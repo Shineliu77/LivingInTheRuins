@@ -20,7 +20,7 @@ public class ForopenerOutside : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("Animator 未設定！");
+           // Debug.LogError("Animator 未設定！");
             yield break;
         }
 

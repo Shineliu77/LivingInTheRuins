@@ -395,6 +395,8 @@ MonoBehaviour:
   duration: 10
   CrashToTriggerCountdown:
   - {fileID: 494267881314760490, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
+  FindToTriggerCountdownNames:
+  - opener0320
 --- !u!114 &-7438070038810782579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +413,6 @@ MonoBehaviour:
   customerPlace: {fileID: 3509340893225791776, guid: 3b7287a1f20d60d43b8c8474b266a235, type: 3}
   moveSpeed: 100
   spawnDelay: 3
-  BringFixedItem: {fileID: 5924402162297093850}
   customerList:
   - {fileID: -3652816231109919897, guid: 84d71541fbdca6d4884ea92a77e9400d, type: 3}
   seatPositions:

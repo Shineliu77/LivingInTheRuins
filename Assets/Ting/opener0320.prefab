@@ -4838,7 +4838,6 @@ MonoBehaviour:
   ShouldFixed:
   - {fileID: 5601052259566882711, guid: 05a44da105c238a4a9c3816cf3aefed4, type: 3}
   brokebar: {fileID: 5622159332604115930}
-  energizedEffect: {fileID: 0}
   isEnergized: 0
   progressBar: {fileID: 0}
   isDamaged: 0

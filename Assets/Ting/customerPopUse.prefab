@@ -1174,7 +1174,6 @@ MonoBehaviour:
   customerPlace: {fileID: 3509340893225791776, guid: 3b7287a1f20d60d43b8c8474b266a235, type: 3}
   moveSpeed: 20
   spawnDelay: 3
-  BringFixedItem: {fileID: 5924402162297093850, guid: dcd5ef49084eb2c45b3a52555691eba9, type: 3}
   customerList: []
   seatPositions:
   - {x: 0, y: 0, z: 0}
@@ -1198,6 +1197,7 @@ MonoBehaviour:
   - {fileID: 4710979090391101559, guid: 39fad1e1db658ed4bb2f35e008d6a966, type: 3}
   fixedItemPrefab: {fileID: 5924402162297093850, guid: dcd5ef49084eb2c45b3a52555691eba9, type: 3}
   customerPlace: {fileID: 601682081881977503}
+  brokeProgressAnime: {fileID: 0}
 --- !u!1 &2636087067454700069
 GameObject:
   m_ObjectHideFlags: 0

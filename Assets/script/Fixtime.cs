@@ -6,8 +6,11 @@ public class Fixtime : MonoBehaviour
 {
     public GameObject energizedEffect; //倒數圖示
     public bool isEnergized; //倒數圖示開啟
-    public float duration = 5.0f;  // 倒數時間
+    public float duration = 10.0f;  // 倒數時間
     public GameObject[] CrashToTriggerCountdown;   // 觸發倒數的物件
+
+    public string[] FindToTriggerCountdownNames;  // 新增：場景內自動尋找的物件名字
+    private GameObject[] findInToTriggerObjects; // 找到的場景物件
 
     private Machine[] machineScripts; //呼叫 machin程式
     private BrokeProgressAnime[] brokeProgressScripts; //呼叫 BrokeProgressAnime程式
@@ -17,26 +20,89 @@ public class Fixtime : MonoBehaviour
 
     private void Start()
     {
-        if (CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0)
-        {
-            Debug.LogWarning($"GameObject {gameObject.name} 的 CrashToTriggerCountdown 尚未指定或為空，請於 Inspector 指定以避免錯誤");
-            return; // 中斷 Start，避免後面程式繼續執行出錯
-        }
         isCounter = false;
         isFixed = false;
 
-        machineScripts = new Machine[CrashToTriggerCountdown.Length];  // 定義觸發倒數的物件陣列
-        brokeProgressScripts = new BrokeProgressAnime[CrashToTriggerCountdown.Length];
-
-        for (int i = 0; i < CrashToTriggerCountdown.Length; i++)  // 定義觸發倒數的物件陣列 增加
+        // 如果 CrashToTriggerCountdown 沒有手動設定，就嘗試用Find的  (找到場景物件)
+        if ((CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0) && FindToTriggerCountdownNames != null && FindToTriggerCountdownNames.Length > 0)
         {
+            findInToTriggerObjects = new GameObject[FindToTriggerCountdownNames.Length];  //定義 findInToTriggerObjects 陣列
 
-            machineScripts[i] = CrashToTriggerCountdown[i].GetComponent<Machine>();     // 定義觸發倒數的物件 呼叫 Machine腳本
-            brokeProgressScripts[i] = CrashToTriggerCountdown[i].GetComponent<BrokeProgressAnime>();   // 定義倒數計時 呼叫 BrokeProgressAnime腳本
-        } 
+            for (int i = 0; i < FindToTriggerCountdownNames.Length; i++)
+            {
+                GameObject obj = GameObject.Find(FindToTriggerCountdownNames[i]);
+                if (obj != null)
+                {
+                    findInToTriggerObjects[i] = obj;
+                }
+                else
+                {
+                    Debug.LogWarning($"Fixtime: 無法在場景中找到名稱為 {FindToTriggerCountdownNames[i]} 的物件");
+                }
+                
+            }
+        }
+
+        if (CrashToTriggerCountdown != null && CrashToTriggerCountdown.Length > 0)   //初始 CrashToTriggerCountdown 跟 CrashToTriggerCountdown.Length
+        {
+            machineScripts = new Machine[CrashToTriggerCountdown.Length];
+            brokeProgressScripts = new BrokeProgressAnime[CrashToTriggerCountdown.Length];
+
+            for (int i = 0; i < CrashToTriggerCountdown.Length; i++)  // 定義觸發倒數的物件陣列 增加
+            {
+                if (CrashToTriggerCountdown[i] != null)   //多一層保護(防止CrashToTriggerCountdown為空報錯)
+                {
+                    machineScripts[i] = CrashToTriggerCountdown[i].GetComponent<Machine>();     // 定義觸發倒數的物件 呼叫 Machine腳本
+                    brokeProgressScripts[i] = CrashToTriggerCountdown[i].GetComponent<BrokeProgressAnime>();   // 定義倒數計時 呼叫 BrokeProgressAnime腳本
+
+                }
+            }
+        }
+        // ---【初始化機器與倒數動畫腳本陣列】---
+        int arrayLength = 0;
+
+        if (CrashToTriggerCountdown != null && CrashToTriggerCountdown.Length > 0)
+        {
+            arrayLength = CrashToTriggerCountdown.Length; // 使用手動設定的陣列
+        }
+        else if (findInToTriggerObjects != null && findInToTriggerObjects.Length > 0)
+        {
+            arrayLength = findInToTriggerObjects.Length; // 使用自動找到的陣列
+        }
+
+        machineScripts = new Machine[arrayLength];
+        brokeProgressScripts = new BrokeProgressAnime[arrayLength];
+
+        // ---【設定machineScripts和brokeProgressScripts】---
+        for (int i = 0; i < arrayLength; i++)
+        {
+            GameObject targetObj = null;
+
+            // 優先使用CrashToTriggerCountdown，沒有才用findInToTriggerObjects
+            if (CrashToTriggerCountdown != null && i < CrashToTriggerCountdown.Length)
+            {
+                targetObj = CrashToTriggerCountdown[i];
+            }
+            else if (findInToTriggerObjects != null && i < findInToTriggerObjects.Length)
+            {
+                targetObj = findInToTriggerObjects[i];
+            }
+
+            if (targetObj != null)
+            {
+                machineScripts[i] = targetObj.GetComponent<Machine>();
+                brokeProgressScripts[i] = targetObj.GetComponent<BrokeProgressAnime>();
+
+                // 防呆：如果找不到腳本，提示警告
+                if (machineScripts[i] == null)
+                    Debug.LogWarning($"Fixtime: {targetObj.name} 沒有 Machine 腳本！");
+                if (brokeProgressScripts[i] == null)
+                    Debug.LogWarning($"Fixtime: {targetObj.name} 沒有 BrokeProgressAnime 腳本！");
+            }
+        }
     }
 
-    private void Update()
+private void Update()
     {
         if (!isFixed && isCounter)
         {
@@ -99,8 +165,8 @@ public class Fixtime : MonoBehaviour
     }
 
     void OnCollisionExit2D(Collision2D coll)   //當  結束碰撞到修理物件
-    {
-        if (System.Array.Exists(CrashToTriggerCountdown, obj => obj == coll.gameObject))
+    {    //達到其中個條件就觸發
+        if (System.Array.Exists(CrashToTriggerCountdown, obj => obj == coll.gameObject) || (findInToTriggerObjects != null && System.Array.Exists(findInToTriggerObjects, obj => obj == coll.gameObject)))
         {
             isFixed = true;
             isCounter = false;

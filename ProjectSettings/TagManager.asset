@@ -26,6 +26,7 @@ TagManager:
   - Red
   - Green
   - Yellow
+  - opener
   layers:
   - Default
   - TransparentFX

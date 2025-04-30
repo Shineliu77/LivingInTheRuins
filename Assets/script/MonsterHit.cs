@@ -85,6 +85,7 @@ public class MonsterHit : MonoBehaviour
         if (monsterHit != null)
         {
             monsterHit.MonsterDefeated(gameObject);
+        
         }
     }
 }
