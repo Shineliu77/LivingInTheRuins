@@ -1,0 +1,47 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "",
+			"Name": "左眼　開閉"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "",
+			"Name": "睫毛 物理"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "",
+			"Name": "瞳孔物理"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "",
+			"Name": "高光 縮放"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "",
+			"Name": "高光 旋轉"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "",
+			"Name": "變臉"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [],
+	"Parts": [
+		{
+			"Id": "Part",
+			"Name": "原眼拆分"
+		}
+	]
+}

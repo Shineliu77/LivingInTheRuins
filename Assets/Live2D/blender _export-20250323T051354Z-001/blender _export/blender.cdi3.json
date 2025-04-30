@@ -1,0 +1,226 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup2",
+			"Name": "角度 X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup2",
+			"Name": "角度 Y"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup2",
+			"Name": "角度 Z"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "紅色液體 開閉"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup",
+			"Name": "紅色水柱 開閉"
+		},
+		{
+			"Id": "ParamEyeLOpen2",
+			"GroupId": "ParamGroup",
+			"Name": "黃色液體 開閉"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup",
+			"Name": "黃色水柱 開閉"
+		},
+		{
+			"Id": "ParamEyeLOpen3",
+			"GroupId": "ParamGroup",
+			"Name": "藍色液體 開閉"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup",
+			"Name": "藍色水柱 開閉"
+		},
+		{
+			"Id": "ParamEyeLOpen4",
+			"GroupId": "ParamGroup",
+			"Name": "綠色液體 開閉"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup",
+			"Name": "綠色水柱 開閉"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup",
+			"Name": "紅色液體 填充"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "ParamGroup",
+			"Name": "黃色液體 填充"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup",
+			"Name": "藍色液體 填充"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup",
+			"Name": "綠色液體 填充"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup",
+			"Name": "紅色液體 物理"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup",
+			"Name": "黃色液體 物理"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup",
+			"Name": "藍色液體 物理"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "ParamGroup",
+			"Name": "綠色液體 物理"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup3",
+			"Name": "攪拌機 X"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup3",
+			"Name": "攪拌機 Y"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "ParamGroup3",
+			"Name": "蓋子開閉"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "ParamGroup4",
+			"Name": "果實 開閉"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "ParamGroup4",
+			"Name": "蘑菇 開閉"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "ParamGroup4",
+			"Name": "花 開閉"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "ParamGroup4",
+			"Name": "葉子 開閉"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "ParamGroup4",
+			"Name": "果實 掉落"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "ParamGroup4",
+			"Name": "蘑菇 掉落"
+		},
+		{
+			"Id": "Param20",
+			"GroupId": "ParamGroup4",
+			"Name": "花 掉落"
+		},
+		{
+			"Id": "Param21",
+			"GroupId": "ParamGroup4",
+			"Name": "葉子 掉落"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "頭"
+		},
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "液體"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "攪拌機"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "原料"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part15",
+			"Name": "注射器3(發動機本體改，新增物件).psd(未找到對應圖層)"
+		},
+		{
+			"Id": "Part12",
+			"Name": "注射器2.psd(未找到對應圖層)"
+		},
+		{
+			"Id": "Part",
+			"Name": "蓋子"
+		},
+		{
+			"Id": "Part2",
+			"Name": "線"
+		},
+		{
+			"Id": "Part3",
+			"Name": "嘴"
+		},
+		{
+			"Id": "Part4",
+			"Name": "發動機"
+		},
+		{
+			"Id": "Part5",
+			"Name": "頭&脖子"
+		},
+		{
+			"Id": "Part13",
+			"Name": "物件"
+		},
+		{
+			"Id": "Part8",
+			"Name": "液體"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"ParamEyeLSmile",
+			"ParamEyeROpen"
+		]
+	]
+}

@@ -1,0 +1,113 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "ParamGroup3",
+			"Name": "眼睛 方向"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "ParamGroup3",
+			"Name": "眼球 X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "ParamGroup3",
+			"Name": "眼球 Y"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "ParamGroup3",
+			"Name": "眼睛物理"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup2",
+			"Name": "觸手張合"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "ParamGroup2",
+			"Name": "觸手物理"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "螺絲起子伸縮"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup",
+			"Name": "螺絲起子旋轉"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup",
+			"Name": "螺絲 旋轉"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup",
+			"Name": "螺絲開閉"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup",
+			"Name": "螺絲 X"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "",
+			"Name": "維修物 開閉"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "眼睛"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "觸手"
+		},
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "螺絲起子"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part8",
+			"Name": "開殼機(新增外組件殼).psd(未找到對應圖層)"
+		},
+		{
+			"Id": "Part3",
+			"Name": "螺絲起子.psd"
+		},
+		{
+			"Id": "Part",
+			"Name": "拆分"
+		},
+		{
+			"Id": "Part4",
+			"Name": "外組件"
+		},
+		{
+			"Id": "Part2",
+			"Name": "螺絲起子"
+		},
+		{
+			"Id": "Part5",
+			"Name": "螺絲"
+		}
+	]
+}
