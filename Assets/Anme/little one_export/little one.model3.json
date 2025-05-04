@@ -1,0 +1,25 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "little one.moc3",
+		"Textures": [
+			"little one.2048/texture_00.png",
+			"little one.2048/texture_01.png",
+			"little one.2048/texture_02.png"
+		],
+		"Physics": "little one.physics3.json",
+		"DisplayInfo": "little one.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}
