@@ -7,7 +7,6 @@ TagManager:
   - machine
   - setupitem
   - fixeditem
-  - manster1
   - passthing
   - brokebar
   - machinefix
@@ -27,6 +26,7 @@ TagManager:
   - Green
   - Yellow
   - opener
+  - monster
   layers:
   - Default
   - TransparentFX

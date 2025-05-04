@@ -6,9 +6,7 @@ public class FixedItemTwoD : MonoBehaviour
     public GameObject[] itemPlaces; // 修理物件生成點
     public GameObject fixedItemPrefab; // 修理物件預製體
     public CustomerPlace customerPlace; // 監測的客人管理區
-    public BrokeProgressAnime brokeProgressAnime; //呼叫 brokeProgressAnime 程式
-    //private limitScene limitScene; // 場景限制管理器
-
+                                       
     public Dictionary<Vector3, GameObject> spawnedItems = new Dictionary<Vector3, GameObject>();
 
     void Start()
@@ -49,7 +47,7 @@ public class FixedItemTwoD : MonoBehaviour
     private void MonitorCustomerSeats()
     {
         // 如果已經有修理物件存在，不再生成新的
-      //  if (spawnedItems.Count >= 1) return;
+        //  if (spawnedItems.Count >= 1) return;
 
         Vector3[] seatPositions = customerPlace.GetSeatPositions(); // 取得座位位置
 
@@ -72,7 +70,8 @@ public class FixedItemTwoD : MonoBehaviour
             {
                 GameObject newFixedItem = Instantiate(fixedItemPrefab, itemPlaces[i].transform.position, Quaternion.identity);
                 spawnedItems[seatPositions[i]] = newFixedItem;
-                break; // **確保只生成一個修理物件後，立即停止方法**
+                newFixedItem.tag = "fixeditem";
+                break; // 確保只生成一個修理物件後，立即停止方法
             }
             //如果客人離開座位摧毀生成修理物件，並感應新客人，生成新物
             if (!seatOccupied && spawnedItems.ContainsKey(seatPositions[i]))
@@ -82,15 +81,7 @@ public class FixedItemTwoD : MonoBehaviour
             }
         }
     }
-    public GameObject GetSpawnedItemBySeat(Vector3 seatPosition) //將生成物件資料拿出(給BrokeProgressAnime)
-    {
-        if (spawnedItems.ContainsKey(seatPosition))
-        {
-            return spawnedItems[seatPosition];
-        }
-        return null;
-    }
-
+  
     private void OnTriggerEnter(Collider other) //當將攜帶要修理得物件還給客人
     {
         Customer customer = other.GetComponent<Customer>();

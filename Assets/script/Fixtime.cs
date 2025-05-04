@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; // 這行很重要
 
 public class Fixtime : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Fixtime : MonoBehaviour
     public GameObject[] CrashToTriggerCountdown;   // 觸發倒數的物件
 
     public string[] FindToTriggerCountdownNames;  // 新增：場景內自動尋找的物件名字
-    private GameObject[] findInToTriggerObjects; // 找到的場景物件
+    public GameObject[] findInToTriggerObjects; // 找到的場景物件
 
     private Machine[] machineScripts; //呼叫 machin程式
     private BrokeProgressAnime[] brokeProgressScripts; //呼叫 BrokeProgressAnime程式
@@ -39,7 +40,7 @@ public class Fixtime : MonoBehaviour
                 {
                     Debug.LogWarning($"Fixtime: 無法在場景中找到名稱為 {FindToTriggerCountdownNames[i]} 的物件");
                 }
-                
+
             }
         }
 
@@ -102,7 +103,7 @@ public class Fixtime : MonoBehaviour
         }
     }
 
-private void Update()
+    private void Update()
     {
         if (!isFixed && isCounter)
         {
@@ -131,7 +132,7 @@ private void Update()
 
             // 倒數結束
             if (duration <= 0.0f)
-            { 
+            {
                 // 結束倒數條件
                 isFixed = true;   // 不再維修
                 isEnergized = false;  // 倒數圖示
@@ -152,7 +153,7 @@ private void Update()
 
     void OnCollisionEnter2D(Collision2D coll)  //當碰撞到修理物件
     {
-        if (System.Array.Exists(CrashToTriggerCountdown, obj => obj == coll.gameObject))
+        if (findInToTriggerObjects.Contains(coll.gameObject))   //當找到碰撞物件 
         {
             isFixed = false;
             isCounter = true;
@@ -174,16 +175,9 @@ private void Update()
             energizedEffect.SetActive(false);
         }
     }
-    private void OnDrawGizmos()
-    {
-        if (CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, 1f);
+    // private void OnDrawGizmos(){ if (CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0){ Gizmos.color = Color.red;Gizmos.DrawWireSphere(transform.position, 1f);
 
 #if UNITY_EDITOR
-            UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, "! CrashToTriggerCountdown 未設定");
+    //  UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, "! CrashToTriggerCountdown 未設定");
 #endif
-        }
-    }
 }

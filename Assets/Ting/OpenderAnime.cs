@@ -18,7 +18,7 @@ public class OpenderAnime : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("fixeditem") && !isTriggered)
         {
-            Debug.Log("碰到 fixeditem！");
+            // Debug.Log("碰到 fixeditem！");
             animator.SetBool("idelTOmove", true);
             isTriggered = true; // 避免多次觸發
 
@@ -48,18 +48,19 @@ public class OpenderAnime : MonoBehaviour
         isTriggered = false; // 允許下次觸發
                              // 銷毀碰撞物件
         Destroy(collidedObject);
-        Debug.Log("動畫結束，回到idle");
+
+        //Debug.Log("動畫結束，回到idle");
 
         if (NewOpenerPrefab != null)
         {
             GameObject newObject = Instantiate(NewOpenerPrefab, transform.position, Quaternion.identity);
-          newObject.AddComponent<Dragging>(); // 確保新物件可拖曳
+            newObject.AddComponent<Dragging>(); // 確保新物件可拖曳
         }
         else
         {
             Debug.LogError("NewOpenerPrefab 未設定！");
         }
 
-       
+        Destroy(GameObject.FindWithTag("fixeditem"));
     }
 }

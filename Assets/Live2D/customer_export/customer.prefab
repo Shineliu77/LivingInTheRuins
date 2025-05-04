@@ -1851,6 +1851,7 @@ MonoBehaviour:
   - {fileID: 0}
   FindToTriggerCountdownNames:
   - opener0320
+  findInToTriggerObjects: []
 --- !u!114 &7217372633339367603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,7 +1888,6 @@ MonoBehaviour:
   itemPlaces: []
   fixedItemPrefab: {fileID: 3818071462493378592}
   customerPlace: {fileID: 0}
-  brokeProgressAnime: {fileID: 0}
 --- !u!1 &4119349044196439099
 GameObject:
   m_ObjectHideFlags: 0

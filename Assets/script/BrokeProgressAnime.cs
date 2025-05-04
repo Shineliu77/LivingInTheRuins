@@ -6,46 +6,28 @@ using UnityEngine.Events;
 public class BrokeProgressAnime : MonoBehaviour
 {
     public GameObject FixItemMachine; //  修理的物件的機器
-    
+
     public GameObject[] ShouldFixed; //  要被修理的物件
     public Image brokebar; //耐久值條
-    //public GameObject energizedEffect; //  修復動畫效果
+                           // public GameObject energizedEffect; //  修復動畫效果
     public bool isEnergized = false; // 是否正在修復
     public CircularProgressBar progressBar; // 呼叫 CircularProgressBar(被維修的物品用)
     public bool isDamaged = false; // 是否處於耐久值條持續 下降  狀態
 
     private Coroutine brokeCoroutine; // 耐久值條持續 下降
     private Coroutine fixCoroutine;   // 耐久值條持續 修復
-   
+
     private int collidingObjects = 0; // 當前與 ShouldFixed 物件接觸的數量
 
-    private FixedItemTwoD fixedItemTwoD; //呼叫 FixedItemTwoD 
 
     private void Start()
     {
-        fixedItemTwoD = FindObjectOfType<FixedItemTwoD>(); //找場景物件
         // 綁定 CircularProgressBar 完成事件，用於修復結束時停止掉血
         if (progressBar != null)
         {
             progressBar.onCountdownFinished.AddListener(StopDamageOverTime);
         }
-       
-    }
 
-    public void LinkProgressBarToSeat(Vector3 seatPos)  //連動 FixedItemTwoD 位置的生成物件的 CircularProgressBar
-    {
-        if (fixedItemTwoD == null) return;
-
-        GameObject fixedItem = fixedItemTwoD.GetSpawnedItemBySeat(seatPos);
-        if (fixedItem != null)
-        {
-            CircularProgressBar radialProgress = fixedItem.GetComponentInChildren<CircularProgressBar>();
-            if (radialProgress != null)
-            {
-                progressBar = radialProgress;
-                progressBar.onCountdownFinished.AddListener(StopDamageOverTime); // 繫結事件
-            }
-        }
     }
 
     // 刷新耐久條 UI
@@ -85,6 +67,30 @@ public class BrokeProgressAnime : MonoBehaviour
             isEnergized = false;
         }
 
+        //tag的fixiem物品碰撞
+        if (coll.gameObject.CompareTag("fixeditem"))
+        {
+            Debug.Log("碰撞到: " + coll.gameObject.name + ", Tag: " + coll.gameObject.tag);
+            isDamaged = true;
+
+            // 如果有修復協程，停止修復
+            if (fixCoroutine != null)
+            {
+                StopCoroutine(fixCoroutine);
+                fixCoroutine = null;
+            }
+
+            // 如果還沒在掉血，啟動掉血協程
+            if (brokeCoroutine == null)
+            {
+                brokeCoroutine = StartCoroutine(DamageOverTime());
+            }
+
+            // 關閉修復動畫
+            //energizedEffect.SetActive(false);
+            isEnergized = false;
+        }
+
         // 碰到 machinefix (修理物)
         if (coll.gameObject.CompareTag("machinefix"))
         {
@@ -93,24 +99,8 @@ public class BrokeProgressAnime : MonoBehaviour
             {
                 fixCoroutine = StartCoroutine(FixTime());
                 isEnergized = true;
-               // energizedEffect.SetActive(true);
+                // energizedEffect.SetActive(true);
             }
-
-            // 嘗試取得該物件或其子物件上的 CircularProgressBar
-             CircularProgressBar radialProgress = coll.gameObject.GetComponentInChildren<CircularProgressBar>();
-           if (radialProgress != null)
-            {
-                 progressBar = radialProgress;
-                 progressBar.onCountdownFinished.AddListener(StopDamageOverTime); // 繫結事件
-            }
-
-    // 只有在沒有損壞時才可以修復
-    if (!isDamaged && fixCoroutine == null)
-    {
-        fixCoroutine = StartCoroutine(FixTime());
-        isEnergized = true;
-        // energizedEffect.SetActive(true);
-    }
         }
     }
 
@@ -128,6 +118,19 @@ public class BrokeProgressAnime : MonoBehaviour
             }
         }
 
+
+        // 離開 tag的fixiem物品碰撞
+        if (coll.gameObject.CompareTag("fixeditem"))
+        {
+            collidingObjects--; // 減少計數
+            if (collidingObjects <= 0)
+            {
+                isDamaged = false;
+                StopDamageOverTime();
+            }
+        }
+
+
         // 離開 machinefix
         if (coll.gameObject.CompareTag("machinefix"))
         {
@@ -136,7 +139,7 @@ public class BrokeProgressAnime : MonoBehaviour
             {
                 fixCoroutine = StartCoroutine(FixTime());
                 isEnergized = true;
-               // energizedEffect.SetActive(true);
+                //  energizedEffect.SetActive(true);
             }
         }
     }
@@ -189,13 +192,13 @@ public class BrokeProgressAnime : MonoBehaviour
                     machineScript.HP = machineScript.HPMax;
 
                     // 修復完成移除動畫
-                   // Transform animeTransform = energizedEffect.transform.Find("machinefixAnime");
-                   // if (animeTransform != null)
-                    //{
-                    //    Destroy(animeTransform.gameObject);
-                   // }
+                    // Transform animeTransform = energizedEffect.transform.Find("machinefixAnime");
+                    // if (animeTransform != null)
+                    // {
+                    //     Destroy(animeTransform.gameObject);
+                    //x }
 
-                   // energizedEffect.SetActive(false);
+                    // energizedEffect.SetActive(false);
                     isEnergized = false;
                     fixCoroutine = null;
                     yield break;
