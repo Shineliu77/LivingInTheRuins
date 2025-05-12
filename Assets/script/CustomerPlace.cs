@@ -27,7 +27,7 @@ public class CustomerPlace : MonoBehaviour
         seatPositions[1] = center + new Vector3(6f, 0, 0);
         seatPositions[2] = center + new Vector3(-5f, 0, 0);
 
-        
+
         // 啟動生成協程
         StartCoroutine(SpawnCustomerLoop());
     }
@@ -74,7 +74,7 @@ public class CustomerPlace : MonoBehaviour
     void Update()
     {
 
-       
+
         CheckCustomersInRange();     //檢查生成範圍
 
         if (currentSpawnedCustomer != null)
@@ -186,10 +186,8 @@ public class CustomerPlace : MonoBehaviour
     }
 
     //當將攜帶要修理得物件還給客人
-   // private void OnTriggerEnter(Collider other) { // 檢查碰撞的物件是否有 CustomerPlace 腳本CustomerPlace customerPlace = other.GetComponent<CustomerPlace>();
- //if (customerPlace != null) // 確保它是客人管理區 {// 嘗試找到 customerPlace 內的客人foreach (Customer customer in customerPlace.customerList)
- //{ RemoveCustomer(customer); // 呼叫移除客人方法// 檢查客人是否攜帶物件，並刪除if (customer.BringFixedItem != null)
-//{  Destroy(customer.BringFixedItem);  } }} }
+
+
 
     // 客人耐心值歸零時離場，移除列表
     public void RemoveCustomer(Customer customer)
@@ -198,12 +196,12 @@ public class CustomerPlace : MonoBehaviour
         {
             customerList.Remove(customer);
 
-          //  if (customer.BringFixedItem != null)
+            //  if (customer.BringFixedItem != null)
             //{
-               // Destroy(customer.BringFixedItem);
-           // }
+            // Destroy(customer.BringFixedItem);
+            // }
         }
-       
+
 
         // 重新檢查範圍內的客人數量
         CheckCustomersInRange();

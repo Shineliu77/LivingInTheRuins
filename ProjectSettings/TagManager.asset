@@ -27,6 +27,8 @@ TagManager:
   - Yellow
   - opener
   - monster
+  - fixeditemOpen
+  - BecomeLarge
   layers:
   - Default
   - TransparentFX

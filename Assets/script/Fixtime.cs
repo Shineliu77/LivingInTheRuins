@@ -163,17 +163,61 @@ public class Fixtime : MonoBehaviour
 
             energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().ActivateCountdown(duration);
         }
+
+        //查找tag觸發
+        if (coll.gameObject.CompareTag("fixeditem"))   //當找到碰撞物件        客人帶來的物件  目前無效
+        {
+            isFixed = false;
+            isCounter = true;
+            isEnergized = true;
+            energizedEffect.SetActive(true);
+            duration = 5.0f;   //倒數計時時間
+
+            energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().ActivateCountdown(duration);
+        }
+
+        //查找tag觸發
+        if (coll.gameObject.CompareTag("Red"))   //當找到碰撞物件  場景試管機器的材料 
+        {
+            isFixed = false;
+            isCounter = true;
+            isEnergized = true;
+            energizedEffect.SetActive(true);
+            duration = 5.0f;   //倒數計時時間
+
+            energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().ActivateCountdown(duration);
+        }
     }
 
     void OnCollisionExit2D(Collision2D coll)   //當  結束碰撞到修理物件
-    {    //達到其中個條件就觸發
-        if (System.Array.Exists(CrashToTriggerCountdown, obj => obj == coll.gameObject) || (findInToTriggerObjects != null && System.Array.Exists(findInToTriggerObjects, obj => obj == coll.gameObject)))
+    {
+        if (coll.gameObject.CompareTag("Red"))
         {
+            isFixed = false;
+            isCounter = true;
+            isEnergized = true;
+            energizedEffect.SetActive(true);
+            return; // 若 Red 有特殊處理邏輯，return 可避免進入下方檢查
+        }
+
+
+
+        if (coll.gameObject.CompareTag("fixeditem") && System.Array.Exists(findInToTriggerObjects, obj => obj == coll.gameObject))
+        {
+            //coll.gameObject.CompareTag("fixeditem")不符合觸發條件
             isFixed = true;
             isCounter = false;
             isEnergized = false;
             energizedEffect.SetActive(false);
         }
+        //達到其中個條件就觸發
+        //if (System.Array.Exists(CrashToTriggerCountdown, obj => obj == coll.gameObject) || (findInToTriggerObjects != null && System.Array.Exists(findInToTriggerObjects, obj => obj == coll.gameObject)))
+        // {
+        //isFixed = true;
+        //isCounter = false;
+        //isEnergized = false;
+        //energizedEffect.SetActive(false);
+        // }
     }
     // private void OnDrawGizmos(){ if (CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0){ Gizmos.color = Color.red;Gizmos.DrawWireSphere(transform.position, 1f);
 

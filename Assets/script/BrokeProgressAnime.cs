@@ -17,6 +17,8 @@ public class BrokeProgressAnime : MonoBehaviour
     private Coroutine brokeCoroutine; // 耐久值條持續 下降
     private Coroutine fixCoroutine;   // 耐久值條持續 修復
 
+    private bool isDamaging = false; // 控制是否正在耐久值條持續 下降
+
     private int collidingObjects = 0; // 當前與 ShouldFixed 物件接觸的數量
 
 
@@ -57,7 +59,11 @@ public class BrokeProgressAnime : MonoBehaviour
             }
 
             // 如果還沒在掉血，啟動掉血協程
-            if (brokeCoroutine == null)
+            //if (brokeCoroutine == null)
+            // {
+            //    brokeCoroutine = StartCoroutine(DamageOverTime());
+            //}
+            if (!isDamaging)
             {
                 brokeCoroutine = StartCoroutine(DamageOverTime());
             }
@@ -92,16 +98,16 @@ public class BrokeProgressAnime : MonoBehaviour
         }
 
         // 碰到 machinefix (修理物)
-        if (coll.gameObject.CompareTag("machinefix"))
-        {
-            // 只有在沒有損壞時才可以修復
-            if (!isDamaged && fixCoroutine == null)
-            {
-                fixCoroutine = StartCoroutine(FixTime());
-                isEnergized = true;
-                // energizedEffect.SetActive(true);
-            }
-        }
+        // if (coll.gameObject.CompareTag("machinefix"))
+        // {
+        // 只有在沒有損壞時才可以修復
+        // if (!isDamaged && fixCoroutine == null)
+        // {
+        //   fixCoroutine = StartCoroutine(FixTime());
+        //   isEnergized = true;
+        // energizedEffect.SetActive(true);
+        //}
+        //}
     }
 
     // 碰撞結束
@@ -110,12 +116,12 @@ public class BrokeProgressAnime : MonoBehaviour
         // 離開 ShouldFixed 的物件
         if (System.Array.Exists(ShouldFixed, obj => obj == coll.gameObject))
         {
-            collidingObjects--; // 減少計數
-            if (collidingObjects <= 0)
-            {
-                isDamaged = false;
-                StopDamageOverTime();
-            }
+            // collidingObjects--; // 減少計數
+            //if (collidingObjects <= 0)
+            //{
+            //   isDamaged = false;
+            //StopDamageOverTime();
+            //  }
         }
 
 
@@ -128,33 +134,47 @@ public class BrokeProgressAnime : MonoBehaviour
                 isDamaged = false;
                 StopDamageOverTime();
             }
+            fixCoroutine = StartCoroutine(FixTime());   //有問題   會直接回滿
+            isEnergized = true;
         }
 
 
         // 離開 machinefix
-        if (coll.gameObject.CompareTag("machinefix"))
+        // if (coll.gameObject.CompareTag("machinefix"))
+        // {
+        // 不在損壞狀態才可以重新啟動修復
+        // if (!isDamaged && fixCoroutine == null)
+        // {
+        //    fixCoroutine = StartCoroutine(FixTime());
+        //    isEnergized = true;
+        //  energizedEffect.SetActive(true);
+        //}
+
+
+        // 離開 碰撞
+        if (!isDamaged && fixCoroutine == null)
         {
-            // 不在損壞狀態才可以重新啟動修復
-            if (!isDamaged && fixCoroutine == null)
-            {
-                fixCoroutine = StartCoroutine(FixTime());
-                isEnergized = true;
-                //  energizedEffect.SetActive(true);
-            }
+            isDamaged = false;
+            StopDamageOverTime();
+            fixCoroutine = StartCoroutine(FixTime());   //有問題   會直接回滿
+            isEnergized = true;
+            //  energizedEffect.SetActive(true);
         }
+
     }
 
     // 每秒降低機器的 HP
     IEnumerator DamageOverTime()
     {
-        while (true)
+        isDamaging = true; // 開始掉血
+
+        while (isDamaging)
         {
             if (FixItemMachine != null)
             {
                 Machine machineScript = FixItemMachine.GetComponent<Machine>();
                 if (machineScript != null)
                 {
-                    // 每秒下降 10% (測試用，可調整)
                     machineScript.HP -= machineScript.HPMax * 0.03f;
                     Refreshbrokebar();
                 }
@@ -163,13 +183,16 @@ public class BrokeProgressAnime : MonoBehaviour
         }
     }
 
-    // 停止耐久度下降
     public void StopDamageOverTime()
     {
+        Debug.Log("嘗試停止耐久值下降");
+
+        isDamaging = false; // 停止掉血迴圈
         if (brokeCoroutine != null)
         {
             StopCoroutine(brokeCoroutine);
             brokeCoroutine = null;
+            Debug.Log("成功停止掉血協程");
         }
         Refreshbrokebar();
     }

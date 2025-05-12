@@ -16,6 +16,8 @@ public class Customer : MonoBehaviour
     private bool isLeaving = false;  // 客人是否到離開
     private Vector3 leaveTargetPos;  // 離開方向
 
+    public CustomerMoney customerMoney; //金錢分數程式
+
     public void StartPatience()   //耐心值定義
     {
         machineScript = GetComponent<Machine>();
@@ -37,7 +39,7 @@ public class Customer : MonoBehaviour
     {
         while (machineScript != null)
         {
-            machineScript.HP -= machineScript.HPMax * 0.1f;
+            machineScript.HP -= machineScript.HPMax * 0.01f; //每秒下降  暫時修改
             RefreshPatiencebar();
             yield return new WaitForSeconds(1f);
 
@@ -58,6 +60,16 @@ public class Customer : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("fixeditemOpen"))
+        {
+            Leave();
+            Destroy(coll.gameObject);
+            customerMoney.GetMoney(50);
         }
     }
 
