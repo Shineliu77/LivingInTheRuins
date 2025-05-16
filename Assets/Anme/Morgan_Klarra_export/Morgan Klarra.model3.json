@@ -1,0 +1,24 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "Morgan Klarra.moc3",
+		"Textures": [
+			"Morgan Klarra.8192/texture_00.png",
+			"Morgan Klarra.8192/texture_01.png"
+		],
+		"Physics": "Morgan Klarra.physics3.json",
+		"DisplayInfo": "Morgan Klarra.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}
