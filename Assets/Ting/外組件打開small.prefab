@@ -320,6 +320,7 @@ MonoBehaviour:
   - {fileID: 657647226, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   - {fileID: -622067836, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   - {fileID: -261587270, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  liquidPopOut: {fileID: 8438874387820952618, guid: 02002bb37b375484599eab9ce4476c5b, type: 3}
 --- !u!4 &3764767743121788634 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}

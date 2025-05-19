@@ -6,7 +6,7 @@ public class MonsterHit : MonoBehaviour
 {
     public MonsterSpawner monsterSpawner; // 怪物生成點管理器
     public GameObject monsterPrefab; // 怪物預製體
-    public BrokeProgressAnime brokeProgressAnime; // 機器耐久值管理器
+    public BrokeProgressAnime brokeProgressAnime; // 機器耐久值管理器  
     public float monsterSpawnChance = 1f; // 怪物生成機率
 
     public float moveSpeed = 10f; // 移動速度
@@ -17,7 +17,10 @@ public class MonsterHit : MonoBehaviour
     private bool isSpawning = false;
     public GameObject currentMonster = null;
     private bool readyToRespawn = false; // 控制是否能再次生成怪物
-    public MonsterState CurrentState = MonsterState.Entrance;
+
+    public string FindHaveBrokeProgressAnimeObj;   //找到有機器耐久值程式的物件名
+    public MonsterState CurrentState = MonsterState.Entrance; //當前狀態動畫  (不調整 按順序播)
+
     public enum MonsterState
     {
         Entrance,
@@ -29,13 +32,20 @@ public class MonsterHit : MonoBehaviour
     void Awake()
     {
         Debug.Log("MonsterHit 掛載於: " + this.name);
+        // 根據指定名稱尋找場景中的機器物件
+
+
+        GameObject BrokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj);
+       brokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj).GetComponent<BrokeProgressAnime>();
+
     }
 
     void Update()
     {
         // 如果尚未生成怪物、有維修機器且機器損壞、目前沒其他怪物、且允許生成
-        if (!isSpawning && brokeProgressAnime != null && brokeProgressAnime.isDamaged && occupiedSpawnPoints.Count == 0 && !readyToRespawn)
+        if (!isSpawning && brokeProgressAnime.isDamaged && occupiedSpawnPoints.Count == 0 && !readyToRespawn)
         {
+
             if (Random.value < monsterSpawnChance)
             {
                 StartCoroutine(SpawnMonster());
@@ -89,7 +99,7 @@ public class MonsterHit : MonoBehaviour
                 targetPosition,
                 moveSpeed * Time.deltaTime);
             yield return null;
-            Debug.Log("抵達目的 - 開始攻擊動畫");
+            //   Debug.Log("抵達目的 - 開始攻擊動畫");
         }
     }
 
@@ -160,15 +170,23 @@ public class MonsterHit : MonoBehaviour
         }
 
         Destroy(defeatedMonster);
-    }
 
-    void OnCollisionEnter2D(Collision2D coll)  //怪物再次生成條件   有問題
-    {
-        if (brokeProgressAnime != null && brokeProgressAnime.isDamaged && readyToRespawn && coll.gameObject.CompareTag("Red"))
+
+        if (brokeProgressAnime != null && brokeProgressAnime.isDamaged )
         {
-            Debug.Log("碰撞觸發重新生成！");
+            new WaitForSeconds(12f);   // 等待blender動畫結束 僅在有碰撞時有效
             readyToRespawn = false;
             StartCoroutine(SpawnMonster());
         }
     }
+    //void OnCollisionEnter2D(Collision2D coll)  //怪物再次生成條件   有問題
+    // {
+    //  if (brokeProgressAnime != null && brokeProgressAnime.isDamaged && readyToRespawn && coll.gameObject.CompareTag("Red"))
+    // {
+    //    Debug.Log("碰撞觸發重新生成！");
+    //    readyToRespawn = false;
+    //    StartCoroutine(SpawnMonster());
+    //}
+    // }
+//}
 }

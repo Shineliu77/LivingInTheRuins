@@ -114,9 +114,9 @@ public class BrokeProgressAnime : MonoBehaviour
     void OnCollisionExit2D(Collision2D coll)
     {
         // 離開 ShouldFixed 的物件
-        if (System.Array.Exists(ShouldFixed, obj => obj == coll.gameObject))
+        if (System.Array.Exists(ShouldFixed, obj => obj == coll.gameObject))  //blender使用(持續調耐久)
         {
-            // collidingObjects--; // 減少計數
+            // collidingObjects--; // 減少計碰撞的物件數量
             //if (collidingObjects <= 0)
             //{
             //   isDamaged = false;
@@ -128,12 +128,14 @@ public class BrokeProgressAnime : MonoBehaviour
         // 離開 tag的fixiem物品碰撞
         if (coll.gameObject.CompareTag("fixeditem"))
         {
-            collidingObjects--; // 減少計數
+            collidingObjects--; // 減少計碰撞的物件數量
             if (collidingObjects <= 0)
             {
                 isDamaged = false;
                 StopDamageOverTime();
+
             }
+
             fixCoroutine = StartCoroutine(FixTime());   //有問題   會直接回滿
             isEnergized = true;
         }
@@ -154,12 +156,16 @@ public class BrokeProgressAnime : MonoBehaviour
         // 離開 碰撞
         if (!isDamaged && fixCoroutine == null)
         {
+            // GameObject.FindWithTag("machine");
+            new WaitForSeconds(12f);   // 等待blender動畫結束 僅在有碰撞時有效
             isDamaged = false;
             StopDamageOverTime();
             fixCoroutine = StartCoroutine(FixTime());   //有問題   會直接回滿
             isEnergized = true;
             //  energizedEffect.SetActive(true);
         }
+
+
 
     }
 
@@ -185,14 +191,14 @@ public class BrokeProgressAnime : MonoBehaviour
 
     public void StopDamageOverTime()
     {
-        Debug.Log("嘗試停止耐久值下降");
+        // Debug.Log("嘗試停止耐久值下降");
 
         isDamaging = false; // 停止掉血迴圈
         if (brokeCoroutine != null)
         {
             StopCoroutine(brokeCoroutine);
             brokeCoroutine = null;
-            Debug.Log("成功停止掉血協程");
+            // Debug.Log("成功停止掉血協程");
         }
         Refreshbrokebar();
     }
@@ -226,8 +232,33 @@ public class BrokeProgressAnime : MonoBehaviour
                     fixCoroutine = null;
                     yield break;
                 }
-                Refreshbrokebar();
-                yield return new WaitForSeconds(1f);
+            }
+            Refreshbrokebar();
+            yield return new WaitForSeconds(1f);
+
+            if (FixItemMachine != null && gameObject.CompareTag("fixeditem"))  //沒有用
+            {
+                // Machine machineScript = FixItemMachine.GetComponent<Machine>();
+                if (machineScript == null) yield break;
+
+                while (machineScript.HP < machineScript.HPMax)
+                {
+                    // 每秒回復 10%
+                    machineScript.HP += machineScript.HPMax * 0.1f;
+
+                    if (machineScript.HP >= machineScript.HPMax)
+                    {
+                        machineScript.HP = machineScript.HPMax;
+
+
+                        isEnergized = false;
+                        fixCoroutine = null;
+                        yield break;
+                    }
+
+                    Refreshbrokebar();
+                    yield return new WaitForSeconds(1f);
+                }
             }
         }
     }

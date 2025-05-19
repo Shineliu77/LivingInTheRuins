@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4379709145308727242}
   - component: {fileID: 1283825346232381463}
   - component: {fileID: 3085050396965431100}
-  - component: {fileID: 7314489075234931115}
   m_Layer: 0
   m_Name: "\u7D05\u8A66\u7BA1 "
   m_TagString: redIiquid
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: -261587270, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -170,17 +169,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30045ac51d37f6d4ea9c3bde50d7aa3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7314489075234931115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2420733381679668085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13457329fc142bc40a7fe6d8d558766c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

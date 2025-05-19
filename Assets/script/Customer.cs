@@ -10,7 +10,7 @@ public class Customer : MonoBehaviour
 
     [HideInInspector] public Vector3 targetPos;  // 位置
     [HideInInspector] public bool hasArrived = false;  // 客人是否到定位置
-    [HideInInspector] public GameObject BringFixedItem; // 連結 CustomerPlace
+
     [HideInInspector] public CustomerPlace customerPlace; // 連結 CustomerPlace
 
     private bool isLeaving = false;  // 客人是否到離開
@@ -20,15 +20,29 @@ public class Customer : MonoBehaviour
 
     public void StartPatience()   //耐心值定義
     {
+
+        GameObject barObject = GameObject.FindWithTag("brokebar");
+        if (barObject != null)
+        {
+            Patiencebar = barObject.GetComponent<Image>();
+        }
+        else
+        {
+            Debug.LogWarning("找不到 tag 為 'brokebar' 的物件！");
+        }
+
         machineScript = GetComponent<Machine>();
         if (patienceCoroutine == null)
         {
             patienceCoroutine = StartCoroutine(PatienceDownTime());
+
         }
     }
 
     private void RefreshPatiencebar()  //耐心值定義
     {
+        //找場景耐久值來用
+        // GameObject.FindGameObjectsWithTag("brokebar");
         if (machineScript != null && Patiencebar != null)
         {
             Patiencebar.fillAmount = machineScript.HP / machineScript.HPMax;
@@ -39,27 +53,16 @@ public class Customer : MonoBehaviour
     {
         while (machineScript != null)
         {
-            machineScript.HP -= machineScript.HPMax * 0.01f; //每秒下降  暫時修改
+            machineScript.HP -= machineScript.HPMax * 0.08f; //每秒下降  暫時修改   如果調整的話  FixedItemTwoD 跟  CustomerBarCallTry 也要改
             RefreshPatiencebar();
             yield return new WaitForSeconds(1f);
 
             if (machineScript.HP <= 0.0f && !isLeaving)
             {
                 Leave();
+
             }
-            if (BringFixedItem != null)
-            {
-                Collider[] colliders = Physics.OverlapSphere(BringFixedItem.transform.position, 1f);
-                foreach (Collider col in colliders)
-                {
-                    if (col.gameObject == this.gameObject) // 檢查是否碰到客人
-                    {
-                        Leave(); // 觸發離場
-                        Destroy(BringFixedItem); // 摧毀物件
-                        break;
-                    }
-                }
-            }
+
         }
     }
 
