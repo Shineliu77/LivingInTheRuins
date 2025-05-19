@@ -45,6 +45,7 @@ public class CustomerbarUse : MonoBehaviour
         for (int i = 0; i < seatPositions.Length; i++)
         {
             bool seatOccupied = false;
+            GameObject newbrokebar = null; // 提前宣告讓後面能使用
 
             foreach (Customer customer in customerPlace.customerList)
             {
@@ -66,22 +67,33 @@ public class CustomerbarUse : MonoBehaviour
                     {
                         // 若尚未生成耐久值，則生成並啟動耐久倒數
                         GameObject canvas = GameObject.Find("Canvas");
-                        GameObject newbrokebar = Instantiate(customerBar, itemPlaces[i].transform.position, Quaternion.identity, canvas.transform);
+                        newbrokebar = Instantiate(customerBar, itemPlaces[i].transform.position, Quaternion.identity, canvas.transform);
                         spawnedItems[seatPositions[i]] = newbrokebar;
-
-                        // 啟動自身倒數
-                        CustomerBarCallTry barScript = newbrokebar.GetComponent<CustomerBarCallTry>();
-                        if (barScript != null)
-                        {
-                            barScript.StartPatience();
-                        }
-                        else
-                        {
-                            Debug.LogError("生成的 bar 缺少 CustomerBarCallTry 腳本！");
-                        }
                     }
+                    break; // 確保只生成一個修理物件後，立即停止方法
+                }
+            }
+            //如果客人離開座位摧毀生成修理物件，並感應新客人，生成新物
+            if (!seatOccupied && spawnedItems.ContainsKey(seatPositions[i]))
+            {
+                Destroy(spawnedItems[seatPositions[i]]);
+                spawnedItems.Remove(seatPositions[i]);
+            }
+
+            // 生成耐久值後 啟動倒數
+            if (newbrokebar != null)
+            {
+                CustomerBarCallTry barScript = newbrokebar.GetComponent<CustomerBarCallTry>();
+                if (barScript != null)
+                {
+                    barScript.StartPatience();
+                }
+                else
+                {
+                    Debug.LogError("生成的 bar 缺少 CustomerBarCallTry 腳本！");
                 }
             }
         }
     }
 }
+

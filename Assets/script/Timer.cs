@@ -33,17 +33,17 @@ public class Timer : MonoBehaviour
 
             else if (remainingTime <= 0 && !ScorePanelOpen)  //如果倒數秒數歸零 打開分數面板暫停遊戲
             {
-                ScorePanel.SetActive(true); // 顯示分數面板
-                ScorePanelOpen = true;          // 防止重複觸發
-                isTimerPaused = true;  // 加這行：暫停時間倒數
-                Time.timeScale = 0;  //遊戲暫停
+               // ScorePanel.SetActive(true); // 顯示分數面板
+               // ScorePanelOpen = true;          // 防止重複觸發
+               // isTimerPaused = true;  // 加這行：暫停時間倒數
+                //Time.timeScale = 0;  //遊戲暫停
                 //the way to reset thing
                 // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//可載入場景
                 //SceneManager.LoadScene("");
             }
             int minutes = Mathf.FloorToInt(remainingTime / 60); //剩餘 分
             int seconds = Mathf.FloorToInt(remainingTime % 60); //剩餘 秒
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //ui顯示方式
+           // timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //ui顯示方式
 
            if (CustomerMoney.Score >= 100 && !ScorePanelOpen)  //金錢分數100分 打開分數面板暫停遊戲
            {

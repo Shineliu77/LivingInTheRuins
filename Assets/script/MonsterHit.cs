@@ -36,7 +36,7 @@ public class MonsterHit : MonoBehaviour
 
 
         GameObject BrokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj);
-       brokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj).GetComponent<BrokeProgressAnime>();
+      // brokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj).GetComponent<BrokeProgressAnime>();
 
     }
 
