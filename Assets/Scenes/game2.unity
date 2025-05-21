@@ -1405,6 +1405,8 @@ MonoBehaviour:
   CrashToTriggerCountdown:
   - {fileID: 1134936528}
   - {fileID: 1424296972}
+  FindToTriggerCountdownNames: []
+  findInToTriggerObjects: []
 --- !u!43 &292484890
 Mesh:
   m_ObjectHideFlags: 0
@@ -2176,6 +2178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 415364771}
   remainingTime: 90
+  ScorePanel: {fileID: 0}
+  customerMoney: {fileID: 0}
 --- !u!114 &415364771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3069,7 +3073,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &522385445 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5455543404088398711, guid: 0afef4286593dea408fe415c74d3136e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1071249178373826640, guid: 0afef4286593dea408fe415c74d3136e, type: 3}
   m_PrefabInstance: {fileID: 1388659677}
   m_PrefabAsset: {fileID: 0}
 --- !u!43 &549365449
@@ -7138,9 +7142,9 @@ MonoBehaviour:
   - {fileID: 1323419563}
   - {fileID: 285051280}
   brokebar: {fileID: 1222133912}
-  energizedEffect: {fileID: 2058174271}
   isEnergized: 0
   progressBar: {fileID: 2002995835}
+  isDamaged: 0
 --- !u!43 &1166816599
 Mesh:
   m_ObjectHideFlags: 0
@@ -8190,6 +8194,8 @@ MonoBehaviour:
   CrashToTriggerCountdown:
   - {fileID: 1134936528}
   - {fileID: 1424296972}
+  FindToTriggerCountdownNames: []
+  findInToTriggerObjects: []
 --- !u!61 &1323419571
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8969,9 +8975,9 @@ MonoBehaviour:
   - {fileID: 1323419563}
   - {fileID: 285051280}
   brokebar: {fileID: 67297298}
-  energizedEffect: {fileID: 54450735}
   isEnergized: 0
   progressBar: {fileID: 140333203}
+  isDamaged: 0
 --- !u!50 &1424296975
 Rigidbody2D:
   serializedVersion: 4
@@ -10498,6 +10504,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   hasArrived: 0
   customerPlace: {fileID: 0}
+  customerMoney: {fileID: 0}
 --- !u!114 &1789774446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10526,6 +10533,11 @@ MonoBehaviour:
   customerPlace: {fileID: 521728098}
   moveSpeed: 1000
   spawnDelay: 3
+  customerList: []
+  seatPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &1789774448
 MonoBehaviour:
   m_ObjectHideFlags: 0

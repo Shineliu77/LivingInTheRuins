@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b662e28cc94ee4646ae396752767baea
+guid: 37e2b9c35bb43a34498e5cee6d68ac40
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: poster_01_0
+      name: postre_2_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 300
-        width: 345
-        height: 442
+        x: 35
+        y: 456
+        width: 353
+        height: 445
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 308ea6fb609afd34196d8fff647f9de3
-      internalID: -259731894
+      spriteID: fb10f39645cc8d94ca89dfc5296f2bc7
+      internalID: 1688189241
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: poster_01_1
+      name: postre_2_1
       rect:
         serializedVersion: 2
-        x: 430
-        y: 142
-        width: 228
-        height: 569
+        x: 429
+        y: 338
+        width: 230
+        height: 567
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7d1f7d6865410747be466dc49a1ebfd
-      internalID: -2053367789
+      spriteID: ca8170901adab554890116157c646eea
+      internalID: -568512598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: poster_01_5
+      name: postre_2_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 33
-        width: 361
-        height: 231
+        x: 34
+        y: 22
+        width: 296
+        height: 412
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe30c12584f87af428de8f2055e0cec3
-      internalID: -31284004
+      spriteID: 3a3359d22c3b58c44bff84d388668b4f
+      internalID: 1560005625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postre_2_6
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 71
+        width: 364
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 508a76b13a4a5bd48b1578a2e24aae44
+      internalID: -1181436556
       vertices: []
       indices: 
       edges: []
@@ -170,12 +191,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      poster_01_0: -259731894
-      poster_01_1: -2053367789
-      poster_01_2: -1371370388
-      poster_01_3: -1785961776
-      poster_01_4: -1846027355
-      poster_01_5: -31284004
+      postre_2_0: 1688189241
+      postre_2_1: -568512598
+      postre_2_2: -1098465879
+      postre_2_3: 1093242736
+      postre_2_4: -1013697076
+      postre_2_5: 1560005625
+      postre_2_6: -1181436556
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1167,8 +1167,8 @@ MonoBehaviour:
   Patiencebar: {fileID: 3785350738063515520, guid: 9cc09cf99f0ebc74898e333ad8fd79c7, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   hasArrived: 0
-  BringFixedItem: {fileID: 0}
   customerPlace: {fileID: 0}
+  customerMoney: {fileID: 0}
 --- !u!114 &1299664257251311807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,8 +1196,8 @@ MonoBehaviour:
   Patiencebar: {fileID: 2119662436911985293, guid: 00ff0b201d0140942971e93ba664e423, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   hasArrived: 0
-  BringFixedItem: {fileID: 0}
   customerPlace: {fileID: 0}
+  customerMoney: {fileID: 0}
 --- !u!1 &3136228843604943718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,7 +1702,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
