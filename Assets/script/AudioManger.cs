@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("musicuse");
+        PlayMusic("HomeStartMouse");
     }
 
     public void PlayMusic(string name)
