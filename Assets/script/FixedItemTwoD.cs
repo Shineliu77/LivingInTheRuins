@@ -8,7 +8,7 @@ public class FixedItemTwoD : MonoBehaviour
     public CustomerPlace customerPlace; // 監測的客人管理區
 
     public Dictionary<Vector3, GameObject> spawnedItems = new Dictionary<Vector3, GameObject>();
-
+    private HashSet<Vector3> returnedItemSeats = new HashSet<Vector3>(); // 客人提前還物件(hp>=0)
     void Start()
     {
         // 取得 LimitScene 腳本
@@ -63,33 +63,37 @@ public class FixedItemTwoD : MonoBehaviour
                     Machine customerMachine = customer.GetComponent<Machine>();
                     if (customerMachine != null && customerMachine.HP <= 0f)
                     {
-                        // 如果該座位有對應的修理物件，就刪除
+                        //  如果 HP <= 0  刪修理物件
                         if (spawnedItems.ContainsKey(seatPositions[i]))
                         {
                             Destroy(spawnedItems[seatPositions[i]]);
                             spawnedItems.Remove(seatPositions[i]);
                         }
                     }
-
-                    else if (!spawnedItems.ContainsKey(seatPositions[i]))
+                    // 如果 HP > 0 沒生成過修理物件，客人提前還物件(hp>=0)
+                    else if (!spawnedItems.ContainsKey(seatPositions[i]) || returnedItemSeats.Contains(seatPositions[i]))
                     {
-                        // 若該座位還沒生成修理物件，則生成
                         GameObject newFixedItem = Instantiate(fixedItemPrefab, itemPlaces[i].transform.position, Quaternion.identity);
                         newFixedItem.tag = "fixeditem";
                         spawnedItems[seatPositions[i]] = newFixedItem;
+
+                        // 若是之前還過物件的座位(hp>=0)，清空座位
+                        returnedItemSeats.Remove(seatPositions[i]);
                     }
 
                     break; // 確保只生成一個修理物件後，立即停止方法
                 }
-                //如果客人離開座位摧毀生成修理物件，並感應新客人，生成新物
-                // if (!seatOccupied && spawnedItems.ContainsKey(seatPositions[i]))
-                // {
-                // Destroy(spawnedItems[seatPositions[i]]);
-                //  spawnedItems.Remove(seatPositions[i]);
-                //}
+            }
+            //如果客人離開座位摧毀生成修理物件，並感應新客人，生成新物
+            if (!seatOccupied && spawnedItems.ContainsKey(seatPositions[i]))
+            {
+                Destroy(spawnedItems[seatPositions[i]]);
+                spawnedItems.Remove(seatPositions[i]);
+                returnedItemSeats.Remove(seatPositions[i]);
             }
         }
     }
+
 
 
     private void OnTriggerEnter(Collider other) //當將攜帶要修理得物件還給客人
@@ -104,6 +108,7 @@ public class FixedItemTwoD : MonoBehaviour
             {
                 Destroy(spawnedItems[customerSeat]);
                 spawnedItems.Remove(customerSeat);
+                returnedItemSeats.Add(customerSeat);  //在次生成
             }
         }
     }

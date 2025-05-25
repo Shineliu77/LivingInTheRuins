@@ -30,7 +30,7 @@ public class OpenderAnime : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitForAnimationToEnd()
+    public IEnumerator WaitForAnimationToEnd()
     {
         yield return null; // 等一幀讓動畫狀態切換
 
@@ -55,6 +55,12 @@ public class OpenderAnime : MonoBehaviour
         {
             GameObject newObject = Instantiate(NewOpenerPrefab, transform.position, Quaternion.identity);
             newObject.AddComponent<Dragging>(); // 確保新物件可拖曳
+        }
+        //  通知NewPlayerTeach動畫播放結束
+        NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>();
+        if (teachScript != null)
+        {
+            teachScript.OnOpenerFinished();
         }
         else
         {

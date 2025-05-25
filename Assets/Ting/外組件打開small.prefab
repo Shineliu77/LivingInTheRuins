@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -1472937607060849194}
   - component: {fileID: 5162471073386265424}
   - component: {fileID: -7618174930439951243}
+  - component: {fileID: 7110569495929041984}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6\u6253\u958Bsmall"
   m_TagString: fixeditemOpen
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7777248801548755955}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dab55cd8fe6183f479ba6170cce4bd74, type: 3}
   m_Name: 
@@ -205,6 +206,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69db1becc73c1f546966504447c35a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7110569495929041984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777248801548755955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6df7e00df8b4144ab7adda4f5bab10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 7777248801548755955}
+  OpenerChangeImage: []
+  First: {fileID: 5807586087369538133}
+  Second: {fileID: 134054863856943030}
+  Third: {fileID: 4889638808047387834}
 --- !u!1001 &4835168987850365857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,9 +318,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7437578802024126719}
   OpenerChangeImage:
   - {fileID: -2129619538, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: 1194634593, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: -1567778227, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: -1538191797, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
 --- !u!114 &3561968479214536131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,9 +332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSprites:
   - {fileID: 649694490, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: 657647226, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: -622067836, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: -261587270, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   liquidPopOut: {fileID: 8438874387820952618, guid: 02002bb37b375484599eab9ce4476c5b, type: 3}
 --- !u!4 &3764767743121788634 stripped
 Transform:
@@ -520,8 +532,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6970719646060977419}
   OpenerChangeImage:
   - {fileID: -30610594, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
-  - {fileID: 1236474045, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
-  - {fileID: -1026011781, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
 --- !u!114 &5926498849949804065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,8 +546,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSprites:
   - {fileID: -1601931343, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
-  - {fileID: -1361594671, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
-  - {fileID: 1859648843, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
 --- !u!212 &6970719646060977419 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1819166377029881970, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}

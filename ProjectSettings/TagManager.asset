@@ -29,6 +29,7 @@ TagManager:
   - monster
   - fixeditemOpen
   - BecomeLarge
+  - BecomeLarge2
   layers:
   - Default
   - TransparentFX

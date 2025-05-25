@@ -13,6 +13,16 @@ public class StopMenuEscape : MonoBehaviour
         {
             isMenuOpen = !isMenuOpen;  // 每次按下ESC就切換狀態
             stopMenuObject.SetActive(isMenuOpen);
+
+            if (isMenuOpen == false)
+            {
+                Time.timeScale = 1;
+            }
+
+            if (isMenuOpen == true)
+            {
+                Time.timeScale = 0;
+            }
         }
     }
 }

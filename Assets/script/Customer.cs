@@ -53,7 +53,7 @@ public class Customer : MonoBehaviour
     {
         while (machineScript != null)
         {
-            machineScript.HP -= machineScript.HPMax * 0.08f; //每秒下降  暫時修改   如果調整的話  FixedItemTwoD 跟  CustomerBarCallTry 也要改
+            machineScript.HP -= machineScript.HPMax * 0.03f; //每秒下降  暫時修改   如果調整的話  FixedItemTwoD 跟  CustomerBarCallTry 也要改
             RefreshPatiencebar();
             yield return new WaitForSeconds(1f);
 
@@ -73,6 +73,12 @@ public class Customer : MonoBehaviour
             Leave();
             Destroy(coll.gameObject);
             customerMoney.GetMoney(50);
+
+            NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>();
+            if (teachScript != null)
+            {
+                teachScript.IsGiveCustomer();
+            }
         }
     }
 

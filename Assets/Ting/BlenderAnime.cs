@@ -94,6 +94,13 @@ public class BlenderAnime : MonoBehaviour
         isTriggered = false; // 允許下次觸發
         Debug.Log(animationName + " 動畫結束，回到 idle");
         animationFinished = true; // 通知液體可生成
+
+        //  通知NewPlayerTeach動畫播放結束
+        NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>();
+        if (teachScript != null)
+        {
+            teachScript.Isblenderfinish();
+        }
     }
     public void ResetFinishedState()  //LiquidPopOut 通知生成結束，可重置狀態
     {

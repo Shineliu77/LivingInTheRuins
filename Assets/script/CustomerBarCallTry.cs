@@ -47,7 +47,7 @@ public class CustomerBarCallTry : MonoBehaviour
     {
         while (HP > 0)
         {
-            HP -= HPMax * 0.08f; // 每秒減少 0.8%
+            HP -= HPMax * 0.03f; // 每秒減少 0.3%
             RefreshPatiencebar();
             yield return new WaitForSeconds(1f);
         }

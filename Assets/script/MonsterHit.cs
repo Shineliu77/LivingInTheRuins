@@ -36,7 +36,7 @@ public class MonsterHit : MonoBehaviour
 
 
         GameObject BrokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj);
-      // brokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj).GetComponent<BrokeProgressAnime>();
+        // brokeProgressAnime = GameObject.Find(FindHaveBrokeProgressAnimeObj).GetComponent<BrokeProgressAnime>();
 
     }
 
@@ -83,6 +83,12 @@ public class MonsterHit : MonoBehaviour
         yield return StartCoroutine(MoveToTarget(newMonster.transform, spawnPoint.transform.position));
         // 怪物移動結束後
         CurrentState = MonsterState.Attacking;
+        //  通知NewPlayerTeach怪物出現攻擊  (暫放)
+        NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>();
+        if (teachScript != null)
+        {
+            teachScript.IsmonsterAttackMachine();
+        }
         yield return new WaitForSeconds(15f);
         if (currentMonster != null)
         {
@@ -172,21 +178,21 @@ public class MonsterHit : MonoBehaviour
         Destroy(defeatedMonster);
 
 
-        if (brokeProgressAnime != null && brokeProgressAnime.isDamaged )
+        // if (brokeProgressAnime != null && brokeProgressAnime.isDamaged)
+        // {
+        //    new WaitForSeconds(12f);   // 等待blender動畫結束 僅在有碰撞時有效
+        //   readyToRespawn = false;
+        //   StartCoroutine(SpawnMonster());
+        //}
+    }
+    void OnCollisionEnter2D(Collision2D coll)  //怪物再次生成條件   有問題
+    {
+        if (brokeProgressAnime != null && brokeProgressAnime.isDamaged && readyToRespawn && coll.gameObject.CompareTag("Red"))
         {
-            new WaitForSeconds(12f);   // 等待blender動畫結束 僅在有碰撞時有效
+            Debug.Log("碰撞觸發重新生成！");
             readyToRespawn = false;
             StartCoroutine(SpawnMonster());
         }
     }
-    //void OnCollisionEnter2D(Collision2D coll)  //怪物再次生成條件   有問題
-    // {
-    //  if (brokeProgressAnime != null && brokeProgressAnime.isDamaged && readyToRespawn && coll.gameObject.CompareTag("Red"))
-    // {
-    //    Debug.Log("碰撞觸發重新生成！");
-    //    readyToRespawn = false;
-    //    StartCoroutine(SpawnMonster());
-    //}
-    // }
-//}
 }
+//}
