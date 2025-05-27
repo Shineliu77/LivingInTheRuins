@@ -9,7 +9,6 @@ public class NewPlayerTeach : MonoBehaviour
     public CustomerPlace customerPlace; // 監測的客人管理區   程式
     public GameObject CustomerCome; //客人入場用  (客人入場 拿核心)  (教如何使用opener)
 
-    // public OpenderAnime openderAnime; //opener 程式
     public GameObject openerfinish; //播完opener用  (教放到工作檯)
     public GameObject collBecameLarge; //碰撞BecameLarge用  (教判斷怎麼修) (教如何更換零件)
     public GameObject AfterChangeImage; //修零件LiveTwoDChangeImage之後用 (解釋還給客人)
@@ -28,8 +27,6 @@ public class NewPlayerTeach : MonoBehaviour
     //  public Dragging dragging;
     void Start()
     {
-        // CustomerCome.SetUpdate(true);
-        //CollOpener = GetComponent<OpenderAnime>(); // 獲取 blenderAnime程式
         openerfinish.SetActive(false);
         CustomerCome.SetActive(false);  //關閉顯示
         collBecameLarge.SetActive(false);
@@ -61,19 +58,14 @@ public class NewPlayerTeach : MonoBehaviour
                         break;
                     }
                 }
-
-
-                // GameObject[] fixedItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
-                // int fixCount = fixedItems.Length;
-                // if (fixCount == 1 && seatOccupied)  // 判斷fixeditemOpen是否為1（從 NewPlayerPlayUse 讀取）
-                // {
-
-                // CustomerComeRoundTwo.SetActive(true);  //關閉顯示
-                //Time.timeScale = 0;
-                //    // StartCoroutine(WaitForClickThenResume());
-                // }
                 if (seatOccupied)
                 {
+                    KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();
+                    if (klarraAnimeScript != null)
+                    {
+                        klarraAnimeScript.animator.SetBool("idelTOmove", true);
+                        klarraAnimeScript.PickPhone();
+                    }
                     Time.timeScale = 0f; // 暫停遊戲
                     CustomerCome.SetActive(true);  //開啟顯示
                     hasPausedForSeat = true;
@@ -97,16 +89,11 @@ public class NewPlayerTeach : MonoBehaviour
         else//執行第一輪教學
         {
             //當opener動畫結束
-            //gameObject.GetComponent<OpenderAnime>();  //呼叫 ForopenerOutsideScript程式
             openerfinish.SetActive(true);  //關閉顯示
             Time.timeScale = 0;
 
             StartCoroutine(WaitForClickThenResume()); //點擊滑鼠 繼續遊戲、關閉面板
-                                                      // if (Input.GetMouseButtonDown(0)) //點了滑鼠左鍵
-                                                      // {
-                                                      //   Time.timeScale = 1;
-                                                      //   openerfinish.SetActive(false);  //關閉顯示繼續遊戲
-                                                      // 判斷fixeditemOpen是否為3（從 NewPlayerPlayUse 讀取）
+                                                     
         }
 
 
@@ -179,6 +166,11 @@ public class NewPlayerTeach : MonoBehaviour
 
             GiveCustomereRoundTwo.SetActive(true);  //關閉顯示
             Time.timeScale = 0;
+            KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();
+            if (klarraAnimeScript != null)
+            {
+                klarraAnimeScript.HangUpPhone();
+            }
             StartCoroutine(WaitForClickThenResume());
         }
         else   //執行第一輪教學

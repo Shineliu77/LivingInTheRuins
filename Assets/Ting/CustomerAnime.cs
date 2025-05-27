@@ -24,7 +24,7 @@ public class CustomerAnime : MonoBehaviour
     private void Update()
     {
         // 檢查耐心值是否歸零，並確保只觸發一次
-        if (machineScript != null && machineScript.HP <= 0.0f && !isTriggered)
+        if (machineScript != null && machineScript.HP <= 50.0f && !isTriggered)
         {
             TriggerBrokebarEmpty();
         }
@@ -34,6 +34,7 @@ public class CustomerAnime : MonoBehaviour
             animator.SetBool("BrokebarEmpty", false);
             animator.SetBool("BrokebarEmptyAngry", false);
         }
+
     }
     private void TriggerBrokebarEmpty()
     {

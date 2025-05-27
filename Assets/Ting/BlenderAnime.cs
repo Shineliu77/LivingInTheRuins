@@ -77,13 +77,13 @@ public class BlenderAnime : MonoBehaviour
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // 等待動畫播放完成
-        while (stateInfo.IsName(animationName) && stateInfo.normalizedTime < 1f)
+        while (stateInfo.IsName(animationName) && stateInfo.normalizedTime < 0.1f)
         {
             yield return null;
             stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
 
-        yield return new WaitForSeconds(12f); // 等待額外時間確保動畫結束
+        yield return new WaitForSeconds(9f); // 等待額外時間確保動畫結束
 
         if (brokeProgressAnime != null) //停止扣機器耐久
         {
