@@ -88,3 +88,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a636051db45b944b7c88c9aab6495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetSwichImage: {fileID: 336251285, guid: c8a70d004220a9e469dfcdebf4dd550d, type: 3}
+  brokebarRed: {fileID: 1526992711, guid: a6bd4a437e92b834b8bb594c0569e325, type: 3}

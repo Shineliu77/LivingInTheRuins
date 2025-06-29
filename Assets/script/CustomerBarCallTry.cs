@@ -9,6 +9,11 @@ public class CustomerBarCallTry : MonoBehaviour
 
     private Image brokeBarImage; // 自己身上的 Image 組件
 
+    public Sprite targetSwichImage;     //被更換的 耐心值
+    public Sprite brokebarRed;     //當耐心值低於 更換耐心值
+    private bool SwichImage = false;
+
+
     private float hp = 100;
     public float HP
     {
@@ -18,7 +23,7 @@ public class CustomerBarCallTry : MonoBehaviour
 
     void Awake()
     {
-        // 嘗試在子物件中找到 Image 元件（通常 bar prefab 是帶有 image 的 UI）
+        // 嘗試在子物件中找到 Image 元件
         brokeBarImage = GetComponentInChildren<Image>();
         if (brokeBarImage == null)
         {
@@ -50,8 +55,22 @@ public class CustomerBarCallTry : MonoBehaviour
             HP -= HPMax * 0.03f; // 每秒減少 0.3%
             RefreshPatiencebar();
             yield return new WaitForSeconds(1f);
-        }
 
+            if (!SwichImage && HP <= 50.0f)
+            {
+                SwitchImage();
+            }
+        }
         // TODO：耐久為 0 時可加入動畫、銷毀等
+    }
+
+    public void SwitchImage()
+    {
+        brokeBarImage.sprite = targetSwichImage;
+        if (brokeBarImage != null && brokebarRed != null)
+        {
+            brokeBarImage.sprite = brokebarRed;
+            SwichImage = true;
+        }
     }
 }

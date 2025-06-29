@@ -68,7 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -316786991, guid: b7c94ddf8e9290f47b626527279e296e, type: 3}
-  m_Type: 3
+  m_Type: 1
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2406523976300956362}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -167,7 +167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1327879492458412302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -377,6 +377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energizedEffect: {fileID: 4144877359273470520}
   isEnergized: 0
+  secondHand: {fileID: 3023768154822852989, guid: 8738befbe5892f94894cae47dc66c46f, type: 3}
+  rotateSpeed: 36
   duration: 10
   CrashToTriggerCountdown: []
   FindToTriggerCountdownNames:

@@ -7,6 +7,9 @@ public class Fixtime : MonoBehaviour
 {
     public GameObject energizedEffect; //倒數圖示
     public bool isEnergized; //倒數圖示開啟
+    public GameObject secondHand; //配合倒數指針
+    public float rotateSpeed = 36f;      // 每秒旋轉360度
+
     public float duration = 10.0f;  // 倒數時間
     public GameObject[] CrashToTriggerCountdown;   // 觸發倒數的物件
 
@@ -107,6 +110,10 @@ public class Fixtime : MonoBehaviour
     {
         if (!isFixed && isCounter)
         {
+            if (secondHand != null && secondHand.activeSelf)
+            {
+                secondHand.transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);  // 順時針旋轉
+            }
             // 檢查是否有 machine HP 歸零
             for (int i = 0; i < machineScripts.Length; i++)
             {
@@ -115,7 +122,6 @@ public class Fixtime : MonoBehaviour
                     //如果耐久值小於等於零
                     energizedEffect.SetActive(false);
                     energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().StopCountdown();
-
                     // 直接停止該機器的耐久度 Coroutine
                     if (brokeProgressScripts[i] != null)
                     {
@@ -125,11 +131,11 @@ public class Fixtime : MonoBehaviour
                     isCounter = false;
                     return;
                 }
+
             }
 
             // 正常倒數
             duration -= Time.deltaTime;
-
             // 倒數結束
             if (duration <= 0.0f)
             {
@@ -137,6 +143,7 @@ public class Fixtime : MonoBehaviour
                 isFixed = true;   // 不再維修
                 isEnergized = false;  // 倒數圖示
                 energizedEffect.SetActive(false); //倒數圖示關閉
+                secondHand.SetActive(false); //指針圖示關閉
                 energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().onCountdownFinished.Invoke(); //到數計時結束
 
                 // 結束時也要停耐久值下降
@@ -159,8 +166,8 @@ public class Fixtime : MonoBehaviour
             isCounter = true;
             isEnergized = true;
             energizedEffect.SetActive(true);
-            duration = 5.0f;   //倒數計時時間
-
+            secondHand.SetActive(true); //指針圖示開啟
+            duration = 10.0f;
             energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().ActivateCountdown(duration);
         }
 
@@ -171,12 +178,12 @@ public class Fixtime : MonoBehaviour
             isCounter = true;
             isEnergized = true;
             energizedEffect.SetActive(true);
-            duration = 5.0f;   //倒數計時時間
-
+            secondHand.SetActive(true); //指針圖示開啟
+            duration = 10.0f;
             energizedEffect.transform.Find("RadialProgressBar").GetComponent<CircularProgressBar>().ActivateCountdown(duration);
         }
 
-        
+
 
 
         if (coll.gameObject.CompareTag("fixeditem") && System.Array.Exists(findInToTriggerObjects, obj => obj == coll.gameObject))
@@ -196,9 +203,5 @@ public class Fixtime : MonoBehaviour
         //energizedEffect.SetActive(false);
         // }
     }
-    // private void OnDrawGizmos(){ if (CrashToTriggerCountdown == null || CrashToTriggerCountdown.Length == 0){ Gizmos.color = Color.red;Gizmos.DrawWireSphere(transform.position, 1f);
 
-#if UNITY_EDITOR
-    //  UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, "! CrashToTriggerCountdown 未設定");
-#endif
 }

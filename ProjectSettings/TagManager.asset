@@ -30,6 +30,7 @@ TagManager:
   - fixeditemOpen
   - BecomeLarge
   - BecomeLarge2
+  - Customer
   layers:
   - Default
   - TransparentFX

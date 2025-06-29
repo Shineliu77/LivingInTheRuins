@@ -9,7 +9,10 @@ public class BrokeProgressAnime : MonoBehaviour
 
     public GameObject[] ShouldFixed; //  要被修理的物件
     public Image brokebar; //耐久值條
-                           // public GameObject energizedEffect; //  修復動畫效果
+    public Sprite targetSwichImage;     //當耐久值條低於 被更換的耐久值條
+    public Sprite brokebarRed;     //當耐久值低於 更換耐久值條
+    private bool SwichImage = false;
+    // public GameObject energizedEffect; //  修復動畫效果
     public bool isEnergized = false; // 是否正在修復
     public CircularProgressBar progressBar; // 呼叫 CircularProgressBar(被維修的物品用)
     public bool isDamaged = false; // 是否處於耐久值條持續 下降  狀態
@@ -29,7 +32,7 @@ public class BrokeProgressAnime : MonoBehaviour
         {
             progressBar.onCountdownFinished.AddListener(StopDamageOverTime);
         }
-
+        brokebar.sprite = targetSwichImage;
     }
 
     // 刷新耐久條 UI
@@ -39,6 +42,17 @@ public class BrokeProgressAnime : MonoBehaviour
         {
             Machine machineScript = FixItemMachine.GetComponent<Machine>();
             brokebar.fillAmount = machineScript.HP / machineScript.HPMax;
+
+            if (!SwichImage && FixItemMachine != null && machineScript.HP <= 50.0f)
+            {
+                SwitchImage();
+            }
+
+            else if (!SwichImage && FixItemMachine != null && machineScript.HP >= 50.0f)
+            {
+                brokebar.sprite = targetSwichImage;
+                SwichImage = false;
+            }
         }
     }
 
@@ -236,6 +250,13 @@ public class BrokeProgressAnime : MonoBehaviour
             Refreshbrokebar();
             yield return new WaitForSeconds(1f);
 
+            if (FixItemMachine != null && machineScript.HP <= 50.0f)  //當耐久低於50%   更換耐久值條 
+            {
+                SwitchImage();
+            }
+            Refreshbrokebar();
+            yield return new WaitForSeconds(1f);
+
             if (FixItemMachine != null && gameObject.CompareTag("fixeditem"))  //沒有用
             {
                 // Machine machineScript = FixItemMachine.GetComponent<Machine>();
@@ -262,4 +283,13 @@ public class BrokeProgressAnime : MonoBehaviour
             }
         }
     }
+    public void SwitchImage()
+    {
+        if (brokebar != null && brokebarRed != null)
+        {
+            brokebar.sprite = brokebarRed;
+            SwichImage = true;
+        }
+    }
+
 }
