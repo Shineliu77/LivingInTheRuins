@@ -11,7 +11,10 @@ public class BrokeProgressAnime : MonoBehaviour
     public Image brokebar; //耐久值條
     public Sprite targetSwichImage;     //當耐久值條低於 被更換的耐久值條
     public Sprite brokebarRed;     //當耐久值低於 更換耐久值條
-    private bool SwichImage = false;
+    private bool SwichImage = false;   //是否符合換的耐久值條圖條件
+
+
+
     // public GameObject energizedEffect; //  修復動畫效果
     public bool isEnergized = false; // 是否正在修復
     public CircularProgressBar progressBar; // 呼叫 CircularProgressBar(被維修的物品用)
@@ -32,7 +35,8 @@ public class BrokeProgressAnime : MonoBehaviour
         {
             progressBar.onCountdownFinished.AddListener(StopDamageOverTime);
         }
-        brokebar.sprite = targetSwichImage;
+        brokebar.sprite = targetSwichImage; //設定耐久值條圖片初始顯示
+
     }
 
     // 刷新耐久條 UI
@@ -43,15 +47,17 @@ public class BrokeProgressAnime : MonoBehaviour
             Machine machineScript = FixItemMachine.GetComponent<Machine>();
             brokebar.fillAmount = machineScript.HP / machineScript.HPMax;
 
-            if (!SwichImage && FixItemMachine != null && machineScript.HP <= 50.0f)
+            if (!SwichImage && FixItemMachine != null && machineScript.HP <= 50.0f)  //如果小於等於 換圖
             {
                 SwitchImage();
             }
 
-            else if (!SwichImage && FixItemMachine != null && machineScript.HP >= 50.0f)
+            else if (!SwichImage && FixItemMachine != null && machineScript.HP >= 50.0f)  //如果大於等於 換回初始
             {
                 brokebar.sprite = targetSwichImage;
                 SwichImage = false;
+
+
             }
         }
     }
@@ -288,7 +294,10 @@ public class BrokeProgressAnime : MonoBehaviour
         if (brokebar != null && brokebarRed != null)
         {
             brokebar.sprite = brokebarRed;
+            // Vector2 currentSize = brokebar.rectTransform.sizeDelta;
+            //brokebar.rectTransform.sizeDelta = new Vector2(80f, currentSize.y);
             SwichImage = true;
+
         }
     }
 
