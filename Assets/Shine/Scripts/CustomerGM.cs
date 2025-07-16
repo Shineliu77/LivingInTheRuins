@@ -8,7 +8,7 @@ public class CustomerGM : MonoBehaviour
     public Transform targetPoint; // 目標位置
     public float moveSpeed;  // 移動速度
     public float stopDistance; // 到達的距離判斷
-    private bool hasArrived = false;
+    public bool hasArrived = false;
 #endregion
     // Start is called before the first frame update
     void Start()
@@ -42,5 +42,9 @@ public class CustomerGM : MonoBehaviour
     {
         Debug.Log("顧客已抵達目標點！");
         // TODO: 例如播放動畫、改變狀態、通知管理器等
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            FindObjectOfType<TeachGM>().ProduceIteam();
+        }
     }
 }
