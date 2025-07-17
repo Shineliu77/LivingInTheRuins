@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u6DB2\u9AD4\u96F6\u4EF6small_\u862D\u6B98"
+      name: "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u85CD"
       rect:
         serializedVersion: 2
         x: 2
@@ -144,7 +144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u9EC3"
+      name: "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u9EC3"
       rect:
         serializedVersion: 2
         x: 31
@@ -165,7 +165,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u7DA0"
+      name: "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u7DA0"
       rect:
         serializedVersion: 2
         x: 64
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u7D05"
+      name: "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u7D05"
       rect:
         serializedVersion: 2
         x: 92
@@ -278,7 +278,7 @@ TextureImporter:
         width: 23
         height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 1, z: 1, w: 1}
       outline: []
       physicsShape: []
@@ -305,10 +305,10 @@ TextureImporter:
       "\u6DB2\u9AD4\u96F6\u4EF6small_\u5B8C\u6574\u7DA0": -622067836
       "\u6DB2\u9AD4\u96F6\u4EF6small_\u5B8C\u6574\u85CD": 649694490
       "\u6DB2\u9AD4\u96F6\u4EF6small_\u5B8C\u6574\u9EC3": 657647226
-      "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u7D05": -1538191797
-      "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u7DA0": -1567778227
-      "\u6DB2\u9AD4\u96F6\u4EF6small_\u6B98\u9EC3": 1194634593
-      "\u6DB2\u9AD4\u96F6\u4EF6small_\u862D\u6B98": -2129619538
+      "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u7D05": -1538191797
+      "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u7DA0": -1567778227
+      "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u85CD": -2129619538
+      "\u6DB2\u9AD4\u96F6\u4EF6\u6B98\u9EC3": 1194634593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

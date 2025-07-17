@@ -144,9 +144,9 @@ GameObject:
   - component: {fileID: 1620038525205140623}
   - component: {fileID: 7885170741521241881}
   - component: {fileID: 6584057528320006712}
-  - component: {fileID: -4510892148912534622}
   - component: {fileID: 382156859707982868}
   - component: {fileID: -7438070038810782579}
+  - component: {fileID: -39287994591797466}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6small"
   m_TagString: fixeditem
@@ -294,18 +294,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-4510892148912534622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924402162297093850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30045ac51d37f6d4ea9c3bde50d7aa3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &382156859707982868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,12 +312,6 @@ MonoBehaviour:
   rotateSpeed: 36
   duration: 10
   CrashToTriggerCountdown: []
-  TargetCircularProgressBar: {fileID: 3050797474153742965, guid: 6da9a87ea95e1604abc1eac787a16b0e, type: 3}
-  OriginCircularProgressBar: {fileID: 957199712, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedCircularProgressBar: {fileID: 1390289412, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  TargetClockOutside: {fileID: 8647722889663185114, guid: d1bcb9bc465d10e4cb00dd8e42fdb666, type: 3}
-  OriginClockOutside: {fileID: -2032260617, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedClockOutside: {fileID: 1446072872, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
   FindToTriggerCountdownNames:
   - opener0320
   findInToTriggerObjects: []
@@ -355,6 +337,18 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+--- !u!114 &-39287994591797466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924402162297093850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8749905935963750441
 GameObject:
   m_ObjectHideFlags: 0

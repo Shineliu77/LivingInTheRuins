@@ -9,32 +9,54 @@ public class CustomerGM : MonoBehaviour
     public float moveSpeed;  // 移動速度
     public float stopDistance; // 到達的距離判斷
     public bool hasArrived = false;
-#endregion
+    public Transform ExitTargetPoint; // 離開目標位置
+
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
         targetPoint = GameObject.Find("顧客定位點").transform;
+        ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         # region 控制顧客腳色移動
-        if (hasArrived || targetPoint == null) return;
 
-        // 計算與目標的距離
-        float distance = Vector2.Distance(transform.position, targetPoint.position);
-
-        if (distance > stopDistance)
+        if (GetComponent<CountdownFill>().timer <= 0f)
         {
-            // 向目標移動
-            Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
-            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+            float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
+
+            if (distance > stopDistance)
+            {
+                // 向目標移動
+                Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
+                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
         else
         {
-            hasArrived = true;
-            OnArrived();
+            
+            // 計算與目標的距離
+            float distance = Vector2.Distance(transform.position, targetPoint.position);
+
+            if (distance > stopDistance)
+            {
+                // 向目標移動
+                Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
+                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+            }
+            else
+            {
+                hasArrived = true;
+                OnArrived();
+            }
         }
         #endregion
     }

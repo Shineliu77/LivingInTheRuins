@@ -34,6 +34,10 @@ public class TeachGM : MonoBehaviour
     #region 第三段說明
     public GameObject Teach3;
     #endregion
+    #region 第四段說明
+    public GameObject Teach4;
+    bool isTeach4;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -50,10 +54,17 @@ public class TeachGM : MonoBehaviour
         {
             IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
         }
+        if (!Teach4.active && isTeach4&& !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled) {
+            GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+        }
     }
     public void ProduceIteam() {
-        IteamPrefab=Instantiate(Iteam, IteamProduce.position, Iteam.transform.rotation)as GameObject;
-        Teach1.SetActive(true);
+        if (IteamPrefab == null)
+        {
+            IteamPrefab = Instantiate(Iteam, IteamProduce.position, Iteam.transform.rotation) as GameObject;
+            Teach1.SetActive(true);
+
+        }
     }
     public void ProduceIteamOpen()
     {
@@ -63,5 +74,10 @@ public class TeachGM : MonoBehaviour
     public void OpenTeach3() {
         Teach3.SetActive(true);
 
+    }
+    public void OpenTeach4()
+    {
+        Teach4.SetActive(true);
+        isTeach4 = true;
     }
 }

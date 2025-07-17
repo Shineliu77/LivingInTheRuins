@@ -36,8 +36,15 @@ public class DraggableReturn2D : MonoBehaviour
         if (this.enabled)
         {
             isDragging = false;
-            // 放開滑鼠，回到原位（可改成用協程慢慢移動）
-            transform.position = originalPosition;
+            if (this.transform.parent.childCount > 0&&gameObject.tag== "fixeditemOpen")
+            {
+                transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                // 放開滑鼠，回到原位（可改成用協程慢慢移動）
+                transform.position = originalPosition;
+            }
         }
     }
 }

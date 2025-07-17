@@ -28,11 +28,16 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     Debug.Log("圖片已更換為 changeSprites[0]");
 
-                    NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
-                    if (teachScript != null)
+                    /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
+                     if (teachScript != null)
+                     {
+                         teachScript.IsAfterChangeImage();
+                     }*/
+                    if (Application.loadedLevelName == "TeachGame")
                     {
-                        teachScript.IsAfterChangeImage();
+                        FindObjectOfType<TeachGM>().OpenTeach4();
                     }
+
                 }
                 else
                 {
