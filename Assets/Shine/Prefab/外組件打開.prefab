@@ -452,9 +452,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2961875956405843756, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5926498849949804065}
-    - targetCorrespondingSourceObject: {fileID: 2961875956405843756, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1135987303541028718}
   m_SourcePrefab: {fileID: 100100000, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
 --- !u!1 &5807586087369538133 stripped
 GameObject:
@@ -475,21 +472,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSprites:
   - {fileID: -1601931343, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
---- !u!114 &1135987303541028718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5807586087369538133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d124b78b11c8ba4ab71c9941353b6f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
-  OpenerChangeImage:
-  - {fileID: -30610594, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
 --- !u!4 &7277014255343593689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}

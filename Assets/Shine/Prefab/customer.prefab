@@ -862,6 +862,7 @@ MonoBehaviour:
   stopDistance: 0.1
   hasArrived: 0
   ExitTargetPoint: {fileID: 0}
+  Finished: 0
 --- !u!114 &5784136612737400606
 MonoBehaviour:
   m_ObjectHideFlags: 0

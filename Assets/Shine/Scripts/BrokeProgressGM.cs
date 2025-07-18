@@ -9,6 +9,7 @@ public class BrokeProgressGM : MonoBehaviour
     float MachineDurability_Script;
     public Animator MachineAni;
     public Image MachineUIBar;
+    public Collider2D Placement;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class BrokeProgressGM : MonoBehaviour
                 {
                     FindObjectOfType<TeachGM>().ProduceIteamOpen();
                 }
+                Placement.enabled = true;
             }
             if (stateInfo.normalizedTime <0.99f) {
                 float animationLength = stateInfo.length; // 動畫總秒數

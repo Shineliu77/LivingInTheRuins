@@ -26,7 +26,14 @@ public class IteamOpenOnTable : MonoBehaviour
             coll.transform.localPosition = Vector3.zero;
             coll.transform.localScale = Vector3.one * SetScale;
             if (Application.loadedLevelName == "TeachGame") {
-                FindObjectOfType<TeachGM>().OpenTeach3();
+                if (FindObjectOfType<TeachGM>().CustomerNumber == 1)
+                {
+                    FindObjectOfType<TeachGM>().OpenTeach3();
+                }
+                if (FindObjectOfType<TeachGM>().CustomerNumber == 2)
+                {
+                    FindObjectOfType<TeachGM>().OpenTeach6();
+                }
             }
         }
     }

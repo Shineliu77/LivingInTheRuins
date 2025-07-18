@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CustomerGM : MonoBehaviour
 {
-# region 控制顧客腳色移動
+    #region 控制顧客腳色移動
     public Transform targetPoint; // 目標位置
     public float moveSpeed;  // 移動速度
     public float stopDistance; // 到達的距離判斷
     public bool hasArrived = false;
     public Transform ExitTargetPoint; // 離開目標位置
-
+    public bool Finished;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class CustomerGM : MonoBehaviour
     {
         # region 控制顧客腳色移動
 
-        if (GetComponent<CountdownFill>().timer <= 0f)
+        if (GetComponent<CountdownFill>().timer <= 0f|| Finished)
         {
             float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
@@ -37,12 +37,16 @@ public class CustomerGM : MonoBehaviour
             }
             else
             {
-                gameObject.SetActive(false);
+                if (FindObjectOfType<TeachGM>().CustomerNumber < 2)
+                {
+                    FindObjectOfType<TeachGM>().ProductCustomer();
+                }
+                Destroy(gameObject);
             }
         }
         else
         {
-            
+
             // 計算與目標的距離
             float distance = Vector2.Distance(transform.position, targetPoint.position);
 
@@ -67,6 +71,19 @@ public class CustomerGM : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame")
         {
             FindObjectOfType<TeachGM>().ProduceIteam();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D hit)
+    {
+        // 確認碰撞的物件是fixeditemOpenFinished時的處理
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            if (hit.gameObject.name == "fixeditemOpenFinished1")
+            {
+                FindObjectOfType<ScoreGM>().AddScore(hit.gameObject.GetComponent<SetIteamOpenObj>().ID);
+                FindObjectOfType<TeachGM>().OpenTeach5();
+                Destroy(hit.gameObject);
+            }
         }
     }
 }
