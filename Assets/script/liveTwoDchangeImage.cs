@@ -27,15 +27,21 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     Debug.Log("圖片已更換為 changeSprites[0]");
 
-                    /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
-                     if (teachScript != null)
-                     {
-                         teachScript.IsAfterChangeImage();
-                     }*/
-                    if (Application.loadedLevelName == "TeachGame")
+                /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
+                 if (teachScript != null)
+                 {
+                     teachScript.IsAfterChangeImage();
+                 }*/
+                if (Application.loadedLevelName == "TeachGame")
+                {
+                    FindObjectOfType<TeachGM>().OpenTeach4();
+                }
+                else {
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        FindObjectOfType<TeachGM>().OpenTeach4();
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                     }
+                }
 
                 }
                 else
@@ -55,6 +61,10 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 if (changeSprites.Length > 1)
                 {
                     spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                    {
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                    }
                     Debug.Log("圖片已更換為 changeSprites[1]");
                 }
                 else
@@ -74,6 +84,10 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 if (changeSprites.Length > 2)
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                    {
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                    }
                     Debug.Log("圖片已更換為 changeSprites[2]");
                 }
                 else

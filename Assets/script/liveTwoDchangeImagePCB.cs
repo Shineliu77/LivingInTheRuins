@@ -21,6 +21,10 @@ public class liveTwoDchangeImagePCB : MonoBehaviour
             if (newSprite != null && spriteRenderer != null)
             {
                 spriteRenderer.sprite = newSprite; // 更換圖片
+                if (transform.parent.GetComponent<DraggableReturn2D>())
+                {
+                    transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                }
                 Debug.Log("圖片已更換！");
             }
         }

@@ -47,6 +47,18 @@ public class TeachGM : MonoBehaviour
     #region 第六段說明
     public GameObject Teach6;
     #endregion
+    #region 第七段說明
+    public Collider2D[] MakeAPotionIteams;
+    public GameObject Teach7;
+    public bool isTeach7;
+
+    #endregion
+    #region 第8段說明
+    public GameObject Teach8;
+    #endregion
+    #region 第9段說明
+    public GameObject Teach9;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -80,7 +92,10 @@ public class TeachGM : MonoBehaviour
                 CustomerPrefab.GetComponent<CustomerGM>().Finished = true;
                 IteamPrefab = null;
             }
-        
+            if (!Teach7.active && isTeach7 && CustomerNumber == 2)
+            {
+                Time.timeScale = 1;
+            }
     }
     public void ProductCustomer()
     {
@@ -137,6 +152,24 @@ public class TeachGM : MonoBehaviour
     public void OpenTeach6()
     {
         Teach6.SetActive(true);
+        MakeAPotionIteams[0].enabled = false;
+        MakeAPotionIteams[1].enabled = false;
+        MakeAPotionIteams[2].enabled = true;
+        MakeAPotionIteams[3].enabled = false;
+    }
+    public void OpenTeach7() {
+        Teach7.SetActive(true);
+        Time.timeScale = 0;
+        isTeach7 = true;
+    }
+    public void OpenTeach8()
+    {
+        Teach8.SetActive(true);
+
+    }
+    public void OpenTeach9()
+    {
+        Teach9.SetActive(true);
 
     }
 }

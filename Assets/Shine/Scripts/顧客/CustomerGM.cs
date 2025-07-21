@@ -70,6 +70,7 @@ public class CustomerGM : MonoBehaviour
         // TODO: 例如播放動畫、改變狀態、通知管理器等
         if (Application.loadedLevelName == "TeachGame")
         {
+            if(!GameObject.FindWithTag("fixeditem") && !GameObject.FindWithTag("fixeditemOpen"))
             FindObjectOfType<TeachGM>().ProduceIteam();
         }
     }
@@ -82,6 +83,11 @@ public class CustomerGM : MonoBehaviour
             {
                 FindObjectOfType<ScoreGM>().AddScore(hit.gameObject.GetComponent<SetIteamOpenObj>().ID);
                 FindObjectOfType<TeachGM>().OpenTeach5();
+                Destroy(hit.gameObject);
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished2")
+            {
+                FindObjectOfType<TeachGM>().OpenTeach9();
                 Destroy(hit.gameObject);
             }
         }

@@ -26,11 +26,16 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
             Debug.Log("碰到 blueIiquid！");
             // 當 Foropener.currentImageIndex 為 0 時才更換圖片
 
-            if (Foropener.currentImageIndex == 0 && changeSprites[0])
-            {
+            
                 if (changeSprites.Length > 0)
                 {
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
+                    if (transform.parent.GetComponent<DraggableReturn2D>()) {
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                    }
+                    if (Application.loadedLevelName == "TeachGame") {
+                        transform.parent.gameObject.name = "fixeditemOpenFinished2";
+                    }
                     Debug.Log("圖片已更換為 changeSprites[0]");
                 }
                 else
@@ -45,7 +50,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     liquidPopOut.LiquidDefeated(collidedObject);
                 }
-            }
+            
         }
 
         // 確認碰撞的物件是 yellowIiquid 時的處理
@@ -53,12 +58,14 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
         {
             Debug.Log("碰到 yellowIiquid！");
 
-            // 當 Foropener.currentImageIndex 為 1 時才更換圖片
-            if (Foropener.currentImageIndex == 1 && changeSprites[1])
-            {
+           
                 if (changeSprites.Length > 1)
                 {
                     spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                    {
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                    }
                     Debug.Log("圖片已更換為 changeSprites[1]");
                 }
                 else
@@ -73,7 +80,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                     //  刪除生成液體
                     liquidPopOut.LiquidDefeated(collidedObject);
                 }
-            }
+            
         }
 
         // 確認碰撞的物件是 greenIiquid 時的處理
@@ -81,11 +88,14 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
         {
             Debug.Log("碰到 greenIiquid！");
             // 當 Foropener.currentImageIndex 為 2 時才更換圖片
-            if (Foropener.currentImageIndex == 2 && changeSprites[2])
-            {
+            
                 if (changeSprites.Length > 2)
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[5]
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                    {
+                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                    }
                     Debug.Log("圖片已更換為 changeSprites[2]");
                 }
                 else
@@ -112,6 +122,10 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                     if (changeSprites.Length > 3)
                     {
                         spriteRenderer.sprite = changeSprites[3]; // 變更為 changeSprites[2]
+                        if (transform.parent.GetComponent<DraggableReturn2D>())
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                         Debug.Log("圖片已更換為 changeSprites[3]");
                     }
                     else
@@ -127,7 +141,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                         liquidPopOut.LiquidDefeated(collidedObject); //  正確呼叫控制器的方法
                     }
                 }
-            }
+            
         }
     }
 }

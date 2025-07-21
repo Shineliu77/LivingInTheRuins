@@ -36,8 +36,9 @@ public class DraggableReturn2D : MonoBehaviour
         if (this.enabled)
         {
             isDragging = false;
-            if (this.transform.parent.childCount > 0&&gameObject.tag== "fixeditemOpen")
+            if ( this.gameObject.tag== "fixeditemOpen")
             {
+                if(this.transform.parent.childCount > 0)
                 transform.localPosition = Vector3.zero;
             }
             else
