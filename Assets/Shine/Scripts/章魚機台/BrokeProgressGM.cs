@@ -10,6 +10,8 @@ public class BrokeProgressGM : MonoBehaviour
     public Animator MachineAni;
     public Image MachineUIBar;
     public Collider2D Placement;
+    public Image MachineUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +31,16 @@ public class BrokeProgressGM : MonoBehaviour
                     FindObjectOfType<TeachGM>().ProduceIteamOpen();
                 }
                 Placement.enabled = true;
+                MachineUI.gameObject.SetActive(false);
+
             }
             if (stateInfo.normalizedTime <0.99f) {
+                MachineUI.gameObject.SetActive(true);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
                 MachineUIBar.fillAmount = (MachineDurability_Script-currentTimeInSeconds) / MachineDurability;
+                MachineUI.fillAmount = currentTimeInSeconds / animationLength;
             }
         }
     }
