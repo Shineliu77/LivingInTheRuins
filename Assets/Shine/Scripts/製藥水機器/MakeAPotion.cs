@@ -7,6 +7,8 @@ public class MakeAPotion : MonoBehaviour
 {
     //製藥水材料碰到機器
     public Image Stopwatch;
+    public Sprite[] StopwatchUISprites;
+
     public float StopwatchTimer;
     public float ScriptStopwatchTimer;
     bool isStopwatch;
@@ -22,6 +24,7 @@ public class MakeAPotion : MonoBehaviour
     float MachineDurability_Script;
     public float DeductMachineDurability;
     public Image MachineDurabilityBar;
+    public Sprite[] MachineDurabilityBarSprite;
 
     public GameObject[] Potions;
     public int SelectPotionID;
@@ -39,9 +42,19 @@ public class MakeAPotion : MonoBehaviour
         if (isStopwatch&& ScriptStopwatchTimer>0) {
             Stopwatch.gameObject.SetActive(true);
             ScriptStopwatchTimer -= Time.deltaTime;
-            Stopwatch.fillAmount = ScriptStopwatchTimer / StopwatchTimer;
-            if (Stopwatch.fillAmount == 0) {
+            Stopwatch.transform.GetChild(0).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+            if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
+            {
+                Stopwatch.transform.GetChild(0).GetComponent<Image>().sprite = StopwatchUISprites[0];
+            }
+            else
+            {
+                Stopwatch.transform.GetChild(0).GetComponent<Image>().sprite = StopwatchUISprites[1];
+            }
+            if (Stopwatch.transform.GetChild(0).GetComponent<Image>().fillAmount == 0) {
                 Potions[SelectPotionID].SetActive(true);
+                Stopwatch.gameObject.SetActive(false);
+
                 if (Application.loadedLevelName == "TeachGame") {
                     FindObjectOfType<TeachGM>().OpenTeach8();
                 }
@@ -101,6 +114,14 @@ public class MakeAPotion : MonoBehaviour
    public void ProduceMachineDurability() {
         MachineDurability_Script -= DeductMachineDurability;
         MachineDurabilityBar.fillAmount = MachineDurability_Script / MachineDurability;
+        if (MachineDurability_Script / MachineDurability > 0.5f)
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
+        }
+        else
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+        }
         if (MachineDurabilityBar.fillAmount == 0) {
             GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
         }

@@ -9,8 +9,10 @@ public class BrokeProgressGM : MonoBehaviour
     float MachineDurability_Script;
     public Animator MachineAni;
     public Image MachineUIBar;
+    public Sprite[] MachineUIBarSprites;
     public Collider2D Placement;
     public Image MachineUI;
+    public Sprite[] MachineUISprites;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,24 @@ public class BrokeProgressGM : MonoBehaviour
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
                 MachineUIBar.fillAmount = (MachineDurability_Script-currentTimeInSeconds) / MachineDurability;
-                MachineUI.fillAmount = currentTimeInSeconds / animationLength;
+                if ((MachineDurability_Script - currentTimeInSeconds) / MachineDurability > 0.5f)
+                {
+                    MachineUIBar.sprite = MachineUIBarSprites[0];
+                }
+                else
+                {
+                    MachineUIBar.sprite = MachineUIBarSprites[1];
+                }
+                MachineUI.transform.GetChild(0).GetComponent<Image>().fillAmount = 1f-(currentTimeInSeconds / animationLength);
+                if (stateInfo.normalizedTime < 0.5f)
+                {
+                    MachineUI.transform.GetChild(0).GetComponent<Image>().sprite = MachineUISprites[0];
+                }
+                else
+                {
+                    MachineUI.transform.GetChild(0).GetComponent<Image>().sprite = MachineUISprites[1];
+                }
+
             }
         }
     }
