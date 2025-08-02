@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403ae2dd693bb1d4b924f6b8d206b053, type: 3}
+  m_Name: crab_export.fadeMotionList
+  m_EditorClassIdentifier: 
+  MotionInstanceIds: d83ff8ffa23ff8ff7a3ff8ff523ff8ff2a3ff8ff023ff8ff
+  CubismFadeMotionObjects:
+  - {fileID: 11400000, guid: 413f8519aae7e7540adfdf544075a192, type: 2}
+  - {fileID: 11400000, guid: 7a470aa215e550641a3c3a0bd6ec95c2, type: 2}
+  - {fileID: 11400000, guid: 404782d01f5b876448d8796ebf0b7c4d, type: 2}
+  - {fileID: 11400000, guid: dcf3d074486197a48894b7387cf5e8d2, type: 2}
+  - {fileID: 11400000, guid: 1398753b023ab734bb0f1444d5ab8fd5, type: 2}
+  - {fileID: 11400000, guid: b5376a00332c24640958cd4390f5e166, type: 2}

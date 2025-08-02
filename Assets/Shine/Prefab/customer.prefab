@@ -97,7 +97,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: -9
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7049343467032209611
 MonoBehaviour:
@@ -119,7 +119,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 11
   _depthOffset: 0.00001
   _opacity: 1
@@ -154,7 +154,9 @@ RectTransform:
   m_LocalScale: {x: 0.00025, y: 0.00025, z: 0.00025}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 8980251143123801711}
   - {fileID: 2698582570959676884}
+  - {fileID: 913056810827380758}
   m_Father: {fileID: 8912239280680587136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -322,7 +324,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3322129435666437011
 MonoBehaviour:
@@ -344,7 +346,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 0
   _depthOffset: 0.00001
   _opacity: 1
@@ -470,6 +472,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u9AD8\u5149 \u65CB\u8F49"
   DisplayName: 
+--- !u!1 &2534805843262540678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 913056810827380758}
+  - component: {fileID: 4466401333429278683}
+  - component: {fileID: 1565390198819186174}
+  m_Layer: 0
+  m_Name: "\u53CD\u5149\u6846"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &913056810827380758
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534805843262540678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1437056317978080155}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 322.29987, y: 132.30008}
+  m_SizeDelta: {x: 340.8, y: 555.7}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4466401333429278683
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534805843262540678}
+  m_CullTransparentMesh: 1
+--- !u!114 &1565390198819186174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534805843262540678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -506436375, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2561356532684980845
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +656,7 @@ MonoBehaviour:
   _modelScreenColor: {r: 0, g: 0, b: 0, a: 0}
   _sortingLayerId: 0
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   CameraToFace: {fileID: 0}
   _drawOrderHandler: {fileID: 0}
   _opacityHandler: {fileID: 0}
@@ -1045,7 +1122,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 16
+  m_SortingOrder: -3
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7230276611345759658
 MonoBehaviour:
@@ -1067,7 +1144,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 17
   _depthOffset: 0.00001
   _opacity: 1
@@ -1168,7 +1245,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -18
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5967606393609539886
 MonoBehaviour:
@@ -1190,7 +1267,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 2
   _depthOffset: 0.00001
   _opacity: 1
@@ -1352,7 +1429,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingOrder: -7
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3420629802757996830
 MonoBehaviour:
@@ -1374,7 +1451,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 13
   _depthOffset: 0.00001
   _opacity: 1
@@ -1475,7 +1552,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: -14
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &9185034117738104535
 MonoBehaviour:
@@ -1497,7 +1574,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 6
   _depthOffset: 0.00001
   _opacity: 1
@@ -1688,7 +1765,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 13
+  m_SortingOrder: -6
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8946161500879150583
 MonoBehaviour:
@@ -1710,7 +1787,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 14
   _depthOffset: 0.00001
   _opacity: 0
@@ -1811,7 +1888,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: -16
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1797413603541878427
 MonoBehaviour:
@@ -1833,7 +1910,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 4
   _depthOffset: 0.00001
   _opacity: 1
@@ -1849,7 +1926,7 @@ GameObject:
   - component: {fileID: 5555002849140205383}
   - component: {fileID: 7120456304374893251}
   m_Layer: 0
-  m_Name: Image
+  m_Name: "\u8010\u4E45\u503C"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1870,9 +1947,9 @@ RectTransform:
   m_Father: {fileID: 1437056317978080155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 322.29987, y: 139.70007}
+  m_SizeDelta: {x: 263, y: 540.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5555002849140205383
 CanvasRenderer:
@@ -1902,7 +1979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 336251285, guid: c8a70d004220a9e469dfcdebf4dd550d, type: 3}
+  m_Sprite: {fileID: -706273245, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2009,7 +2086,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: -4
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1354812883022201941
 MonoBehaviour:
@@ -2031,7 +2108,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 16
   _depthOffset: 0.00001
   _opacity: 0
@@ -2132,7 +2209,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 7
+  m_SortingOrder: -12
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7481542661085787087
 MonoBehaviour:
@@ -2154,7 +2231,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 8
   _depthOffset: 0.00001
   _opacity: 1
@@ -2255,7 +2332,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: -13
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5306264161011994713
 MonoBehaviour:
@@ -2277,7 +2354,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 7
   _depthOffset: 0.00001
   _opacity: 1
@@ -2452,7 +2529,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: -17
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7212616927111279917
 MonoBehaviour:
@@ -2474,7 +2551,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 3
   _depthOffset: 0.00001
   _opacity: 1
@@ -2575,7 +2652,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: -8
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7141944482292348407
 MonoBehaviour:
@@ -2597,7 +2674,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 12
   _depthOffset: 0.00001
   _opacity: 1
@@ -2808,7 +2885,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingOrder: -10
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4760034778940269956
 MonoBehaviour:
@@ -2830,10 +2907,85 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 10
   _depthOffset: 0.00001
   _opacity: 1
+--- !u!1 &7978116186979393054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8980251143123801711}
+  - component: {fileID: 172630719033090885}
+  - component: {fileID: 1369642753043270962}
+  m_Layer: 0
+  m_Name: "\u5916\u6846"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8980251143123801711
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978116186979393054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1437056317978080155}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 315, y: 141}
+  m_SizeDelta: {x: 471.2, y: 1012.9}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &172630719033090885
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978116186979393054}
+  m_CullTransparentMesh: 1
+--- !u!114 &1369642753043270962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978116186979393054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -228030372, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8317222076173354280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,7 +3144,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -19
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &711284501012452853
 MonoBehaviour:
@@ -3014,7 +3166,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 1
   _depthOffset: 0.00001
   _opacity: 1
@@ -3115,7 +3267,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: -15
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2969635962819045592
 MonoBehaviour:
@@ -3137,7 +3289,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 5
   _depthOffset: 0.00001
   _opacity: 1
@@ -3299,7 +3451,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: -11
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3886285705828370631
 MonoBehaviour:
@@ -3321,7 +3473,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 9
   _depthOffset: 0.00001
   _opacity: 1
@@ -3422,7 +3574,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 14
+  m_SortingOrder: -5
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &393431752655812798
 MonoBehaviour:
@@ -3444,7 +3596,7 @@ MonoBehaviour:
   _screenColor: {r: 0, g: 0, b: 0, a: 0}
   _mainTexture: {fileID: 2800000, guid: 47899154cb7c5ee4fb5adf289e39562b, type: 3}
   _sortingMode: 2
-  _sortingOrder: -1
+  _sortingOrder: -20
   _renderOrder: 15
   _depthOffset: 0.00001
   _opacity: 0

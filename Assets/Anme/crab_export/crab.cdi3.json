@@ -1,0 +1,367 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "Param20",
+			"GroupId": "ParamGroup14",
+			"Name": "身體 X"
+		},
+		{
+			"Id": "Param21",
+			"GroupId": "ParamGroup14",
+			"Name": "身體 Y"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "大右臂Z 1"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup",
+			"Name": "大右臂Z 2"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup",
+			"Name": "大右臂Z 3"
+		},
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup",
+			"Name": "大右鉗開合"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup2",
+			"Name": "大左臂Z 1"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup2",
+			"Name": "大左臂Z 2"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "ParamGroup2",
+			"Name": "大左臂Z 3"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "ParamGroup2",
+			"Name": "大左鉗 開合"
+		},
+		{
+			"Id": "ParamBrowLX",
+			"GroupId": "ParamGroup3",
+			"Name": "小右臂Z 1"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "ParamGroup3",
+			"Name": "小右臂Z 2"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "ParamGroup3",
+			"Name": "小右臂Z 3"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "ParamGroup3",
+			"Name": "小右鉗開合"
+		},
+		{
+			"Id": "ParamBrowLForm",
+			"GroupId": "ParamGroup4",
+			"Name": "小左臂Z 1"
+		},
+		{
+			"Id": "ParamBrowRAngle",
+			"GroupId": "ParamGroup4",
+			"Name": "小左臂Z 2"
+		},
+		{
+			"Id": "ParamBrowLAngle",
+			"GroupId": "ParamGroup4",
+			"Name": "小左臂Z 3"
+		},
+		{
+			"Id": "ParamBrowRX",
+			"GroupId": "ParamGroup4",
+			"Name": "小左鉗 開合"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "ParamGroup5",
+			"Name": "右大腿 Z"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"GroupId": "ParamGroup5",
+			"Name": "右小腿 Z"
+		},
+		{
+			"Id": "ParamBrowRForm",
+			"GroupId": "ParamGroup5",
+			"Name": "右腳 Z"
+		},
+		{
+			"Id": "ParamBodyAngleY",
+			"GroupId": "ParamGroup6",
+			"Name": "左大腿 Z"
+		},
+		{
+			"Id": "ParamBodyAngleX",
+			"GroupId": "ParamGroup6",
+			"Name": "左小腿 Z"
+		},
+		{
+			"Id": "ParamCheek",
+			"GroupId": "ParamGroup6",
+			"Name": "左腳 Z"
+		},
+		{
+			"Id": "ParamBodyAngleZ",
+			"GroupId": "ParamGroup7",
+			"Name": "右燈泡"
+		},
+		{
+			"Id": "ParamHairFront",
+			"GroupId": "ParamGroup7",
+			"Name": "左燈泡"
+		},
+		{
+			"Id": "ParamHairSide",
+			"GroupId": "ParamGroup8",
+			"Name": "火花1"
+		},
+		{
+			"Id": "ParamHairBack",
+			"GroupId": "ParamGroup8",
+			"Name": "火花2"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup8",
+			"Name": "火花3"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup8",
+			"Name": "火花4"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup9",
+			"Name": "電路板 開閉"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup9",
+			"Name": "電路板 切換"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup9",
+			"Name": "電路板 X"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup10",
+			"Name": "大右臂 物理1"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup10",
+			"Name": "大右臂 物理2"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup10",
+			"Name": "大右臂 物理3"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "ParamGroup10",
+			"Name": "大右臂 物理4"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "ParamGroup11",
+			"Name": "大左臂 物理1"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "ParamGroup11",
+			"Name": "大左臂 物理2"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup11",
+			"Name": "大左臂 物理3"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup11",
+			"Name": "大左臂 物理4"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "ParamGroup12",
+			"Name": "小右臂 物理1"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "ParamGroup12",
+			"Name": "小右臂 物理2"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "ParamGroup12",
+			"Name": "小右臂 物理3"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "ParamGroup13",
+			"Name": "小左臂 物理1"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "ParamGroup13",
+			"Name": "小左臂 物理2"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "ParamGroup13",
+			"Name": "小左臂 物理3"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup14",
+			"GroupId": "",
+			"Name": "身體"
+		},
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "大右臂"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "大左臂"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "小右臂"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "小左臂"
+		},
+		{
+			"Id": "ParamGroup5",
+			"GroupId": "",
+			"Name": "右腿"
+		},
+		{
+			"Id": "ParamGroup6",
+			"GroupId": "",
+			"Name": "左腿"
+		},
+		{
+			"Id": "ParamGroup7",
+			"GroupId": "",
+			"Name": "燈泡"
+		},
+		{
+			"Id": "ParamGroup8",
+			"GroupId": "",
+			"Name": "火花"
+		},
+		{
+			"Id": "ParamGroup9",
+			"GroupId": "",
+			"Name": "電路板"
+		},
+		{
+			"Id": "ParamGroup10",
+			"GroupId": "",
+			"Name": "大右臂物理"
+		},
+		{
+			"Id": "ParamGroup11",
+			"GroupId": "",
+			"Name": "大左臂物理"
+		},
+		{
+			"Id": "ParamGroup12",
+			"GroupId": "",
+			"Name": "小右臂物理"
+		},
+		{
+			"Id": "ParamGroup13",
+			"GroupId": "",
+			"Name": "小左臂物理"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part",
+			"Name": "火花組1"
+		},
+		{
+			"Id": "Part2",
+			"Name": "火花組2"
+		},
+		{
+			"Id": "Part3",
+			"Name": "電路板"
+		},
+		{
+			"Id": "Part4",
+			"Name": "右燈泡"
+		},
+		{
+			"Id": "Part5",
+			"Name": "左燈泡"
+		},
+		{
+			"Id": "Part6",
+			"Name": "大鉗關節(右)"
+		},
+		{
+			"Id": "Part9",
+			"Name": "小鉗關節(右)"
+		},
+		{
+			"Id": "Part7",
+			"Name": "大鉗關節(左)"
+		},
+		{
+			"Id": "Part8",
+			"Name": "小鉗關節(左)"
+		},
+		{
+			"Id": "Part10",
+			"Name": "腿關節(右)"
+		},
+		{
+			"Id": "Part11",
+			"Name": "腿關節（左）"
+		},
+		{
+			"Id": "PartSketch0",
+			"Name": "[ 參考圖 ]"
+		}
+	]
+}
