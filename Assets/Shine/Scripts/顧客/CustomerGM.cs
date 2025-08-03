@@ -87,7 +87,7 @@ public class CustomerGM : MonoBehaviour
             }
             if (hit.gameObject.name == "fixeditemOpenFinished2")
             {
-                FindObjectOfType<TeachGM>().OpenTeach9();
+                FindObjectOfType<TeachGM>().OpenTeach10();
                 Destroy(hit.gameObject);
             }
         }

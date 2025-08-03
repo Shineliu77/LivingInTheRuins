@@ -59,6 +59,9 @@ public class TeachGM : MonoBehaviour
     #region 第9段說明
     public GameObject Teach9;
     #endregion
+    #region 第10段說明
+    public GameObject Teach10;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -177,20 +180,20 @@ public class TeachGM : MonoBehaviour
         Teach8.SetActive(true);
 
     }
-    public void OpenTeach9()
+    public void OpenTeach10()
     {
-        Teach9.SetActive(true);
+        Teach10.SetActive(true);
         Time.timeScale = 0;
         KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();   //當教學結束  掛電話 
         if (klarraAnimeScript != null)
         {
             klarraAnimeScript.HangUpPhone();
         }
-        StartCoroutine(Teach9Closed());
+        StartCoroutine(Teach10Closed());
     }
-    private IEnumerator Teach9Closed()  //關掉Teach9
+    private IEnumerator Teach10Closed()  //關掉Teach9
     {
-        yield return new WaitUntil(() => !Teach9.activeSelf);
+        yield return new WaitUntil(() => !Teach10.activeSelf);
         GoOtherScene();
     }
 
