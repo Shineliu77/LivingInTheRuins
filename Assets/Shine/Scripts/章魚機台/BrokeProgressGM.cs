@@ -10,9 +10,16 @@ public class BrokeProgressGM : MonoBehaviour
     public Animator MachineAni;
     public Image MachineUIBar;
     public Sprite[] MachineUIBarSprites;
+
+    public Image MachineUIBarOutside; //耐久值外框
+    public Sprite[] MachineUIBarSpritesOutside;
+
     public Collider2D Placement;
     public Image MachineUI;
     public Sprite[] MachineUISprites;
+
+    public Image MachineUIOutside; //圓形計時器外框
+    public Sprite[] MachineUISpritesOutside;
 
     // Start is called before the first frame update
     void Start()
@@ -45,19 +52,23 @@ public class BrokeProgressGM : MonoBehaviour
                 if ((MachineDurability_Script - currentTimeInSeconds) / MachineDurability > 0.5f)
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[0];
+                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
                 }
                 else
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[1];
+                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
                 }
-                MachineUI.transform.GetChild(0).GetComponent<Image>().fillAmount = 1f-(currentTimeInSeconds / animationLength);
+                MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f-(currentTimeInSeconds / animationLength);
                 if (stateInfo.normalizedTime < 0.5f)
                 {
-                    MachineUI.transform.GetChild(0).GetComponent<Image>().sprite = MachineUISprites[0];
+                    MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[0];
+                    MachineUIOutside.sprite = MachineUISpritesOutside[0]; //圓形計時器外框原色
                 }
                 else
                 {
-                    MachineUI.transform.GetChild(0).GetComponent<Image>().sprite = MachineUISprites[1];
+                    MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
+                    MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
                 }
 
             }
@@ -74,4 +85,5 @@ public class BrokeProgressGM : MonoBehaviour
 
         }
     }
+
 }

@@ -30,7 +30,8 @@ public class MonsterGM : MonoBehaviour
     void Update()
     {
         #region 控制怪物腳色移動
-        if (ScriptBlood > 0) {
+        if (ScriptBlood > 0)
+        {
             // 計算與目標的距離
             float distance = Vector2.Distance(transform.position, targetPoint.position);
 
@@ -46,21 +47,11 @@ public class MonsterGM : MonoBehaviour
                 OnArrived();
             }
         }
-        else {
+        else
+        {
             MonsterAni.SetTrigger("Fail");
+            Invoke("MonsterFail", 1.5f);
 
-            float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
-
-            if (distance > stopDistance)
-            {
-                // 向目標移動
-                Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
-                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
 
         #endregion
@@ -71,16 +62,36 @@ public class MonsterGM : MonoBehaviour
         Debug.Log("怪物已抵達目標點！");
         MonsterAni.SetTrigger("Attack");
         // TODO: 例如播放動畫、改變狀態、通知管理器等
-        if (Application.loadedLevelName == "TeachGame"&&!FindObjectOfType<TeachGM>().isTeach7)
+        if (Application.loadedLevelName == "TeachGame" && !FindObjectOfType<TeachGM>().isTeach7)
         {
-                FindObjectOfType<TeachGM>().OpenTeach7();
+            FindObjectOfType<TeachGM>().OpenTeach7();
         }
+
     }
     private void OnMouseDown()
     {
         ScriptBlood -= DeductBlood;
     }
-    public void AttackMachine() {
+    public void AttackMachine()
+    {
         FindObjectOfType<MakeAPotion>().ProduceMachineDurability();
     }
+
+    public void MonsterFail()
+    {
+        MonsterAni.SetTrigger("Leave"); //撥放離開動畫
+        float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
+
+        if (distance > stopDistance)
+        {
+            // 向目標移動
+            Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
+            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

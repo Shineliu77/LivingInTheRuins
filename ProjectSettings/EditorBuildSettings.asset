@@ -20,7 +20,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/2.unity
     guid: 507093b6f736f11488445a679629ffe4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/gamelive2dtrytry2d.unity
     guid: b7110337c285c0e43bb5611ae33b5f7a
+  - enabled: 1
+    path: Assets/Shine/Scene/TeachGame.unity
+    guid: 98c174977ac46ba479b00a1450f132cc
+  - enabled: 1
+    path: Assets/Scenes/lobby.unity
+    guid: c1e27d76aff3d4542b19e2d831e2a8ad
+  - enabled: 1
+    path: Assets/Scenes/levelSelect.unity
+    guid: ffbc4c1a960291d47912c9e3fe28cbfe
   m_configObjects: {}

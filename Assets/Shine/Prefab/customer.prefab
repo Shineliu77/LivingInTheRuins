@@ -573,9 +573,10 @@ GameObject:
   - component: {fileID: 5877041563810886965}
   - component: {fileID: 7576838894011401649}
   - component: {fileID: 5784136612737400606}
+  - component: {fileID: 5930714247751944790}
   m_Layer: 0
   m_Name: customer
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -882,7 +883,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00611338, y: 0.011550814}
+  m_Offset: {x: 0.00611338, y: 0.27191937}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -893,7 +894,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.66208524, y: 1.144798}
+  m_Size: {x: 0.66208524, y: 0.62406087}
   m_EdgeRadius: 0
 --- !u!50 &5877041563810886965
 Rigidbody2D:
@@ -954,7 +955,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillImage: {fileID: 7120456304374893251}
   countdownTime: 100
-  timer: 0
+  changeTargetfillImage: {fileID: -706273245, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  fillImageChange: {fileID: -1402450266, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  fillImageOutside: {fileID: 1369642753043270962}
+  changeTargetfillImageeOutside: {fileID: -228030372, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  fillImageChangeeOutside: {fileID: -2120014239, guid: f326746434d04fa41b2b6967664bbdd6, type: 3}
+  ShouldDestroy: {fileID: 310610305282353134}
+  timer: 100
+--- !u!114 &5930714247751944790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561356532684980845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ab448bc9f72c419c7d1d1e78a2c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 650195539377775738}
 --- !u!1 &2862059076396413088
 GameObject:
   m_ObjectHideFlags: 0

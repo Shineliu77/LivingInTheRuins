@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class MakeAPotion : MonoBehaviour
 {
     //製藥水材料碰到機器
-    public Image Stopwatch;
+    public Image Stopwatch; //原色圖片
     public Sprite[] StopwatchUISprites;
+
+    public Image StopwatchOutside; //外框圖片
+    public Sprite[] StopwatchUIOutsideSprites;
 
     public float StopwatchTimer;
     public float ScriptStopwatchTimer;
@@ -23,8 +26,11 @@ public class MakeAPotion : MonoBehaviour
     public float MachineDurability;
     float MachineDurability_Script;
     public float DeductMachineDurability;
-    public Image MachineDurabilityBar;
+    public Image MachineDurabilityBar; 
     public Sprite[] MachineDurabilityBarSprite;
+
+    public Image MachineDurabilityBarOustside;   //耐久外框圖片
+    public Sprite[] MachineDurabilityBarSpriteOustside;
 
     public GameObject[] Potions;
     public int SelectPotionID;
@@ -42,16 +48,19 @@ public class MakeAPotion : MonoBehaviour
         if (isStopwatch&& ScriptStopwatchTimer>0) {
             Stopwatch.gameObject.SetActive(true);
             ScriptStopwatchTimer -= Time.deltaTime;
-            Stopwatch.transform.GetChild(0).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+            Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
             if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
             {
-                Stopwatch.transform.GetChild(0).GetComponent<Image>().sprite = StopwatchUISprites[0];
+                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
+                StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
+
             }
             else
             {
-                Stopwatch.transform.GetChild(0).GetComponent<Image>().sprite = StopwatchUISprites[1];
+                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
+                StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
             }
-            if (Stopwatch.transform.GetChild(0).GetComponent<Image>().fillAmount == 0) {
+            if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0) {
                 Potions[SelectPotionID].SetActive(true);
                 Stopwatch.gameObject.SetActive(false);
 
@@ -117,10 +126,12 @@ public class MakeAPotion : MonoBehaviour
         if (MachineDurability_Script / MachineDurability > 0.5f)
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[0];  //耐久值外框原色
         }
         else
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
         }
         if (MachineDurabilityBar.fillAmount == 0) {
             GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
