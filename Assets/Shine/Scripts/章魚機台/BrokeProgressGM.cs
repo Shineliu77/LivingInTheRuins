@@ -20,11 +20,16 @@ public class BrokeProgressGM : MonoBehaviour
 
     public Image MachineUIOutside; //圓形計時器外框
     public Sprite[] MachineUISpritesOutside;
+    public float SaveRemainingValue;
 
+    public Transform needle; // 指針物件（需拖曳到 Inspector）
+    public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
     // Start is called before the first frame update
     void Start()
     {
         MachineDurability_Script = MachineDurability;
+        SaveRemainingValue = MachineUIBar.fillAmount;
+
     }
 
     // Update is called once per frame
@@ -41,15 +46,19 @@ public class BrokeProgressGM : MonoBehaviour
                 }
                 Placement.enabled = true;
                 MachineUI.gameObject.SetActive(false);
-
+                MachineDurability_Script = SaveRemainingValue;
             }
             if (stateInfo.normalizedTime <0.99f) {
                 MachineUI.gameObject.SetActive(true);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
-                MachineUIBar.fillAmount = (MachineDurability_Script-currentTimeInSeconds) / MachineDurability;
-                if ((MachineDurability_Script - currentTimeInSeconds) / MachineDurability > 0.5f)
+                
+                SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
+
+                MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+
+                if (MachineUIBar.fillAmount > 0.5f)
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[0];
                     MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
@@ -60,6 +69,9 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
                 }
                 MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f-(currentTimeInSeconds / animationLength);
+                float fillAmount = 1f - (currentTimeInSeconds / animationLength);
+                float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
+                needle.localEulerAngles = new Vector3(0, 0, -zRotation);
                 if (stateInfo.normalizedTime < 0.5f)
                 {
                     MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[0];
