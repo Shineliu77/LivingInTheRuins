@@ -34,6 +34,13 @@ public class MakeAPotion : MonoBehaviour
 
     public GameObject[] Potions;
     public int SelectPotionID;
+
+    public Transform needle; // 指針物件（需拖曳到 Inspector）
+    public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
+
+    public Animator MachineAni;
+     float SaveMachineDurability;
+    bool isRun;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +56,9 @@ public class MakeAPotion : MonoBehaviour
             Stopwatch.gameObject.SetActive(true);
             ScriptStopwatchTimer -= Time.deltaTime;
             Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+            float fillAmount=ScriptStopwatchTimer / StopwatchTimer;
+            float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
+            needle.localEulerAngles = new Vector3(0, 0, -zRotation);
             if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
             {
                 Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
@@ -63,13 +73,38 @@ public class MakeAPotion : MonoBehaviour
             if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0) {
                 Potions[SelectPotionID].SetActive(true);
                 Stopwatch.gameObject.SetActive(false);
-
+                isRun = false;
                 if (Application.loadedLevelName == "TeachGame") {
                     FindObjectOfType<TeachGM>().OpenTeach8();
                 }
             }
         }
-   
+        if (isRun)
+        {
+            AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("blue work"))
+            {
+                if (stateInfo.normalizedTime >= 0.99f)
+                {
+
+                    MachineDurability_Script = SaveMachineDurability;
+
+                }
+                else
+                {
+                    float animationLength = stateInfo.length; // 動畫總秒數
+                    float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
+                    float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
+
+                    SaveMachineDurability = MachineDurability_Script - currentTimeInSeconds;
+                    DeductDurability();
+
+                }
+             
+
+            }
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D hit)
@@ -106,6 +141,7 @@ public class MakeAPotion : MonoBehaviour
     //製作藥水判斷要不要產生怪物
     void ProduceMonster()
     {
+        isRun = true;
         if (Application.loadedLevelName == "TeachGame")
         {          
              MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
@@ -121,21 +157,11 @@ public class MakeAPotion : MonoBehaviour
     }
     //怪物攻擊機台扣的耐力值
    public void ProduceMachineDurability() {
-        MachineDurability_Script -= DeductMachineDurability;
-        MachineDurabilityBar.fillAmount = MachineDurability_Script / MachineDurability;
-        if (MachineDurability_Script / MachineDurability > 0.5f)
-        {
-            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
-            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[0];  //耐久值外框原色
-        }
-        else
-        {
-            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
-            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
-        }
-        if (MachineDurabilityBar.fillAmount == 0) {
-            GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
-        }
+        SaveMachineDurability = MachineDurability_Script - DeductMachineDurability;
+        MachineDurability_Script = SaveMachineDurability;
+        DeductDurability();
+
+
     }
     public void Reset()
     {
@@ -146,4 +172,24 @@ public class MakeAPotion : MonoBehaviour
             Potions[i].SetActive(false);
         }
     }
+
+    void DeductDurability() {
+        MachineDurabilityBar.fillAmount = SaveMachineDurability / MachineDurability;
+
+        if (SaveMachineDurability / MachineDurability > 0.5f)
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[0];  //耐久值外框原色
+        }
+        else
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+        }
+        if (MachineDurabilityBar.fillAmount == 0)
+        {
+            GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
+        }
+    }
+
 }

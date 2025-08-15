@@ -18,6 +18,34 @@ public class MonsterGM : MonoBehaviour
     public float DeductBlood;
     public Animator MonsterAni;
     #endregion
+    #region 怪物每15秒攻擊機臺一次
+    public float interval = 15f;    // 每次扣血間隔（秒）
+    Coroutine loop;
+    #endregion
+    void OnEnable()
+    {
+        if (loop == null) loop = StartCoroutine(DamageLoop());
+    }
+
+    void OnDisable()
+    {
+        if (loop != null)
+        {
+            StopCoroutine(loop);
+            loop = null;
+        }
+    }
+    
+    IEnumerator DamageLoop()
+    {
+        while (true)
+        {
+           
+           yield return new WaitForSeconds(interval);
+            FindObjectOfType<MakeAPotion>().ProduceMachineDurability();
+            // 迴圈會自動「重新計 15 秒」
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
