@@ -27,7 +27,9 @@ public class CountdownFill : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-
+            if (Application.loadedLevelName == "TeachGame") {
+                timer = Mathf.Clamp(timer, countdownTime/3, countdownTime);
+            }
             // ­pºâ¶ñº¡¤ñ¨Ò
             float fill = Mathf.Clamp01(timer / countdownTime);
             fillImage.fillAmount = fill;
