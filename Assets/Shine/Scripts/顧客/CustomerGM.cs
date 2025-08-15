@@ -81,12 +81,13 @@ public class CustomerGM : MonoBehaviour
         {
             if (hit.gameObject.name == "fixeditemOpenFinished1")
             {
-                FindObjectOfType<ScoreGM>().AddScore(hit.gameObject.GetComponent<SetIteamOpenObj>().ID);
+                FindObjectOfType<ScoreGM>().AddScore();
                 FindObjectOfType<TeachGM>().OpenTeach5();
                 Destroy(hit.gameObject);
             }
             if (hit.gameObject.name == "fixeditemOpenFinished2")
             {
+                FindObjectOfType<ScoreGM>().AddScore();
                 FindObjectOfType<TeachGM>().OpenTeach10();
                 Destroy(hit.gameObject);
             }

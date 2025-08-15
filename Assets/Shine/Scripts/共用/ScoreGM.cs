@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreGM : MonoBehaviour
 {
-    public int[] RepairScore;
     public int TotalScore;
-    public Text ScoreText;
 
     public int AllScore = 0; //紀錄到大廳的總分數 
     public Image HundredsDigitImage;     // 百位數的圖片
@@ -26,9 +24,24 @@ public class ScoreGM : MonoBehaviour
     {
         
     }
-    public void AddScore(int ID)
+    public void AddScore()
     {
-        TotalScore+=RepairScore[ID];
-        ScoreText.text = TotalScore + "";
+        TotalScore+=50;
+        UpdateScoreUI();
+
+    }
+    void UpdateScoreUI()
+    {
+        // 限制分數最大到 999（避免超出圖片範圍）
+        int score = Mathf.Clamp(TotalScore, 0, 999);
+
+        int hundreds = score / 100;       // 百位
+        int tens = (score / 10) % 10;     // 十位
+        int units = score % 10;           // 個位
+
+        // 設定對應的圖片
+        HundredsDigitImage.sprite = numberSprites[hundreds];
+        TensDigitImage.sprite = numberSprites[tens];
+        UnitsDigitImage.sprite = numberSprites[units];
     }
 }
