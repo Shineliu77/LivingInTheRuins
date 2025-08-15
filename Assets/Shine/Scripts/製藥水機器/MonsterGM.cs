@@ -78,8 +78,12 @@ public class MonsterGM : MonoBehaviour
         else
         {
             MonsterAni.SetTrigger("Fail");
-            Invoke("MonsterFail", 1.5f);
+            AnimatorStateInfo stateInfo = MonsterAni.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.normalizedTime >= 0.99f&& stateInfo.IsName("fail"))
+            {
 
+                Invoke("MonsterFail", 1.5f);
+            }
         }
 
         #endregion
@@ -108,6 +112,7 @@ public class MonsterGM : MonoBehaviour
     public void MonsterFail()
     {
         MonsterAni.SetTrigger("Leave"); //撥放離開動畫
+
         float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
         if (distance > stopDistance)
