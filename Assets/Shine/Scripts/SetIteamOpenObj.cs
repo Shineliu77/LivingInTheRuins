@@ -11,6 +11,7 @@ public class SetIteamOpenObj : MonoBehaviour
     public Sprite[] ReagentsImage;
     public Sprite CircuitBoard;
     public string MaintenanceProjectName;
+    public Vector3 OriginalSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,7 @@ public class SetIteamOpenObj : MonoBehaviour
 
                 break;
         }
+        OriginalSize = transform.localScale;
     }
 
     // Update is called once per frame
@@ -43,5 +45,8 @@ public class SetIteamOpenObj : MonoBehaviour
         for (int i = 0; i < IteamObj.Length; i++) {
             IteamObj[i].SetActive(false);
         }
+    }
+    public void ResetSize() {
+        transform.localScale = OriginalSize;
     }
 }

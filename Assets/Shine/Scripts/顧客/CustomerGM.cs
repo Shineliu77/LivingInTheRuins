@@ -66,7 +66,7 @@ public class CustomerGM : MonoBehaviour
     }
     void OnArrived()
     {
-        Debug.Log("顧客已抵達目標點！");
+        //Debug.Log("顧客已抵達目標點！");
         // TODO: 例如播放動畫、改變狀態、通知管理器等
         if (Application.loadedLevelName == "TeachGame")
         {

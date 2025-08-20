@@ -180,6 +180,11 @@ public class TeachGM : MonoBehaviour
         Teach8.SetActive(true);
 
     }
+    public void OpenTeach9()
+    {
+        Teach9.SetActive(true);
+
+    }
     public void OpenTeach10()
     {
         Teach10.SetActive(true);

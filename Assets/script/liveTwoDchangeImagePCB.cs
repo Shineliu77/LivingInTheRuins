@@ -21,6 +21,8 @@ public class liveTwoDchangeImagePCB : MonoBehaviour
             if (newSprite != null && spriteRenderer != null)
             {
                 spriteRenderer.sprite = newSprite; // §ó´«¹Ï¤ù
+                transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
                 if (transform.parent.GetComponent<DraggableReturn2D>())
                 {
                     transform.parent.GetComponent<DraggableReturn2D>().enabled = true;

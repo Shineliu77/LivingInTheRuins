@@ -30,13 +30,17 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 if (changeSprites.Length > 0)
                 {
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
-                    if (transform.parent.GetComponent<DraggableReturn2D>()) {
+                transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                if (transform.parent.GetComponent<DraggableReturn2D>()) {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                     }
                     if (Application.loadedLevelName == "TeachGame") {
                         transform.parent.gameObject.name = "fixeditemOpenFinished2";
-                    }
-                    Debug.Log("圖片已更換為 changeSprites[0]");
+                    FindObjectOfType<TeachGM>().OpenTeach9();
+
+                }
+                Debug.Log("圖片已更換為 changeSprites[0]");
                 }
                 else
                 {
@@ -62,7 +66,9 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 if (changeSprites.Length > 1)
                 {
                     spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
-                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                     }
@@ -92,7 +98,9 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 if (changeSprites.Length > 2)
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[5]
-                    if (transform.parent.GetComponent<DraggableReturn2D>())
+                transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                     }
@@ -122,7 +130,9 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                     if (changeSprites.Length > 3)
                     {
                         spriteRenderer.sprite = changeSprites[3]; // 變更為 changeSprites[2]
-                        if (transform.parent.GetComponent<DraggableReturn2D>())
+                    transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                    if (transform.parent.GetComponent<DraggableReturn2D>())
                         {
                             transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                         }

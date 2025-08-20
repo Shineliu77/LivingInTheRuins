@@ -18,9 +18,10 @@ public class MonsterGM : MonoBehaviour
     public float DeductBlood;
     public Animator MonsterAni;
     #endregion
-    #region 怪物每15秒攻擊機臺一次
-    public float interval = 15f;    // 每次扣血間隔（秒）
+    #region 怪物每?秒攻擊機臺一次
+    public float interval;    // 每次扣血間隔（秒）
     Coroutine loop;
+    AnimatorStateInfo stateInfo;
     #endregion
     void OnEnable()
     {
@@ -58,7 +59,9 @@ public class MonsterGM : MonoBehaviour
     void Update()
     {
         #region 控制怪物腳色移動
-        if (ScriptBlood > 0)
+         stateInfo = MonsterAni.GetCurrentAnimatorStateInfo(0);
+
+        if (ScriptBlood > 0&&!stateInfo.IsName("leave"))
         {
             // 計算與目標的距離
             float distance = Vector2.Distance(transform.position, targetPoint.position);
@@ -72,20 +75,20 @@ public class MonsterGM : MonoBehaviour
             else
             {
                 hasArrived = true;
+
                 OnArrived();
             }
         }
         else
         {
             MonsterAni.SetTrigger("Fail");
-            AnimatorStateInfo stateInfo = MonsterAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.normalizedTime >= 0.99f&& stateInfo.IsName("fail"))
-            {
-
-                Invoke("MonsterFail", 1.5f);
-            }
+           
         }
+        if (stateInfo.normalizedTime >= 0.99f && stateInfo.IsName("leave"))
+        {
 
+            Invoke("MonsterFail", 0.5f);
+        }
         #endregion
     }
 
@@ -102,7 +105,10 @@ public class MonsterGM : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        ScriptBlood -= DeductBlood;
+        if (!stateInfo.IsName("leave")&& !stateInfo.IsName("success"))
+        {
+            ScriptBlood -= DeductBlood;
+        }
     }
     public void AttackMachine()
     {

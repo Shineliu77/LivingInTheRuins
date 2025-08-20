@@ -160,6 +160,7 @@ public class MakeAPotion : MonoBehaviour
         SaveMachineDurability = MachineDurability_Script - DeductMachineDurability;
         MachineDurability_Script = SaveMachineDurability;
         DeductDurability();
+        GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
 
 
     }
@@ -188,7 +189,7 @@ public class MakeAPotion : MonoBehaviour
         }
         if (MachineDurabilityBar.fillAmount == 0)
         {
-            GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
+
         }
     }
 

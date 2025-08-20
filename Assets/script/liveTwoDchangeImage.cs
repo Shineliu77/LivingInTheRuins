@@ -32,6 +32,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                  {
                      teachScript.IsAfterChangeImage();
                  }*/
+                transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     FindObjectOfType<TeachGM>().OpenTeach4();
@@ -61,6 +62,8 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 if (changeSprites.Length > 1)
                 {
                     spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
+                    transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
@@ -84,6 +87,8 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 if (changeSprites.Length > 2)
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
+                    transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
