@@ -25,7 +25,7 @@ public class CustomerGM : MonoBehaviour
     {
         # region 控制顧客腳色移動
 
-        if (GetComponent<CountdownFill>().timer <= 0f|| Finished)
+        if (GetComponent<CountdownFill>().timer <= 0f || Finished)
         {
             float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
@@ -37,11 +37,24 @@ public class CustomerGM : MonoBehaviour
             }
             else
             {
-                if (FindObjectOfType<TeachGM>().CustomerNumber < 2)
+                if (Application.loadedLevelName == "TeachGame")
                 {
-                    FindObjectOfType<TeachGM>().ProductCustomer();
+                    if (FindObjectOfType<TeachGM>().CustomerNumber < 2)
+                    {
+                        FindObjectOfType<TeachGM>().ProductCustomer();
+                    }
                 }
                 Destroy(gameObject);
+                if (Application.loadedLevelName == "FirstGame")
+                {
+                    if (FindObjectOfType<FirstGame>().CustomerNumber < 4)
+                    {
+                        FindObjectOfType<FirstGame>().ProductCustomer();
+                    }
+                }
+                Destroy(gameObject);
+
+
             }
         }
         else
@@ -61,18 +74,30 @@ public class CustomerGM : MonoBehaviour
                 hasArrived = true;
                 OnArrived();
             }
+
         }
         #endregion
     }
-    void OnArrived()
+    public void OnArrived()
     {
         //Debug.Log("顧客已抵達目標點！");
         // TODO: 例如播放動畫、改變狀態、通知管理器等
         if (Application.loadedLevelName == "TeachGame")
         {
-            if(!GameObject.FindWithTag("fixeditem") && !GameObject.FindWithTag("fixeditemOpen"))
-            FindObjectOfType<TeachGM>().ProduceIteam();
+            if (!GameObject.FindWithTag("fixeditem") && !GameObject.FindWithTag("fixeditemOpen"))
+                FindObjectOfType<TeachGM>().ProduceIteam();
         }
+
+
+        //第一關使用
+        else if (Application.loadedLevelName == "FirstGame")
+        {
+            if (!GameObject.FindWithTag("fixeditem") && !GameObject.FindWithTag("fixeditemOpen"))
+                FindObjectOfType<FirstGame>().ProduceIteam();
+
+        }
+
+
     }
     private void OnTriggerEnter2D(Collider2D hit)
     {
@@ -90,6 +115,54 @@ public class CustomerGM : MonoBehaviour
                 FindObjectOfType<ScoreGM>().AddScore();
                 FindObjectOfType<TeachGM>().OpenTeach10();
                 Destroy(hit.gameObject);
+            }
+        }
+
+
+        //第一關使用  
+        if (Application.loadedLevelName == "FirstGame")
+        {
+            if (hit.gameObject.name == "fixeditemOpenFinished1")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+                // if(hasArrived == true)
+                // { 
+                //FindObjectOfType<FirstGame>().ProduceIteam(); 
+                // }
+
+
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished2")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished3")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished4")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
             }
         }
     }

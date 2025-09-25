@@ -205,6 +205,7 @@ MonoBehaviour:
   - {fileID: -2129619538, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   CircuitBoard: {fileID: 1942677955, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   MaintenanceProjectName: 
+  OriginalSize: {x: 0, y: 0, z: 0}
 --- !u!1001 &4835168987850365857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -321,6 +322,10 @@ PrefabInstance:
     - target: {fileID: 3323213370751100232, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323213370751100232, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
+      propertyPath: m_TagString
+      value: brokePCB
       objectReference: {fileID: 0}
     - target: {fileID: 3393947223932842207, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_LocalPosition.x

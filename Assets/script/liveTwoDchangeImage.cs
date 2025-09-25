@@ -21,11 +21,11 @@ public class LiveTwoDChangeImage : MonoBehaviour
         {
             Debug.Log("碰到 brokecircle！");
             // 當 Foropener.currentImageIndex 為 0 時才更換圖片
-           
-                if (changeSprites.Length > 0)
-                {
-                    spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
-                    Debug.Log("圖片已更換為 changeSprites[0]");
+
+            if (changeSprites.Length > 0)
+            {
+                spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
+                Debug.Log("圖片已更換為 changeSprites[0]");
 
                 /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
                  if (teachScript != null)
@@ -37,19 +37,20 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 {
                     FindObjectOfType<TeachGM>().OpenTeach4();
                 }
-                else {
+                else
+                {
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
                         transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                     }
                 }
 
-                }
-                else
-                {
-                    Debug.LogWarning("changeSprites 陣列為空，無法變更圖片！");
-                }
-            
+            }
+            else
+            {
+                Debug.LogWarning("changeSprites 陣列為空，無法變更圖片！");
+            }
+
         }
 
         // 確認碰撞的物件是 square 時的處理
@@ -98,6 +99,32 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
+                }
+            }
+
+
+            //如果物件是電路板
+            if (GameObject.FindWithTag("brokePCB") != null && collision.gameObject.CompareTag("PCB"))
+            {
+                Debug.Log("碰到 PCB！");
+                // 當 Foropener.currentImageIndex 為 1 時才更換圖片
+                if (Foropener.currentImageIndex == 0 && changeSprites[0])
+                {
+                    if (changeSprites.Length > 1)
+                    {
+                        spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[1]
+                        transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                        if (transform.parent.GetComponent<DraggableReturn2D>())
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
+                        Debug.Log("圖片已更換為 changeSprites[0]");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
+                    }
                 }
             }
         }

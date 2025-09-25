@@ -27,8 +27,9 @@ public class CountdownFill : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            if (Application.loadedLevelName == "TeachGame") {
-                timer = Mathf.Clamp(timer, countdownTime/3, countdownTime);
+            if (Application.loadedLevelName == "TeachGame")
+            {
+                timer = Mathf.Clamp(timer, countdownTime / 3, countdownTime);
             }
             // 計算填滿比例
             float fill = Mathf.Clamp01(timer / countdownTime);
@@ -59,13 +60,21 @@ public class CountdownFill : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D hit)
     {
         // 確認碰撞的物件是fixeditemOpenFinished時的處理
-        if (Application.loadedLevelName == "TeachGame")
+        if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName == "FirstGame")     //新手教學與關卡共通
         {
             if (hit.gameObject.name == "fixeditemOpenFinished1")
             {
                 Destroy(ShouldDestroy);
             }
             if (hit.gameObject.name == "fixeditemOpenFinished2")
+            {
+                Destroy(ShouldDestroy);
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished3")
+            {
+                Destroy(ShouldDestroy);
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished4")
             {
                 Destroy(ShouldDestroy);
             }

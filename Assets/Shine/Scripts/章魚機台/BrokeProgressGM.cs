@@ -36,7 +36,8 @@ public class BrokeProgressGM : MonoBehaviour
     void Update()
     {
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("work")) {
+        if (stateInfo.IsName("work"))
+        {
 
             if (stateInfo.normalizedTime >= 0.99f && GameObject.FindGameObjectsWithTag("fixeditemOpen").Length <= 0)
             {
@@ -44,16 +45,25 @@ public class BrokeProgressGM : MonoBehaviour
                 {
                     FindObjectOfType<TeachGM>().ProduceIteamOpen();
                 }
+
+                //第一關使用
+                else if (Application.loadedLevelName == "FirstGame")
+                {
+                    FindObjectOfType<FirstGame>().ProduceIteamOpen();
+                }
+
+
                 Placement.enabled = true;
                 MachineUI.gameObject.SetActive(false);
                 MachineDurability_Script = SaveRemainingValue;
             }
-            if (stateInfo.normalizedTime <0.99f) {
+            if (stateInfo.normalizedTime < 0.99f)
+            {
                 MachineUI.gameObject.SetActive(true);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
-                
+
                 SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
 
                 MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
@@ -68,7 +78,7 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUIBar.sprite = MachineUIBarSprites[1];
                     MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
                 }
-                MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f-(currentTimeInSeconds / animationLength);
+                MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
                 float fillAmount = 1f - (currentTimeInSeconds / animationLength);
                 float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
                 needle.localEulerAngles = new Vector3(0, 0, -zRotation);
@@ -82,7 +92,6 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
                     MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
                 }
-
             }
         }
     }

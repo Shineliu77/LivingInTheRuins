@@ -15,23 +15,56 @@ public class SetIteamOpenObj : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CloseIteamObj();
-        IteamObj[ID].SetActive(true);
-        switch (ID) {
-            case 0:
-                IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            CloseIteamObj();
+            IteamObj[ID].SetActive(true);
+            switch (ID)
+            {
+                case 0:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
 
-                MaintenanceProjectName = ProcessorImage[ProcessorID].name;
-                break;
-            case 1:
-                IteamObj[ID].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
-                MaintenanceProjectName = CircuitBoard.name;
-                break;
-            case 2:
-                IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
-                MaintenanceProjectName = ReagentsImage[ReagentsID].name;
+                    MaintenanceProjectName = ProcessorImage[ProcessorID].name;
+                    break;
+                case 1:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
+                    MaintenanceProjectName = CircuitBoard.name;
+                    break;
+                case 2:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
+                    MaintenanceProjectName = ReagentsImage[ReagentsID].name;
 
-                break;
+                    break;
+            }
+        }
+
+        //第一關使用
+        else if (Application.loadedLevelName == "FirstGame")
+        {
+            CloseIteamObj();
+
+            int ID = Random.Range(0, 2);
+
+            IteamObj[ID].SetActive(true);
+            switch (ID)
+            {
+                case 0:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
+
+                    MaintenanceProjectName = ProcessorImage[ProcessorID].name;
+                    break;
+                case 1:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
+                    MaintenanceProjectName = CircuitBoard.name;
+                    break;
+                case 2:
+                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
+                    MaintenanceProjectName = ReagentsImage[ReagentsID].name;
+
+                    break;
+            }
+
+           
         }
         OriginalSize = transform.localScale;
     }

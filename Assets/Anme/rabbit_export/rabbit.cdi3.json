@@ -1,0 +1,348 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup2",
+			"Name": "右 眨眼"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "ParamGroup2",
+			"Name": "中 眨眼"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup2",
+			"Name": "左 眨眼"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "ParamGroup5",
+			"Name": "右耳 後摺"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "ParamGroup5",
+			"Name": "中耳 後摺"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "ParamGroup5",
+			"Name": "左耳 後摺"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup6",
+			"Name": "三角燈 開閉"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "ParamGroup6",
+			"Name": "圓形燈 開閉"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "ParamGroup6",
+			"Name": "方形燈 開閉"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴 X"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴Y"
+		},
+		{
+			"Id": "Param24",
+			"GroupId": "ParamGroup8",
+			"Name": "方塊 開關"
+		},
+		{
+			"Id": "Param25",
+			"GroupId": "ParamGroup8",
+			"Name": "方塊 X"
+		},
+		{
+			"Id": "Param26",
+			"GroupId": "ParamGroup8",
+			"Name": "方塊 Y"
+		},
+		{
+			"Id": "Param27",
+			"GroupId": "ParamGroup9",
+			"Name": "右手 Z"
+		},
+		{
+			"Id": "Param28",
+			"GroupId": "ParamGroup9",
+			"Name": "左手 Z"
+		},
+		{
+			"Id": "Param22",
+			"GroupId": "ParamGroup7",
+			"Name": "出料口 開闔"
+		},
+		{
+			"Id": "Param23",
+			"GroupId": "ParamGroup7",
+			"Name": "門圖層"
+		},
+		{
+			"Id": "Param29",
+			"GroupId": "ParamGroup10",
+			"Name": "圓形物料 開關"
+		},
+		{
+			"Id": "Param32",
+			"GroupId": "ParamGroup10",
+			"Name": "圓形物料 X"
+		},
+		{
+			"Id": "Param33",
+			"GroupId": "ParamGroup10",
+			"Name": "圓形物料 Y"
+		},
+		{
+			"Id": "Param34",
+			"GroupId": "ParamGroup10",
+			"Name": "圓物料 圖層"
+		},
+		{
+			"Id": "Param30",
+			"GroupId": "ParamGroup10",
+			"Name": "方形物料 開關"
+		},
+		{
+			"Id": "Param35",
+			"GroupId": "ParamGroup10",
+			"Name": "方形物料 X"
+		},
+		{
+			"Id": "Param36",
+			"GroupId": "ParamGroup10",
+			"Name": "方形物料 Y"
+		},
+		{
+			"Id": "Param37",
+			"GroupId": "ParamGroup10",
+			"Name": "方形物料 圖層"
+		},
+		{
+			"Id": "Param31",
+			"GroupId": "ParamGroup10",
+			"Name": "三角物料 開關"
+		},
+		{
+			"Id": "Param38",
+			"GroupId": "ParamGroup10",
+			"Name": "三角物料 X"
+		},
+		{
+			"Id": "Param39",
+			"GroupId": "ParamGroup10",
+			"Name": "三角物料 Y"
+		},
+		{
+			"Id": "Param40",
+			"GroupId": "ParamGroup10",
+			"Name": "三角物料 圖層"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup3",
+			"Name": "鬍鬚物理"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "ParamGroup3",
+			"Name": "右耳 物理"
+		},
+		{
+			"Id": "Param20",
+			"GroupId": "ParamGroup3",
+			"Name": "中耳 物理"
+		},
+		{
+			"Id": "Param21",
+			"GroupId": "ParamGroup3",
+			"Name": "左耳 物理"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup",
+			"Name": "右眼 物理X"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup",
+			"Name": "右眼 物理Y"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup",
+			"Name": "右眼 高光旋轉"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup",
+			"Name": "右眼 高光縮放"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup",
+			"Name": "中眼 物理X"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup",
+			"Name": "中眼 物理Y"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup",
+			"Name": "中眼 高光旋轉"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup",
+			"Name": "中眼 高光縮放"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "ParamGroup",
+			"Name": "左眼 物理X"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup",
+			"Name": "左眼 物理Y"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup",
+			"Name": "左眼 高光旋轉"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup",
+			"Name": "左眼 高光縮放"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "眼睛"
+		},
+		{
+			"Id": "ParamGroup5",
+			"GroupId": "",
+			"Name": "耳朵"
+		},
+		{
+			"Id": "ParamGroup6",
+			"GroupId": "",
+			"Name": "耳朵燈"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "嘴巴"
+		},
+		{
+			"Id": "ParamGroup8",
+			"GroupId": "",
+			"Name": "方塊"
+		},
+		{
+			"Id": "ParamGroup9",
+			"GroupId": "",
+			"Name": "手"
+		},
+		{
+			"Id": "ParamGroup7",
+			"GroupId": "",
+			"Name": "出料口"
+		},
+		{
+			"Id": "ParamGroup10",
+			"GroupId": "",
+			"Name": "物料"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "其他物理"
+		},
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "眼睛物理"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part",
+			"Name": "出料口"
+		},
+		{
+			"Id": "Part2",
+			"Name": "眼"
+		},
+		{
+			"Id": "Part3",
+			"Name": "手"
+		},
+		{
+			"Id": "Part4",
+			"Name": "鬍鬚"
+		},
+		{
+			"Id": "Part5",
+			"Name": "耳"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"Param18",
+			"Param19"
+		],
+		[
+			"Param25",
+			"Param26"
+		],
+		[
+			"Param32",
+			"Param33"
+		],
+		[
+			"Param35",
+			"Param36"
+		],
+		[
+			"Param38",
+			"Param39"
+		],
+		[
+			"ParamAngleY",
+			"ParamAngleZ"
+		],
+		[
+			"Param",
+			"Param2"
+		],
+		[
+			"Param6",
+			"Param7"
+		]
+	]
+}

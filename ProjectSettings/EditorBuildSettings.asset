@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/levelSelect.unity
     guid: ffbc4c1a960291d47912c9e3fe28cbfe
+  - enabled: 1
+    path: Assets/Shine/Scene/FirstGame.unity
+    guid: 9aa6e06b83bbf334b80bc444c85ffc99
   m_configObjects: {}
