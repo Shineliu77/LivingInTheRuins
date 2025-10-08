@@ -169,7 +169,10 @@ public class FirstGame : MonoBehaviour
         GameObject customerGO = Instantiate(Customer, StartPos.position, StartPos.rotation);
         customerGO.GetComponent<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber+1);
         customerGO.GetComponent<CustomerGM>().ID = CustomerNumber;
-        IteamPrefab.Add(Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject);
+        GameObject IteamGO= Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
+        IteamGO.transform.parent = customerGO.transform;
+        IteamGO.transform.localPosition = Vector3.zero;
+        IteamPrefab.Add(IteamGO);
 
         seatOccupied[seatIndex] = true;
         activeCustomers.Add(customerGO);
