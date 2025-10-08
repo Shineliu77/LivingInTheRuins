@@ -574,6 +574,7 @@ GameObject:
   - component: {fileID: 7576838894011401649}
   - component: {fileID: 5784136612737400606}
   - component: {fileID: 5930714247751944790}
+  - component: {fileID: 4630737205573296955}
   m_Layer: 0
   m_Name: customer
   m_TagString: Customer
@@ -941,6 +942,9 @@ MonoBehaviour:
   hasArrived: 0
   ExitTargetPoint: {fileID: 0}
   Finished: 0
+  PosName: 
+  ID: 0
+  isProduceIteam: 0
 --- !u!114 &5784136612737400606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,6 +979,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 650195539377775738}
+--- !u!114 &4630737205573296955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561356532684980845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95a5b03ad98a8847877911f72b28629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SeatIndex: -1
+  Owner: {fileID: 0}
 --- !u!1 &2862059076396413088
 GameObject:
   m_ObjectHideFlags: 0

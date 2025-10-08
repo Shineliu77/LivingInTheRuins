@@ -11,20 +11,30 @@ public class CustomerGM : MonoBehaviour
     public bool hasArrived = false;
     public Transform ExitTargetPoint; // 離開目標位置
     public bool Finished;
+    public string PosName;
+    public int ID;
+    public bool isProduceIteam;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        targetPoint = GameObject.Find("顧客定位點").transform;
-        ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
-
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            targetPoint = GameObject.Find("顧客定位點").transform;
+            ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
+        }
+            if (Application.loadedLevelName == "FirstGame")
+        {
+            targetPoint = GameObject.Find(PosName).transform;
+            ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         # region 控制顧客腳色移動
-
+        transform.localScale = Vector3.one * 5.169395f;
         if (GetComponent<CountdownFill>().timer <= 0f || Finished)
         {
             float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
@@ -49,7 +59,7 @@ public class CustomerGM : MonoBehaviour
                 {
                     if (FindObjectOfType<FirstGame>().CustomerNumber < 4)
                     {
-                        FindObjectOfType<FirstGame>().ProductCustomer();
+                        FindObjectOfType<FirstGame>()?.NotifyCustomerFinished(gameObject);
                     }
                 }
                 Destroy(gameObject);
@@ -71,8 +81,11 @@ public class CustomerGM : MonoBehaviour
             }
             else
             {
+               
+                    OnArrived();
+                
                 hasArrived = true;
-                OnArrived();
+
             }
 
         }
@@ -90,12 +103,15 @@ public class CustomerGM : MonoBehaviour
 
 
         //第一關使用
-        else if (Application.loadedLevelName == "FirstGame")
+        /* if (Application.loadedLevelName == "FirstGame")
         {
-            if (!GameObject.FindWithTag("fixeditem") && !GameObject.FindWithTag("fixeditemOpen"))
-                FindObjectOfType<FirstGame>().ProduceIteam();
-
-        }
+            if (!isProduceIteam)
+            {
+                FindObjectOfType<FirstGame>().ProduceIteam(ID);
+                isProduceIteam = true;
+            }
+        
+        }*/
 
 
     }
