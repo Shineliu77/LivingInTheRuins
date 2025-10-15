@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5325468992189030092}
   - component: {fileID: 287031863378497351}
   - component: {fileID: -4794119307231285332}
+  - component: {fileID: -2638602415890854520}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6\u6253\u958B"
   m_TagString: fixeditemOpen
@@ -175,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0
 --- !u!114 &-4794119307231285332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,12 +202,26 @@ MonoBehaviour:
   - {fileID: -1026011781, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   ReagentsImage:
   - {fileID: -1538191797, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
-  - {fileID: -1567778227, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   - {fileID: 1194634593, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   - {fileID: -2129619538, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  - {fileID: -1567778227, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   CircuitBoard: {fileID: 1942677955, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   MaintenanceProjectName: 
   OriginalSize: {x: 0, y: 0, z: 0}
+  currentProcessorIndex: -1
+  currentReagentsIndex: -1
+--- !u!114 &-2638602415890854520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777248801548755955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee1e9a5d708f154299b258d3a318d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4835168987850365857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,7 +316,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeSprites:
+  - {fileID: -261587270, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  - {fileID: 657647226, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   - {fileID: 649694490, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  - {fileID: -622067836, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
   liquidPopOut: {fileID: 8438874387820952618, guid: 02002bb37b375484599eab9ce4476c5b, type: 3}
 --- !u!4 &3764767743121788634 stripped
 Transform:
@@ -374,6 +393,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3323213370751100232, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4468679033932493800}
+    - targetCorrespondingSourceObject: {fileID: 3323213370751100232, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7138966847352343289}
   m_SourcePrefab: {fileID: 100100000, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
 --- !u!4 &4817911958426816813 stripped
 Transform:
@@ -398,6 +420,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newSprite: {fileID: 2028890515, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+--- !u!114 &7138966847352343289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4889638808047387834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDragging: 0
 --- !u!1001 &8755563630268665209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -477,6 +512,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSprites:
   - {fileID: -1601931343, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  - {fileID: -1361594671, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  - {fileID: 1859648843, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
 --- !u!4 &7277014255343593689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}

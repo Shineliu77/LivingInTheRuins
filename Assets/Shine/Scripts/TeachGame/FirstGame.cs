@@ -17,7 +17,7 @@ public class FirstGame : MonoBehaviour
     [Range(1, 10)]
     public int maxConcurrentCustomers = 3;  // 需求：固定 3（可保留彈性）
     #endregion
-
+    
     #region 顧客生成
     [Header("顧客 Prefab")]
     public GameObject Customer;
@@ -43,10 +43,17 @@ public class FirstGame : MonoBehaviour
 
     [Header("打開組件生成位置")]
     public Transform IteamOpenProduce;
+    // 製藥元件(試管)
+    public Collider2D[] MakeAPotionIteams;
     #endregion
 
     void Start()
     {
+        MakeAPotionIteams[0].enabled = true;
+        MakeAPotionIteams[1].enabled = true;
+        MakeAPotionIteams[2].enabled = true;
+        MakeAPotionIteams[3].enabled = true;
+
         // 初始化時間與座位占用狀態
         levelEndTime = Time.time + levelDurationSeconds;
 
@@ -187,12 +194,6 @@ public class FirstGame : MonoBehaviour
         marker.SeatIndex = seatIndex;
         marker.Owner = this;
 
-        // 顧客入場要做的事
-        KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();
-        if (klarraAnimeScript != null)
-        {
-            klarraAnimeScript.PickPhone();
-        }
     }
 
     /// <summary>
@@ -204,12 +205,7 @@ public class FirstGame : MonoBehaviour
     {
         if (customerGO == null) return;
 
-        // 掛斷電話（沿用你的 HangUpPhone）
-        KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();
-        if (klarraAnimeScript != null)
-        {
-            klarraAnimeScript.HangUpPhone();
-        }
+        
 
         // 釋放座位
         var marker = customerGO.GetComponent<FirstGameCustomerMarker>();
@@ -256,11 +252,12 @@ public class FirstGame : MonoBehaviour
         {
             IteamOpenPrefab = Instantiate(IteamOpen, IteamOpenProduce.position, IteamOpenProduce.rotation);
             var set = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
-            if (set != null)
-            {
-                set.ID = 0;
-                set.ProcessorID = 0;
+             if (set != null)
+             {
+             set.ID = 0;
+             set.ProcessorID = 0;
             }
+            GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
         }
     }
 

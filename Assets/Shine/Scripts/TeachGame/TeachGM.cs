@@ -135,7 +135,7 @@ public class TeachGM : MonoBehaviour
         if (CustomerNumber == 2)
         {
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ID = 2;
-            IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ReagentsID = 0;
+            IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ReagentsID = 2;
         }
     }
     public void OpenTeach3()

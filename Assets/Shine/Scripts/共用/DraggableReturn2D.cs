@@ -3,7 +3,7 @@ using UnityEngine;
 public class DraggableReturn2D : MonoBehaviour
 {
     private Vector3 originalPosition;      // 原始位置
-    private bool isDragging = false;       // 是否正在拖曳
+    public bool isDragging = false;       // 是否正在拖曳
     private Vector3 offset;                // 滑鼠點擊時的偏移
 
     void Start()

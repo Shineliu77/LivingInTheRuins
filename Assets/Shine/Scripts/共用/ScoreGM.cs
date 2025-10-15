@@ -7,27 +7,32 @@ public class ScoreGM : MonoBehaviour
 {
     public int TotalScore;
 
-    public int AllScore = 0; //紀錄到大廳的總分數 
+    public int AllScore; //紀錄到大廳的總分數 
     public Image HundredsDigitImage;     // 百位數的圖片
     public Image TensDigitImage;     // 十位數的圖片
     public Image UnitsDigitImage;     // 個位數的圖片
     public Sprite[] numberSprites;   // 0~9 對應的圖片
-
-    // Start is called before the first frame update
+                                     // public int levelScore;
+                                     // Start is called before the first frame update
     void Start()
     {
-        
+        TotalScore = 0;
+        AllScore = PlayerPrefs.GetInt("SavedScore", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void AddScore()
     {
-        TotalScore+=50;
+        TotalScore += 50;
+        AllScore += 50;
+        PlayerPrefs.SetInt("SavedScore", AllScore);
+        PlayerPrefs.Save();
         UpdateScoreUI();
+
 
     }
     void UpdateScoreUI()
