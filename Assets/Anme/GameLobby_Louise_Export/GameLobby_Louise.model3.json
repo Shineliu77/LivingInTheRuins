@@ -1,0 +1,24 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "GameLobby_Louise.moc3",
+		"Textures": [
+			"GameLobby_Louise.2048/texture_00.png",
+			"GameLobby_Louise.2048/texture_01.png"
+		],
+		"Physics": "GameLobby_Louise.physics3.json",
+		"DisplayInfo": "GameLobby_Louise.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}

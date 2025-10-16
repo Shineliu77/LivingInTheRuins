@@ -1,0 +1,23 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "GameLobby_Tablet.moc3",
+		"Textures": [
+			"GameLobby_Tablet.2048/texture_00.png"
+		],
+		"Physics": "GameLobby_Tablet.physics3.json",
+		"DisplayInfo": "GameLobby_Tablet.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}
