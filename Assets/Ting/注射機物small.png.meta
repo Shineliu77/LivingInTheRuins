@@ -127,9 +127,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 120
+        y: 117
         width: 83
-        height: 73
+        height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 7, w: 0}
@@ -148,12 +148,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 120
-        y: 120
+        y: 117
         width: 82
-        height: 76
+        height: 79
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 8, w: 4}
+      border: {x: 0, y: 0, z: 5, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -169,12 +169,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 3
+        y: 1
         width: 91
-        height: 106
+        height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 13, w: 5}
+      border: {x: 0, y: 0, z: 13, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -189,13 +189,13 @@ TextureImporter:
       name: "\u6CE8\u5C04\u6A5F\u7269small_yellow"
       rect:
         serializedVersion: 2
-        x: 117
-        y: 11
-        width: 77
-        height: 90
+        x: 116
+        y: 9
+        width: 79
+        height: 92
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 18}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 17}
       outline: []
       physicsShape: []
       tessellationDetail: 0

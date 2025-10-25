@@ -3914,12 +3914,6 @@ MonoBehaviour:
   rotateSpeed: 36
   duration: 10
   CrashToTriggerCountdown: []
-  TargetCircularProgressBar: {fileID: 1285590542}
-  OriginCircularProgressBar: {fileID: 957199712, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedCircularProgressBar: {fileID: 1390289412, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  TargetClockOutside: {fileID: 1942838078}
-  OriginClockOutside: {fileID: -2032260617, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedClockOutside: {fileID: 1446072872, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
   FindToTriggerCountdownNames:
   - blender
   findInToTriggerObjects: []
@@ -6450,12 +6444,6 @@ MonoBehaviour:
   rotateSpeed: 36
   duration: 10
   CrashToTriggerCountdown: []
-  TargetCircularProgressBar: {fileID: 1285590542}
-  OriginCircularProgressBar: {fileID: 957199712, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedCircularProgressBar: {fileID: 1390289412, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  TargetClockOutside: {fileID: 1942838078}
-  OriginClockOutside: {fileID: -2032260617, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedClockOutside: {fileID: 1446072872, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
   FindToTriggerCountdownNames:
   - blender
   findInToTriggerObjects: []
@@ -9510,12 +9498,6 @@ MonoBehaviour:
   rotateSpeed: 36
   duration: 5
   CrashToTriggerCountdown: []
-  TargetCircularProgressBar: {fileID: 1285590542}
-  OriginCircularProgressBar: {fileID: 957199712, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedCircularProgressBar: {fileID: 1390289412, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  TargetClockOutside: {fileID: 1942838078}
-  OriginClockOutside: {fileID: -2032260617, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedClockOutside: {fileID: 1446072872, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
   FindToTriggerCountdownNames:
   - blender
   findInToTriggerObjects: []
@@ -14355,6 +14337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopMenuObject: {fileID: 1600662249}
+  stopAdjust: {fileID: 0}
 --- !u!114 &784763045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19390,23 +19373,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.5015574
+      value: 4.139295
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.5015574
+      value: 4.139295
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.5015574
+      value: 4.139295
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -966.6
+      value: -965.1152
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -542.59
+      value: -540.16614
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19414,7 +19397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.99992573
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalRotation.x
@@ -19426,7 +19409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.012189338
       objectReference: {fileID: 0}
     - target: {fileID: 8733209149272209393, guid: 066548fbaa6aa9c4f9d8e944bef28337, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -38415,12 +38398,6 @@ MonoBehaviour:
   rotateSpeed: 36
   duration: 5
   CrashToTriggerCountdown: []
-  TargetCircularProgressBar: {fileID: 1285590542}
-  OriginCircularProgressBar: {fileID: 957199712, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedCircularProgressBar: {fileID: 1390289412, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  TargetClockOutside: {fileID: 1942838078}
-  OriginClockOutside: {fileID: -2032260617, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
-  RedClockOutside: {fileID: 1446072872, guid: 3a3e11b4b05f417409759e0c233f0c22, type: 3}
   FindToTriggerCountdownNames:
   - blender
   findInToTriggerObjects: []

@@ -1319,6 +1319,8 @@ MonoBehaviour:
   ShouldFixed:
   - {fileID: 5924402162297093850, guid: dcd5ef49084eb2c45b3a52555691eba9, type: 3}
   brokebar: {fileID: 4006259901181875667}
+  targetSwichImage: {fileID: 0}
+  brokebarRed: {fileID: 0}
   isEnergized: 0
   progressBar: {fileID: 0}
   isDamaged: 0
@@ -1437,6 +1439,8 @@ MonoBehaviour:
   ShouldFixed:
   - {fileID: 5924402162297093850, guid: dcd5ef49084eb2c45b3a52555691eba9, type: 3}
   brokebar: {fileID: 4006259901181875667}
+  targetSwichImage: {fileID: 0}
+  brokebarRed: {fileID: 0}
   isEnergized: 0
   progressBar: {fileID: 0}
   isDamaged: 0

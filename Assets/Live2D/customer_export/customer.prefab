@@ -1846,6 +1846,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energizedEffect: {fileID: 6867629186990902466}
   isEnergized: 0
+  secondHand: {fileID: 0}
+  rotateSpeed: 36
   duration: 10
   CrashToTriggerCountdown:
   - {fileID: 0}

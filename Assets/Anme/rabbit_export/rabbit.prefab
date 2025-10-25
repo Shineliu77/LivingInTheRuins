@@ -122,21 +122,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 5898029433726539500}
-  - {fileID: 2448933933609455687}
-  - {fileID: 221119334983962709}
-  - {fileID: 783121098053854110}
-  - {fileID: 8204142676992951526}
-  - {fileID: 3574785825155275845}
-  - {fileID: 8086915166312099749}
-  - {fileID: 8098951700901399418}
-  - {fileID: 9016747027258086315}
-  - {fileID: 7389874125361423888}
-  - {fileID: 1849404391494480158}
-  - {fileID: 5805514644769461845}
-  - {fileID: 368245906047979139}
-  - {fileID: 9119887982002435004}
-  - {fileID: 9089437660828801737}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967223d908bf07b4f90945995bdca68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maskTexture: {fileID: 11400000, guid: 16bf142754640ab4487bb625c30931fd, type: 2}
+  _maskTexture: {fileID: 0}
 --- !u!114 &1387989120185115918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b893d4d32dd60bc4c9a2e447d31c6e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExpressionsList: {fileID: 11400000, guid: 362a9d3e4de065b46bbf4958f613818d, type: 2}
+  ExpressionsList: {fileID: 0}
   UseLegacyBlendCalculation: 0
   CurrentExpressionIndex: -1
 --- !u!95 &937125794225970448
@@ -477,7 +477,7 @@ Animator:
   m_GameObject: {fileID: 367908316215262056}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6954813d2d17e63448cdb1f17b25b8ad, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd9e6647bfff7542acb0200ab74bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CubismFadeMotionList: {fileID: 11400000, guid: b49ce8887aeb6504fb6fa73131c7b987, type: 2}
+  CubismFadeMotionList: {fileID: 0}
 --- !u!114 &6653829531286780275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1636,8 +1636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 7943582658522207905}
-  - {fileID: 4923233754433955379}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
@@ -1902,10 +1902,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 5896605772526710226}
-  - {fileID: 1521052635629048058}
-  - {fileID: 3070505049338450329}
-  - {fileID: 6981065503408319770}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
@@ -7205,8 +7205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 327711237301786078}
-  - {fileID: 1229476355952217574}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
@@ -9005,21 +9005,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 1898602297306635608}
-  - {fileID: 5217590748235657916}
-  - {fileID: 5270295525759242328}
-  - {fileID: 9110805066370151493}
-  - {fileID: 5764133295078311887}
-  - {fileID: 5781531209022697035}
-  - {fileID: 7243606623634289318}
-  - {fileID: 5180092638534521205}
-  - {fileID: 6782382148220675287}
-  - {fileID: 7240455714521058584}
-  - {fileID: 1147697158125954304}
-  - {fileID: 8292444677465275329}
-  - {fileID: 228492556108556120}
-  - {fileID: 7580314169061097252}
-  - {fileID: 637510810116196899}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
