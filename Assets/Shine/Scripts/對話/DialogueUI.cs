@@ -31,7 +31,8 @@ public class DialogueUI : MonoBehaviour
         {
             var line = dialogueManager.dialogueLines[currentLine];
             speakerText.text = line.speaker;
-            contentText.text ="\u3000\u3000"+line.content;
+            //contentText.text ="\u3000\u3000"+line.content;
+            contentText.text =line.content;
             Debug.Log(line.image.name);
           
                 StartCoroutine(LoadImage(line.imageFile));

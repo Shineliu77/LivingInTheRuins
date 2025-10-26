@@ -1193,7 +1193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c92e8b41624f64b8bc31e3db28fad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Patiencebar: {fileID: 2119662436911985293, guid: 00ff0b201d0140942971e93ba664e423, type: 3}
+  Patiencebar: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   hasArrived: 0
   customerPlace: {fileID: 0}
