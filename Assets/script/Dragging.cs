@@ -28,6 +28,35 @@ public class Dragging : MonoBehaviour
         mousePos.z = zDistance;
         offset = transform.position - Camera.main.ScreenToWorldPoint(mousePos);
         drag = true;
+
+        if (Application.loadedLevelName == "FirstGame")
+        {
+
+            Debug.Log("元件 開始拖曳1");
+            if (gameObject.CompareTag("brokecircle"))  //將其改成public仍無法切換動畫
+            {
+
+                Debug.Log("元件brokecircle開始拖曳");
+
+                FindObjectOfType<RabbitGM>().Takecircle();
+            }
+
+            if (gameObject.CompareTag("square"))  //將其改成public仍無法切換動畫
+            {
+
+                Debug.Log("元件brokecircle開始拖曳");
+
+                FindObjectOfType<RabbitGM>().Takesquare();
+            }
+
+            if (gameObject.CompareTag("triangle"))  //將其改成public仍無法切換動畫
+            {
+
+                Debug.Log("元件brokecircle開始拖曳");
+
+                FindObjectOfType<RabbitGM>().Taketriangle();
+            }
+        }
     }
 
     private void OnMouseUp()

@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 5248816768589385130}
   - component: {fileID: 4669543171487578867}
   - component: {fileID: 6603803010233459226}
-  - component: {fileID: 5000219301713558692}
-  - component: {fileID: 331237357657722966}
+  - component: {fileID: 808020194965136493}
   m_Layer: 0
   m_Name: "\u96FB\u8DEF\u677F "
   m_TagString: PCB
@@ -160,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7496722, y: 0.72269344}
   m_EdgeRadius: 0
---- !u!114 &5000219301713558692
+--- !u!114 &808020194965136493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,18 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4145697323038434478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30045ac51d37f6d4ea9c3bde50d7aa3d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &331237357657722966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4145697323038434478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13457329fc142bc40a7fe6d8d558766c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isDragging: 0

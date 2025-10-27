@@ -36,13 +36,13 @@ public class MonsterGM : MonoBehaviour
             loop = null;
         }
     }
-    
+
     IEnumerator DamageLoop()
     {
         while (true)
         {
-           
-           yield return new WaitForSeconds(interval);
+
+            yield return new WaitForSeconds(interval);
             FindObjectOfType<MakeAPotion>().ProduceMachineDurability();
             // 迴圈會自動「重新計 15 秒」
         }
@@ -59,9 +59,9 @@ public class MonsterGM : MonoBehaviour
     void Update()
     {
         #region 控制怪物腳色移動
-         stateInfo = MonsterAni.GetCurrentAnimatorStateInfo(0);
+        stateInfo = MonsterAni.GetCurrentAnimatorStateInfo(0);
 
-        if (ScriptBlood > 0&&!stateInfo.IsName("leave"))
+        if (ScriptBlood > 0 && !stateInfo.IsName("leave"))
         {
             // 計算與目標的距離
             float distance = Vector2.Distance(transform.position, targetPoint.position);
@@ -82,12 +82,42 @@ public class MonsterGM : MonoBehaviour
         else
         {
             MonsterAni.SetTrigger("Fail");
-           
-        }
-        if (stateInfo.normalizedTime >= 0.99f && stateInfo.IsName("leave"))
-        {
+            if (stateInfo.normalizedTime >= 0.01f && stateInfo.IsName("leave"))
+            {
 
-            Invoke("MonsterFail", 0.5f);
+
+                float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
+
+                if (distance > stopDistance)
+                {
+                    // 向目標移動
+                    Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
+                    transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
+
+            else
+            {
+                if (stateInfo.normalizedTime >= 0.01f && stateInfo.IsName("success"))
+                {
+                    float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
+
+                    if (distance > stopDistance)
+                    {
+                        // 向目標移動
+                        Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
+                        transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+            }
         }
         #endregion
     }
@@ -105,7 +135,7 @@ public class MonsterGM : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!stateInfo.IsName("leave")&& !stateInfo.IsName("success"))
+        if (!stateInfo.IsName("leave") && !stateInfo.IsName("success"))
         {
             ScriptBlood -= DeductBlood;
         }
@@ -113,24 +143,6 @@ public class MonsterGM : MonoBehaviour
     public void AttackMachine()
     {
         FindObjectOfType<MakeAPotion>().ProduceMachineDurability();
-    }
-
-    public void MonsterFail()
-    {
-        MonsterAni.SetTrigger("Leave"); //撥放離開動畫
-
-        float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
-
-        if (distance > stopDistance)
-        {
-            // 向目標移動
-            Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
-            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
 }

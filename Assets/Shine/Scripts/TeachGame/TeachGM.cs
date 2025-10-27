@@ -30,14 +30,22 @@ public class TeachGM : MonoBehaviour
     public Transform IteamOpenProduce;
     #endregion
     #region 第二段說明
-    public GameObject Teach2;
+    public GameObject Teach2; //第一段
+    public GameObject TeachTwo;
+    private bool teach2 = false;//第一段
+    private bool teachTwo = false;
     #endregion
     #region 第三段說明
-    public GameObject Teach3;
+    public GameObject Teach3;//第一段
+    public GameObject TeachThree;
+    public GameObject TeachThree2;
+  
     #endregion
     #region 第四段說明
-    public GameObject Teach4;
-    bool isTeach4;
+    public GameObject Teach4; //第一段
+    public GameObject TeachFour;
+    bool isTeach4;         //第一段
+    private bool teach4 = false;
     #endregion
     #region 第五段說明
     public GameObject Teach5;
@@ -54,7 +62,10 @@ public class TeachGM : MonoBehaviour
 
     #endregion
     #region 第8段說明
-    public GameObject Teach8;
+    public GameObject Teach8;  //第一段
+    public GameObject TeachEight;
+    private bool teach8 = false;//第一段
+    private bool teachEight = false;
     #endregion
     #region 第9段說明
     public GameObject Teach9;
@@ -74,10 +85,17 @@ public class TeachGM : MonoBehaviour
 
         if (IteamPrefab && !Teach1.active & !IteamPrefab.GetComponent<BoxCollider2D>().enabled)
         {
-
             IteamPrefab.GetComponent<BoxCollider2D>().enabled = true;
         }
-        if (IteamOpenPrefab && !Teach2.active & !IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled)
+
+
+        if (teach2 == true && !Teach2.active)  //打開第二個教學面板的第二段
+        {
+            TeachTwo.SetActive(true);
+
+        }
+
+        if (IteamOpenPrefab && !Teach2.active && !TeachTwo.active & !IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled)
         {
             IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
         }
@@ -87,6 +105,7 @@ public class TeachGM : MonoBehaviour
             {
                 GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
                 IteamOpenPrefab.name = "fixeditemOpenFinished1";
+                TeachFour.SetActive(true);
 
             }
         }
@@ -99,6 +118,13 @@ public class TeachGM : MonoBehaviour
         if (!Teach7.active && isTeach7 && CustomerNumber == 2)
         {
             Time.timeScale = 1;
+        }
+
+        if (teach8 == true && !Teach8.activeSelf && !teachEight)  //打開第八個教學面板的第二段
+        {
+
+            TeachEight.SetActive(true);
+            teachEight = true;
         }
     }
     public void ProductCustomer()
@@ -131,18 +157,39 @@ public class TeachGM : MonoBehaviour
             Teach2.SetActive(true);
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ID = 0;
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ProcessorID = 0;
+            teach2 = true;
+            Debug.Log("教學2代");
         }
         if (CustomerNumber == 2)
         {
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ID = 2;
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ReagentsID = 2;
         }
-    }
-    public void OpenTeach3()
-    {
-        Teach3.SetActive(true);
+
 
     }
+    public void CloseTeachTwo() //關掉第二個教學面板的第二段 掛回文字面板按鈕
+    {
+        TeachTwo.SetActive(false);
+        teach2 = false;
+    }
+    public void OpenTeach3() //IteamOpenOnTable
+    {
+        Teach3.SetActive(true);
+    }
+
+    public void OpenTeacheachThree()
+    {
+        Teach3.SetActive(false);
+        TeachThree.SetActive(true);
+    }
+
+    public void OpenTeacheachThree2()
+    {
+        TeachThree.SetActive(false);
+        TeachThree2.SetActive(true); ;
+    }
+
     public void OpenTeach4()
     {
         if (!isTeach4)
@@ -150,6 +197,12 @@ public class TeachGM : MonoBehaviour
             Teach4.SetActive(true);
             isTeach4 = true;
         }
+    }
+
+    public void CloseTeachFour()
+    {
+        TeachFour.SetActive(false);
+        teach4 = false;
     }
     public void OpenTeach5()
     {
@@ -178,7 +231,15 @@ public class TeachGM : MonoBehaviour
     public void OpenTeach8()
     {
         Teach8.SetActive(true);
+        teach8 = true;
 
+    }
+
+    public void CloseTeachEight()
+    {
+        TeachEight.SetActive(false);
+        teach8 = false;
+        teachEight = false;
     }
     public void OpenTeach9()
     {

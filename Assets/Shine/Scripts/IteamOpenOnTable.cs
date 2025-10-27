@@ -8,13 +8,13 @@ public class IteamOpenOnTable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnCollisionEnter2D(Collision2D coll)
     {//tag的fixiem物品碰撞
@@ -26,30 +26,61 @@ public class IteamOpenOnTable : MonoBehaviour
             coll.transform.localPosition = Vector3.zero;
             coll.transform.localScale = Vector3.one * SetScale;
 
-            if (Application.loadedLevelName == "FirstGame") //讓brokePCB可以拿出來給crab
-            {
+            //讓brokePCB可以拿出來給crab
 
-                if (Application.loadedLevelName == "FirstGame")
+
+            if (Application.loadedLevelName == "FirstGame")
+            {
+                if (coll.gameObject.CompareTag("fixeditemOpen"))
                 {
-                    Transform child = null;
-                    foreach (Transform t in coll.transform.GetComponentsInChildren<Transform>(true))  //把外組件打開的子物件brokePCB解除拖曳
+                    Debug.Log("偵測到 fixeditemOpen 碰撞！");
+
+                    // 檢查是否有顯示 CircuitBoard
+                    if (SetIteamOpenObj.HasActiveCircuitBoard)
                     {
-                        if (t.CompareTag("brokePCB"))
+                        // 檢查這個物件是否有子物件
+                        Debug.Log("找到brokePCB了！");
+                        if (coll.transform.childCount > 0)
                         {
-                            child = t; break;
+                            Debug.Log("找到brokePCB了222！");
+                            // 嘗試找到 brokePCB 子物件
+                            Transform brokeChild = null;
+                            foreach (Transform child in coll.transform)
+                            {
+                                if (child.CompareTag("brokePCB"))
+                                {
+                                    Debug.Log("找到brokePCB了222222222222！");
+                                    brokeChild = child;
+                                    Debug.Log("找到brokePCB了22222222222222222222222222222222！");
+                                    break;
+
+                                }
+                            }
+
+                            if (brokeChild != null)
+                            {
+                                // 啟用子物件的拖曳腳本
+                                var drag = brokeChild.GetComponent<DraggableReturn2D>();
+                                Debug.Log("brokePCB 得到拖曳腳本！");
+                                if (drag != null)
+                                {
+                                    drag.enabled = true;
+                                    Debug.Log("brokePCB 拖曳啟用！");
+                                }
+                                else
+                                { Debug.LogWarning("brokePCB 找不到 DraggableReturn2D 腳本"); }
+                            }
+                            else { Debug.LogWarning("fixeditemOpen 底下找不到 brokePCB 子物件"); }
                         }
+                        else { Debug.LogWarning("fixeditemOpen 沒有任何子物件"); }
                     }
-                    if (child != null)
-                    {
-                        DraggableReturn2D childDrag = child.GetComponent<DraggableReturn2D>();
-                        GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
-                        if (childDrag != null) childDrag.enabled = true;
-                    }
+                    else { Debug.Log("目前沒有啟用的 CircuitBoard，因此不允許拖曳"); }
                 }
             }
 
 
-            if (Application.loadedLevelName == "TeachGame") {
+            if (Application.loadedLevelName == "TeachGame")
+            {
                 if (FindObjectOfType<TeachGM>().CustomerNumber == 1)
                 {
                     FindObjectOfType<TeachGM>().OpenTeach3();

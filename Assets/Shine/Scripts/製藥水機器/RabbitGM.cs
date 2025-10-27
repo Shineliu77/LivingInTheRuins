@@ -32,8 +32,8 @@ public class RabbitGM : MonoBehaviour
     public Image MachineDurabilityBarOustside;   //耐久外框圖片
     public Sprite[] MachineDurabilityBarSpriteOustside;
 
-    public GameObject[] Potions;
-    public int SelectPotionID;
+    // public GameObject[] Potions;
+    // public int SelectPotionID;
 
     public Transform needle; // 指針物件（需拖曳到 Inspector）
     public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
@@ -48,9 +48,11 @@ public class RabbitGM : MonoBehaviour
     //生成物件
     public GameObject[] ObjectPrefabs;         // 多項可生成物件
     public Transform ObjectPop;         // 生成點
-    public int maxObjects = 4;           // 生成上限
+    public int maxObjects = 5;           // 生成上限
     private GameObject CurrentObject;    // 該生成點當前物件
     public static List<GameObject> allSpawnedObjects = new List<GameObject>(); // 全域已生成物件紀錄
+
+    private bool canSpawn = false;
 
 
     // Start is called before the first frame update
@@ -64,6 +66,7 @@ public class RabbitGM : MonoBehaviour
     // Update is called once per frame
     void Update() //無效
     {
+
         if (isStopwatch && ScriptStopwatchTimer > 0)
         {
             Stopwatch.gameObject.SetActive(true);
@@ -116,47 +119,68 @@ public class RabbitGM : MonoBehaviour
 
                 }
             }
-        }
 
+        }
+        if (Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
+        {
+            AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
+            if (canSpawn == true)
+            {
+                if (stateInfo2.IsName("work circle") && stateInfo2.normalizedTime > 0.98f)  //生成圓
+                {
+                    Debug.Log("開始work circle");
+                    SpawnObject(0);
+                    canSpawn = false;
+                    Stopwatch.gameObject.SetActive(false);
+
+                }
+
+                AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成方
+                if (stateInfo3.IsName("work square") && stateInfo3.normalizedTime > 0.98f)
+                {
+                    Debug.Log("開始work square");
+                    SpawnObject(1);
+                    canSpawn = false;
+                    Stopwatch.gameObject.SetActive(false);
+
+                }
+
+                AnimatorStateInfo stateInfo4 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成角
+
+                if (stateInfo4.IsName("work triangle") && stateInfo4.normalizedTime > 0.98f)
+                {
+                    Debug.Log("開始work triangle");
+                    SpawnObject(2);
+                    canSpawn = false;
+                    Stopwatch.gameObject.SetActive(false);
+
+                }
+            }
+        }
     }
 
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-        {
-            // Reset();
-            //如果觸發按鈕的話
-            MachineAni.SetTrigger("IdleToWalkCircle");
-            ProduceMonster();
 
-        }
-        //Invoke("SpawnObject(0)", 0.5f);無效無法延遲
-        //Invoke("SpawnObject", 0.5f);
-        SpawnObject(0);
-
+        //  Reset();
+        //如果觸發按鈕的話
+        canSpawn = true;
+        MachineAni.SetTrigger("IdleToWalkCircle");
+        ProduceMonster();
     }
     public void RabbitSquaare()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-
-        {
-            //Reset();
-            MachineAni.SetTrigger("IdleToSquare");
-            ProduceMonster();
-
-        }
-
-        //MachineAni.SetBool("waitSquare", true);
-        SpawnObject(1);
+        //Reset();
+        canSpawn = true;
+        MachineAni.SetTrigger("IdleToSquare");
+        ProduceMonster();
     }
     public void RabbittTriangle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-        {
-            // Reset();
-            MachineAni.SetTrigger("IdleToTriangle");
-            ProduceMonster();
-
-        }
-        // MachineAni.SetBool("waitTriangle", true);
-        SpawnObject(2);
+        // Reset();
+        canSpawn = true;
+        MachineAni.SetTrigger("IdleToTriangle");
+        ProduceMonster();
     }
 
     public void SpawnObject(int prefabIndex) // 場景上含生成點最多可以有4個物件，若達生成上限，直接停止   //之後要補生成點有物件不可生成(等場景儲存位置有了後)
@@ -170,18 +194,21 @@ public class RabbitGM : MonoBehaviour
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            canSpawn = false;
         }
 
         if (prefabIndex == 1)//方形
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            canSpawn = false;
         }
 
         if (prefabIndex == 2) //三角
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            canSpawn = false;
         }
 
     }
@@ -227,10 +254,10 @@ public class RabbitGM : MonoBehaviour
     {
         isStopwatch = true;
         ScriptStopwatchTimer = StopwatchTimer;
-        for (int i = 0; i < Potions.Length; i++)
-        {
-            Potions[i].SetActive(false);
-        }
+        //for (int i = 0; i < Potions.Length; i++)
+        //  {
+        //      Potions[i].SetActive(false);
+        //}
     }
 
     void DeductDurability()
@@ -253,4 +280,24 @@ public class RabbitGM : MonoBehaviour
         }
     }
 
+
+    public void Takecircle()
+    {
+
+        // MachineAni.SetTrigger("takecircle");
+        MachineAni.SetTrigger("takecircle");
+    }
+
+    public void Takesquare()
+    {
+
+        // MachineAni.SetTrigger("takesquare");
+        MachineAni.SetTrigger("takeSquare");
+    }
+    public void Taketriangle()
+    {
+
+        // MachineAni.SetTrigger("takeTriangle");
+        MachineAni.SetTrigger("takeTriangle");
+    }
 }

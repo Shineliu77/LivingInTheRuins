@@ -12,9 +12,10 @@ public class SetIteamOpenObj : MonoBehaviour
     public Sprite CircuitBoard;
     public string MaintenanceProjectName;
     public Vector3 OriginalSize;
-
+    public static bool HasActiveCircuitBoard = false;  //是否開啟 CircuitBoard
     public int currentProcessorIndex = -1;
     public int currentReagentsIndex = -1;
+    public int OpenCount;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +49,7 @@ public class SetIteamOpenObj : MonoBehaviour
             foreach (GameObject obj in IteamObj)
             {
                 obj.SetActive(false);
+                OpenCount = 0;
             }
 
             //修理元件中隨機開出一樣
@@ -84,6 +86,8 @@ public class SetIteamOpenObj : MonoBehaviour
 
                     case 1:
                         sr.sprite = CircuitBoard;
+                        HasActiveCircuitBoard = true;
+                        Debug.Log("有電路板喔");
                         break;
 
                     case 2:
@@ -91,13 +95,17 @@ public class SetIteamOpenObj : MonoBehaviour
                         currentReagentsIndex = Random.Range(0, ReagentsImage.Length);
                         sr.sprite = ReagentsImage[currentReagentsIndex];
                         break;
+
                 }
             }
+            OpenCount = selectedIndexes.Count;
+            Debug.Log($"實際打開了 {OpenCount} 個物件");
         }
         OriginalSize = transform.localScale;
     }
 
-    // Update is called once per frame
+
+
     void Update()
     {
 
@@ -109,8 +117,22 @@ public class SetIteamOpenObj : MonoBehaviour
             IteamObj[i].SetActive(false);
         }
     }
-    public void ResetSize()
+    public void ResetSize()   //修好 OpenCount數字就減1  等於0時變回原本大小
     {
-        transform.localScale = OriginalSize;
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            transform.localScale = OriginalSize;
+        }
+
+        if (Application.loadedLevelName == "FirstGame")
+        {
+            OpenCount--;
+            if (OpenCount == 0)
+            {
+                transform.localScale = OriginalSize;
+
+            }
+        }
+       
     }
 }

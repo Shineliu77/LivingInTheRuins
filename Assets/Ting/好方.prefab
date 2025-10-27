@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4506388442777486957}
   - component: {fileID: 1445649009185227899}
   - component: {fileID: -6369418498421756999}
-  - component: {fileID: -5511131870473287714}
+  - component: {fileID: -3992076678281539388}
   m_Layer: 0
   m_Name: "\u597D\u65B9"
   m_TagString: square
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30045ac51d37f6d4ea9c3bde50d7aa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5511131870473287714
+--- !u!114 &-3992076678281539388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3287382048044914801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13457329fc142bc40a7fe6d8d558766c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0

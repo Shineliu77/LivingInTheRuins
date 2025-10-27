@@ -19,12 +19,23 @@ public class DraggableReturn2D : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = transform.position - new Vector3(mouseWorldPos.x, mouseWorldPos.y, transform.position.z);
             isDragging = true;
+            if (Application.loadedLevelName == "FirstGame")
+            {
+                Debug.Log("PCB 開始拖曳1");
+                if (GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().isDragging == true)
+                {
+
+                    Debug.Log("撥放crab拿走動畫");
+                    //GameObject.FindWithTag("PCB").GetComponent<CrabGM>().MachineAni.SetTrigger("takeout");
+                    FindObjectOfType<CrabGM>().TakePCB();
+                }
+            }
         }
     }
 
     void OnMouseDrag()
     {
-        if (isDragging&& this.enabled)
+        if (isDragging && this.enabled)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mouseWorldPos.x, mouseWorldPos.y, transform.position.z) + offset;
@@ -36,10 +47,10 @@ public class DraggableReturn2D : MonoBehaviour
         if (this.enabled)
         {
             isDragging = false;
-            if ( this.gameObject.tag== "fixeditemOpen")
+            if (this.gameObject.tag == "fixeditemOpen")
             {
-                if(this.transform.parent.childCount > 0)
-                transform.localPosition = Vector3.zero;
+                if (this.transform.parent.childCount > 0)
+                    transform.localPosition = Vector3.zero;
             }
             else
             {
@@ -47,5 +58,15 @@ public class DraggableReturn2D : MonoBehaviour
                 transform.position = originalPosition;
             }
         }
+    }
+
+
+    public void SetNewOrigin(Vector3 newPos)
+    {
+        //if (!gameObject.CompareTag("brokePCB"))
+        // {
+        originalPosition = newPos;
+        //  }
+
     }
 }

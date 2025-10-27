@@ -69,10 +69,12 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[1]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                         if (transform.parent.GetComponent<DraggableReturn2D>())
                         {
-                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                            {
+                                transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            }
                         }
                         Debug.Log("圖片已更換為 changeSprites[0]");
 
@@ -98,10 +100,12 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                         if (transform.parent.GetComponent<DraggableReturn2D>())
                         {
-                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                            {
+                                transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            }
                         }
                         Debug.Log("圖片已更換為 changeSprites[1]");
                         RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
@@ -125,10 +129,12 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                         if (transform.parent.GetComponent<DraggableReturn2D>())
                         {
-                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                            {
+                                transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                            }
                         }
                         Debug.Log("圖片已更換為 changeSprites[2]");
                         RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
@@ -151,11 +157,13 @@ public class LiveTwoDChangeImage : MonoBehaviour
                         if (changeSprites.Length > 1)
                         {
                             spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[1]
-                                                                      // transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
+                                                                      //transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();    但應該不是你讓東西變-1 但應該不是
                             if (transform.parent.GetComponent<DraggableReturn2D>())
                             {
-                                transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                                if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                                {
+                                    transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                                }
                             }
                             Debug.Log("圖片已更換為 changeSprites[0]");
                         }

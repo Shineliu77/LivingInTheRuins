@@ -31,10 +31,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                     }
                     if (Application.loadedLevelName == "TeachGame")
                     {
@@ -74,10 +76,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                     }
                     Debug.Log("圖片已更換為 changeSprites[0]");
                 }
@@ -85,15 +89,11 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
                 }
-                MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
-                Destroy(collision.gameObject);
-                // if (liquidPopOut != null)
-                //  {
-                //   Debug.Log("液體碰到 yellowIiquid，通知控制器銷毀！");
-                //     //  刪除生成液體
-                //    liquidPopOut.LiquidDefeated(collidedObject);
-                // }
-
+                if (spriteRenderer.sprite == changeSprites[0])
+                {
+                    MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
+                    Destroy(collision.gameObject);
+                }
             }
             // 確認碰撞的物件是 yellowIiquid 時的處理
             if (collision.gameObject.CompareTag("yellowIiquid"))
@@ -105,10 +105,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                     }
                     Debug.Log("圖片已更換為 changeSprites[1]");
                 }
@@ -116,17 +118,11 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
                 }
-
-                MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
-                Destroy(collision.gameObject);
-
-               // if (liquidPopOut != null)
-               // {
-               //     Debug.Log("液體碰到 yellowIiquid，通知控制器銷毀！");
-                    //  刪除生成液體
-               //     liquidPopOut.LiquidDefeated(collidedObject);
-              //  }
-
+                if (spriteRenderer.sprite == changeSprites[1])
+                {
+                    MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
+                    Destroy(collision.gameObject);
+                }
             }
 
             // 確認碰撞的物件是 blueIiquid 時的處理
@@ -139,10 +135,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[0]
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                     }
                     Debug.Log("圖片已更換為 changeSprites[2]");
                 }
@@ -150,9 +148,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
                 }
+                if (spriteRenderer.sprite == changeSprites[2])
+                {
+                    MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
+                    Destroy(collision.gameObject);
+                }
 
-                MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
-                Destroy(collision.gameObject);
                 // if (liquidPopOut != null)
                 // {
                 //    Debug.Log("液體碰到 yellowIiquid，通知控制器銷毀！");
@@ -171,10 +172,12 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[3];
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-
                     if (transform.parent.GetComponent<DraggableReturn2D>())
                     {
-                        transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                        {
+                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                        }
                     }
                     Debug.Log("圖片已更換為 changeSprites[3]");
                 }
@@ -182,15 +185,11 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 {
                     Debug.LogWarning("changeSprites 陣列長度不足，無法變更圖片！");
                 }
-                MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
-                Destroy(collision.gameObject);
-
-                //  if (liquidPopOut != null)
-                // {
-                //    Debug.Log("液體碰到 greenIiquid，通知控制器銷毀！");
-                //  刪除生成液體
-                //   liquidPopOut.LiquidDefeated(collidedObject);
-                // }
+                if (spriteRenderer.sprite == changeSprites[3])
+                {
+                    MakeAPotion.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
+                    Destroy(collision.gameObject);
+                }
             }
         }
 
