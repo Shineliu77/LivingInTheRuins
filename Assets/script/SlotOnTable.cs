@@ -15,12 +15,11 @@ public class SlotOnTable : MonoBehaviour
     void Update()
     {
         // 如果目前有物件在slot裡，檢查玩家是否點擊了它
-        if (hasItem && itemInContact != null && Input.GetMouseButtonDown(0))
+        if (itemInContact != null && Input.GetMouseButtonDown(0))
         {
-            // 檢查滑鼠點擊是否在物件上
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D hit = Physics2D.OverlapPoint(mousePos);
-
+            Vector3 mousePos = Input.mousePosition;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
+            Collider2D hit = Physics2D.OverlapPoint(worldPos);
             if (hit != null && hit.gameObject == itemInContact)
             {
                 Debug.Log($"從 {name} 取出 {itemInContact.name}");
@@ -54,17 +53,19 @@ public class SlotOnTable : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 僅放入液體
-        if (LiquidslotPoint != null &&
-            (collision.CompareTag("redIiquid") || collision.CompareTag("yellowIiquid") || collision.CompareTag("blueIiquid") || collision.CompareTag("greenIiquid")) && !hasItem)
+        if (LiquidslotPoint != null && hasItem == false &&
+        (collision.CompareTag("redIiquid") || collision.CompareTag("yellowIiquid") || collision.CompareTag("blueIiquid") || collision.CompareTag("greenIiquid")) && !hasItem)
         {
             PlaceItemInSlot(collision.gameObject, LiquidslotPoint);
+            hasItem = true;
         }
 
         // 僅放入元件
-        if (SpriteslotPoint != null &&
+        if (SpriteslotPoint != null && hasItem == false &&
             (collision.CompareTag("brokecircle") || collision.CompareTag("square") || collision.CompareTag("triangle")) && !hasItem)
         {
             PlaceItemInSlot(collision.gameObject, SpriteslotPoint);
+            hasItem = true;
         }
     }
 
@@ -103,7 +104,7 @@ public class SlotOnTable : MonoBehaviour
         }
 
 
-        hasItem = true;
+       
         Debug.Log($" {obj.name} 放入 {slotPoint.name}");
     }
 

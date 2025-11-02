@@ -30,7 +30,19 @@ public class CrabGM : MonoBehaviour
     GameObject CurrentPCB;
     private bool canSpawnPCB = false;
 
-    // Start is called before the first frame update
+    //隨機判斷要不要產生怪物 但 新手教學關卡要產生怪物
+    bool isProduceMonster;
+    public GameObject Monster;
+    GameObject MonsterPrefab;
+    public Transform ProducePos;
+    public float DeductMachineDurability;//扣除機器耐久
+    bool isRun;
+
+    //機器耐久值恢復
+    public GameObject FixMachineDurability;  //機器耐久維修物
+    bool MachineDurabilityFix = false;  //不可修
+    private Coroutine repairCoroutine; // 協程參考，避免重複啟動
+
     void Start()
     {
         MachineDurability_Script = MachineDurability;
@@ -59,6 +71,7 @@ public class CrabGM : MonoBehaviour
             if (stateInfo.normalizedTime < 0.99f)
             {
                 MachineUI.gameObject.SetActive(true);
+                MachineDurabilityFix = false;    //不可維修
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
@@ -66,7 +79,6 @@ public class CrabGM : MonoBehaviour
                 SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
 
                 MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
-
                 if (MachineUIBar.fillAmount > 0.5f)
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[0];
@@ -95,17 +107,13 @@ public class CrabGM : MonoBehaviour
         }
         if (canSpawnPCB && CurrentPCB == null)   //生成PCB
         {
+
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("hold") && stateInfo.normalizedTime > 0.25f)
             {
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;
             }
-            // if (GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().isDragging == true)  //將其改成public仍無法切換動畫
-            // {
-            //   TakePCB();
-            //  }
-
         }
     }
 
@@ -114,6 +122,7 @@ public class CrabGM : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("brokePCB"))
         {
+            ProduceMonster();
             Destroy(coll.gameObject);
             canSpawnPCB = true;
             MachineAni.SetTrigger("IdleToWalk");
@@ -123,17 +132,92 @@ public class CrabGM : MonoBehaviour
     public void HoldPCB() //撥放持續拿PCB動畫
     {
         MachineAni.SetBool("hold", true);
-
-        // if(GameObject.FindWithTag("PCB"))
-        //{
-
-        // GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().OnMouseDown();
-        // MachineAni.SetTrigger("takeout");
-        //}
-
     }
     public void TakePCB()
     {
         MachineAni.SetTrigger("takeout");
+    }
+
+    //判斷要不要產生怪物
+    void ProduceMonster()
+    {
+        isRun = true;
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+            MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
+        }
+        else
+        {
+            //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
+            isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
+            if (isProduceMonster && !MonsterPrefab)
+            {
+                MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+                MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
+
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    {
+        if (hit.gameObject == FixMachineDurability)
+        {
+            //  if (isRun)
+            // {
+            //   MachineDurabilityFix = false;
+            //  if (repairCoroutine != null)
+            //   {
+            //    StopCoroutine(repairCoroutine);
+            //   repairCoroutine = null;
+            //}
+            // }
+            // else if (!MachineDurabilityFix)
+            if (!MachineDurabilityFix)
+            {
+                MachineDurabilityFix = true;
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
+        }
+    }
+
+    private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
+    {
+        while (MachineDurabilityFix)
+        {
+            float repairAmount = MachineDurability * 0.005f;
+            // float repairAmount = MachineDurability * 0.1f;
+            MachineDurability_Script += repairAmount;
+
+            if (MachineDurability_Script > MachineDurability)
+                MachineDurability_Script = MachineDurability;
+            SaveRemainingValue = MachineDurability_Script;
+            MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    // private void OnCollisionExit2D(Collision2D hit)  //停止恢復
+    // {
+    //     if (hit.gameObject == FixMachineDurability)
+    //  {
+    //    MachineDurabilityFix = false;
+    //    if (repairCoroutine != null)
+    //  {
+    //      StopCoroutine(repairCoroutine);
+    //     repairCoroutine = null;
+    // }
+    //}
+    // }
+    //怪物攻擊機台扣的耐力值
+    public void ProduceMachineDurability()
+    {
+
+        SaveRemainingValue = MachineDurability_Script - DeductMachineDurability;
+        MachineDurability_Script = SaveRemainingValue;
+        MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+        GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
+
+
     }
 }

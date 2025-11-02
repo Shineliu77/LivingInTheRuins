@@ -24,7 +24,12 @@ public class BrokeProgressGM : MonoBehaviour
 
     public Transform needle; // 指針物件（需拖曳到 Inspector）
     public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
-    // Start is called before the first frame update
+
+    //機器耐久值恢復
+    public GameObject FixMachineDurability;  //機器耐久維修物
+    bool MachineDurabilityFix = false;  //不可修
+    private Coroutine repairCoroutine; // 協程參考，避免重複啟動
+
     void Start()
     {
         MachineDurability_Script = MachineDurability;
@@ -32,13 +37,19 @@ public class BrokeProgressGM : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    //隨機判斷要不要產生怪物 但 新手教學關卡要產生怪物
+    bool isProduceMonster;
+    public GameObject Monster;
+    GameObject MonsterPrefab;
+    public Transform ProducePos;
+    public float DeductMachineDurability;//扣除機器耐久
+    bool isRun;
+
     void Update()
     {
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName("work"))
         {
-
             if (stateInfo.normalizedTime >= 0.99f && GameObject.FindGameObjectsWithTag("fixeditemOpen").Length <= 0)
             {
                 if (Application.loadedLevelName == "TeachGame")
@@ -60,6 +71,7 @@ public class BrokeProgressGM : MonoBehaviour
             if (stateInfo.normalizedTime < 0.99f)
             {
                 MachineUI.gameObject.SetActive(true);
+                MachineDurabilityFix = false;    //不可維修
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
@@ -92,6 +104,7 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
                     MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
                 }
+
             }
         }
     }
@@ -101,10 +114,82 @@ public class BrokeProgressGM : MonoBehaviour
     {//tag的fixiem物品碰撞
         if (coll.gameObject.CompareTag("fixeditem"))
         {
+
             coll.gameObject.SetActive(false);
             MachineAni.SetTrigger("IdleToWalk");
+            ProduceMonster();
+        }
 
+        if (coll.gameObject == FixMachineDurability)
+        {
+            if (!MachineDurabilityFix)
+            {
+                MachineDurabilityFix = true;
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
         }
     }
 
+    private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
+    {
+        while (MachineDurabilityFix)
+        {
+            float repairAmount = MachineDurability * 0.005f;
+            // float repairAmount = MachineDurability * 0.1f;
+            MachineDurability_Script += repairAmount;
+
+            if (MachineDurability_Script > MachineDurability)
+                MachineDurability_Script = MachineDurability;
+            SaveRemainingValue = MachineDurability_Script;
+            MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    // private void OnCollisionExit2D(Collision2D hit)  //停止恢復
+    // {
+    //     if (hit.gameObject == FixMachineDurability)
+    //  {
+    //    MachineDurabilityFix = false;
+    //    if (repairCoroutine != null)
+    //  {
+    //      StopCoroutine(repairCoroutine);
+    //     repairCoroutine = null;
+    // }
+    //}
+    // }
+
+
+    //判斷要不要產生怪物
+    void ProduceMonster()
+    {
+        isRun = true;
+        if (Application.loadedLevelName == "TeachGame")
+        {
+            MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+            MonsterPrefab.GetComponent<MonsterGM>().InitTarget("opener0320");
+        }
+        else
+        {
+            //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
+            isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
+            if (isProduceMonster && !MonsterPrefab)
+            {
+                MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+                MonsterPrefab.GetComponent<MonsterGM>().InitTarget("opener0320");
+                MonsterPrefab.transform.localScale = new Vector3(
+                     -MonsterPrefab.transform.localScale.x,   // 反轉 X 軸
+                     MonsterPrefab.transform.localScale.y,
+                     MonsterPrefab.transform.localScale.z
+                 );
+            }
+        }
+    }
+    //怪物攻擊機台扣的耐力值
+    public void ProduceMachineDurability()
+    {
+        SaveRemainingValue = MachineDurability_Script - DeductMachineDurability;
+        MachineDurability_Script = SaveRemainingValue;
+        MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+        GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
+    }
 }

@@ -16,7 +16,7 @@ public class RabbitGM : MonoBehaviour
     public float ScriptStopwatchTimer;
     bool isStopwatch;
 
-    //隨機判斷要不要產生怪物 但 新手教學關卡要產生怪物
+    //隨機判斷要不要產生怪物 
     bool isProduceMonster;
     public GameObject Monster;
     GameObject MonsterPrefab;
@@ -54,8 +54,11 @@ public class RabbitGM : MonoBehaviour
 
     private bool canSpawn = false;
 
+    //機器耐久值恢復
+    public GameObject FixMachineDurability;  //機器耐久維修物
+    bool MachineDurabilityFix = false;  //不可修
+    private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
-    // Start is called before the first frame update
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -67,42 +70,73 @@ public class RabbitGM : MonoBehaviour
     void Update() //無效
     {
 
-        if (isStopwatch && ScriptStopwatchTimer > 0)
-        {
-            Stopwatch.gameObject.SetActive(true);
-            ScriptStopwatchTimer -= Time.deltaTime;
-            Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
-            float fillAmount = ScriptStopwatchTimer / StopwatchTimer;
-            float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
-            needle.localEulerAngles = new Vector3(0, 0, -zRotation);
-            if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
-            {
-                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
-                StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
+        //   if (isStopwatch && ScriptStopwatchTimer > 0)
+        //  {
+        // Stopwatch.gameObject.SetActive(true);
+        // ScriptStopwatchTimer -= Time.deltaTime;
+        // Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+        // float fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+        //  float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
+        // needle.localEulerAngles = new Vector3(0, 0, -zRotation);
+        //   if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
+        //  {
+        // Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
+        //    StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
 
-            }
-            else
-            {
-                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
-                StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
-            }
-            if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0)
-            {
-                // Potions[SelectPotionID].SetActive(true);
-                Stopwatch.gameObject.SetActive(false);
-                isRun = false;
-                // if (Application.loadedLevelName == "TeachGame")
-                // {
-                // FindObjectOfType<TeachGM>().OpenTeach8();
-                //}
-            }
-        }
+        //  }
+        // else
+        //  {
+        //    Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
+        //     StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
+        // }
+        //   if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0)
+        // {
+        // Potions[SelectPotionID].SetActive(true);
+        //  Stopwatch.gameObject.SetActive(false);
+        //   isRun = false;
+        // if (Application.loadedLevelName == "TeachGame")
+        // {
+        // FindObjectOfType<TeachGM>().OpenTeach8();
+        //}
+        // }
+        //}
         if (isRun)
         {
             AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("IdleToWalkCircle"))
+            if (stateInfo.IsName("work circle") || stateInfo.IsName("work square") || stateInfo.IsName("work triangle"))
             {
-                if (stateInfo.normalizedTime >= 0.99f)
+                {  //倒數計時
+                    float normalizedTime = Mathf.Min(stateInfo.normalizedTime, 1f);
+                    Stopwatch.gameObject.SetActive(true);
+
+
+                    Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - normalizedTime;
+                    float zRotation = (1f - normalizedTime) * maxRotation;
+                    needle.localEulerAngles = new Vector3(0, 0, -zRotation);
+                    // if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
+                    if (normalizedTime < 0.5f)
+                    {
+                        Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
+                        StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
+
+                    }
+                    else
+                    {
+                        Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
+                        StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
+                    }
+                    if (normalizedTime >= 0.98f)
+                    {
+                        Stopwatch.gameObject.SetActive(false);
+                        isRun = false;
+                        MachineDurabilityFix = true; // 動畫結束後允許修復
+                    }
+                    MachineDurabilityFix = false;   //不可維修
+
+                }  //倒數計時
+
+
+                if (stateInfo.normalizedTime >= 0.98f)
                 {
 
                     MachineDurability_Script = SaveMachineDurability;
@@ -131,7 +165,7 @@ public class RabbitGM : MonoBehaviour
                     Debug.Log("開始work circle");
                     SpawnObject(0);
                     canSpawn = false;
-                    Stopwatch.gameObject.SetActive(false);
+                    //  Stopwatch.gameObject.SetActive(false);
 
                 }
 
@@ -141,7 +175,7 @@ public class RabbitGM : MonoBehaviour
                     Debug.Log("開始work square");
                     SpawnObject(1);
                     canSpawn = false;
-                    Stopwatch.gameObject.SetActive(false);
+                    // Stopwatch.gameObject.SetActive(false);
 
                 }
 
@@ -152,7 +186,7 @@ public class RabbitGM : MonoBehaviour
                     Debug.Log("開始work triangle");
                     SpawnObject(2);
                     canSpawn = false;
-                    Stopwatch.gameObject.SetActive(false);
+                    //  Stopwatch.gameObject.SetActive(false);
 
                 }
             }
@@ -162,7 +196,7 @@ public class RabbitGM : MonoBehaviour
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
 
-        //  Reset();
+        Reset();
         //如果觸發按鈕的話
         canSpawn = true;
         MachineAni.SetTrigger("IdleToWalkCircle");
@@ -170,19 +204,71 @@ public class RabbitGM : MonoBehaviour
     }
     public void RabbitSquaare()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-        //Reset();
+        Reset();
         canSpawn = true;
         MachineAni.SetTrigger("IdleToSquare");
         ProduceMonster();
     }
     public void RabbittTriangle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-        // Reset();
+        Reset();
         canSpawn = true;
         MachineAni.SetTrigger("IdleToTriangle");
         ProduceMonster();
     }
+    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    {
+        if (hit.gameObject == FixMachineDurability)
+        {
+            if (isRun)
+            {
+                MachineDurabilityFix = false;
+                if (repairCoroutine != null)
+                {
+                    StopCoroutine(repairCoroutine);
+                    repairCoroutine = null;
+                }
+            }
+            else if (!MachineDurabilityFix)
+            {
+                MachineDurabilityFix = true;
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
+        }
+    }
 
+    private IEnumerator FixDurabilityOverTime()   // 每秒恢復0.5%耐久
+    {
+        while (MachineDurabilityFix)
+        {
+            float repairAmount = MachineDurability * 0.005f;
+            //float repairAmount = MachineDurability * 0.1f;
+            MachineDurability_Script += repairAmount;
+
+            if (MachineDurability_Script > MachineDurability)
+                MachineDurability_Script = MachineDurability;
+
+            //  同步更新 SaveMachineDurability
+            SaveMachineDurability = MachineDurability_Script;
+
+            // 更新顯示條
+            DeductDurability();
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    // private void OnCollisionExit2D(Collision2D hit)  //停止恢復
+    // {
+    // if (hit.gameObject == FixMachineDurability)
+    // {
+    //    MachineDurabilityFix = false;
+    //  if (repairCoroutine != null)
+    // {
+    //    StopCoroutine(repairCoroutine);
+    //    repairCoroutine = null;
+    //}
+    // }
+    // }
     public void SpawnObject(int prefabIndex) // 場景上含生成點最多可以有4個物件，若達生成上限，直接停止   //之後要補生成點有物件不可生成(等場景儲存位置有了後)
     {
         if (allSpawnedObjects.Count >= maxObjects)
@@ -222,7 +308,7 @@ public class RabbitGM : MonoBehaviour
         }
     }
 
-    //製作藥水判斷要不要產生怪物
+    //判斷要不要產生怪物
     void ProduceMonster()
     {
         isRun = true;
@@ -233,10 +319,16 @@ public class RabbitGM : MonoBehaviour
         else
         {
             //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
-            //isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
+            isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
             if (isProduceMonster && !MonsterPrefab)
             {
-                //    MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+                MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+                MonsterPrefab.GetComponent<MonsterGM>().InitTarget("rabbit");
+                MonsterPrefab.transform.localScale = new Vector3(
+       -MonsterPrefab.transform.localScale.x,   // 反轉 X 軸
+       MonsterPrefab.transform.localScale.y,
+       MonsterPrefab.transform.localScale.z
+   );
             }
         }
     }

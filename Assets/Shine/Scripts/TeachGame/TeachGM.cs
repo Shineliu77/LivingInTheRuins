@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class TeachGM : MonoBehaviour
 {
     #region 產生顧客
@@ -39,7 +40,7 @@ public class TeachGM : MonoBehaviour
     public GameObject Teach3;//第一段
     public GameObject TeachThree;
     public GameObject TeachThree2;
-  
+
     #endregion
     #region 第四段說明
     public GameObject Teach4; //第一段
@@ -73,13 +74,16 @@ public class TeachGM : MonoBehaviour
     #region 第10段說明
     public GameObject Teach10;
     #endregion
+
+    public GameObject ScorePanel;
+
+
     // Start is called before the first frame update
     void Start()
     {
         ProductCustomer();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -165,7 +169,6 @@ public class TeachGM : MonoBehaviour
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ID = 2;
             IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ReagentsID = 2;
         }
-
 
     }
     public void CloseTeachTwo() //關掉第二個教學面板的第二段 掛回文字面板按鈕
@@ -260,9 +263,14 @@ public class TeachGM : MonoBehaviour
     private IEnumerator Teach10Closed()  //關掉Teach9
     {
         yield return new WaitUntil(() => !Teach10.activeSelf);
+        ScorePanel.SetActive(true);
+        yield return new WaitUntil(() => !ScorePanel.activeSelf);
         GoOtherScene();
     }
-
+    public void CloseScorePanel()
+    {
+        ScorePanel.SetActive(false);
+    }
     private void GoOtherScene()  //換場景與解鎖關卡
     {
         if (PlayerPrefs.GetInt("TutorialUnlocked", 0) == 0) // 0 尚未解鎖過
@@ -277,4 +285,5 @@ public class TeachGM : MonoBehaviour
         PlayerPrefs.Save();  //儲存
         SceneManager.LoadScene("lobby");
     }
+
 }

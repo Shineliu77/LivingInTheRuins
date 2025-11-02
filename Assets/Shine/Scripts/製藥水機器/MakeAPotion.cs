@@ -50,7 +50,10 @@ public class MakeAPotion : MonoBehaviour
     private bool canSpawnPotions = false;  //是否可生成
     public static List<GameObject> allSpawnedPotions = new List<GameObject>(); // 全域已生成物件紀錄
 
-    // Start is called before the first frame update
+    //機器耐久值恢復
+    public GameObject FixMachineDurability;  //機器耐久維修物
+    bool MachineDurabilityFix = false;  //不可修
+    private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -99,9 +102,10 @@ public class MakeAPotion : MonoBehaviour
         if (isRun)
         {
             AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("blue work"))
+            if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
             {
-                if (stateInfo.normalizedTime >= 0.99f)
+                MachineDurabilityFix = false;   //不可維修
+                if (stateInfo.normalizedTime >= 0.77f)
                 {
 
                     MachineDurability_Script = SaveMachineDurability;
@@ -117,8 +121,6 @@ public class MakeAPotion : MonoBehaviour
                     DeductDurability();
 
                 }
-
-
             }
         }
         if (Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
@@ -130,7 +132,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     SpawnObject(0);
                     canSpawnPotions = false;
-                    Stopwatch.gameObject.SetActive(false);
+                    // Stopwatch.gameObject.SetActive(false);
 
                 }
                 if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.77f)
@@ -213,8 +215,77 @@ public class MakeAPotion : MonoBehaviour
                 ProduceMonster();
             }
 
+
+            //if (hit.gameObject == FixMachineDurability)  //觸發機器耐久恢復
+            //{
+
+            //  if (isRun)
+            // {
+            //     MachineDurabilityFix = false;   //不可維修
+            //  }
+            // else if (!MachineDurabilityFix ||!isRun)
+            // {
+            //    MachineDurabilityFix = true;
+            //   repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            // }
+            // }
+
         }
     }
+
+    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    {
+        if (hit.gameObject == FixMachineDurability)
+        {
+            if (isRun)
+            {
+                MachineDurabilityFix = false;
+                if (repairCoroutine != null)
+                {
+                    StopCoroutine(repairCoroutine);
+                    repairCoroutine = null;
+                }
+            }
+            else if (!MachineDurabilityFix)
+            {
+                MachineDurabilityFix = true;
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
+        }
+    }
+
+    private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
+    {
+        while (MachineDurabilityFix)
+        {
+            float repairAmount = MachineDurability * 0.005f;
+            // float repairAmount = MachineDurability * 0.1f;
+            MachineDurability_Script += repairAmount;
+
+            if (MachineDurability_Script > MachineDurability)
+                MachineDurability_Script = MachineDurability;
+
+            //  同步更新 SaveMachineDurability
+            SaveMachineDurability = MachineDurability_Script;
+
+            // 更新顯示條
+            DeductDurability();
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    //private void OnCollisionExit2D(Collision2D hit)  //停止恢復
+    // {
+    //  if (hit.gameObject == FixMachineDurability)
+    //  {
+    //   MachineDurabilityFix = false;
+    //   if (repairCoroutine != null)
+    //  {
+    //     StopCoroutine(repairCoroutine);
+    //    repairCoroutine = null;
+    //}
+    // }
+    // }
 
     public void SpawnObject(int prefabIndex) // 場景上含生成點最多可以有4個物件，若達生成上限，直接停止   
     {
@@ -269,6 +340,7 @@ public class MakeAPotion : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame")
         {
             MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+            MonsterPrefab.GetComponent<MonsterGM>().InitTarget("blender");
         }
         else
         {
@@ -277,7 +349,9 @@ public class MakeAPotion : MonoBehaviour
             if (isProduceMonster && !MonsterPrefab)
             {
                 MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+                MonsterPrefab.GetComponent<MonsterGM>().InitTarget("blender");
             }
+
         }
     }
     //怪物攻擊機台扣的耐力值
@@ -287,7 +361,6 @@ public class MakeAPotion : MonoBehaviour
         MachineDurability_Script = SaveMachineDurability;
         DeductDurability();
         GameObject.FindWithTag("Monster").GetComponent<MonsterGM>().MonsterAni.SetTrigger("Win");
-
 
     }
     public void Reset()
