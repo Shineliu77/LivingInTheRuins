@@ -75,9 +75,13 @@ public class TeachGM : MonoBehaviour
     public GameObject Teach10;
     #endregion
 
-    public GameObject ScorePanel;
-
-
+    public GameObject ScorePanel;  //分數面板
+    public GameObject Door; //鐵門
+    public GameObject ClickClose; //點擊換場
+    public Transform MiddletargetPosition; //中間停頓點
+    public Transform FinaltargetPosition; //最終停頓點
+    public float MiddledoorSpeed; //中間速度
+    public float FinaldoorSpeed;//最後速度
     // Start is called before the first frame update
     void Start()
     {
@@ -263,13 +267,43 @@ public class TeachGM : MonoBehaviour
     private IEnumerator Teach10Closed()  //關掉Teach9
     {
         yield return new WaitUntil(() => !Teach10.activeSelf);
-        ScorePanel.SetActive(true);
-        yield return new WaitUntil(() => !ScorePanel.activeSelf);
-        GoOtherScene();
+        yield return StartCoroutine(CloseDoor());
     }
-    public void CloseScorePanel()
+   
+    private IEnumerator CloseDoor()
     {
-        ScorePanel.SetActive(false);
+        Door.SetActive(true);
+
+        // 門從目前位置往中間
+        while (Vector3.Distance(Door.transform.position, MiddletargetPosition.position) > 0.01f)
+        {
+            Door.transform.position = Vector3.MoveTowards(Door.transform.position, MiddletargetPosition.position, MiddledoorSpeed * Time.deltaTime);
+            yield return null;  
+        }
+        Door.transform.position = MiddletargetPosition.position;
+
+        yield return new WaitForSeconds(0.5f);  //停一下再移動
+
+        ScorePanel.SetActive(true);//開分數
+        while (Vector3.Distance(Door.transform.position, FinaltargetPosition.position) > 0.01f)
+        {
+            Door.transform.position = Vector3.MoveTowards(Door.transform.position, FinaltargetPosition.position, FinaldoorSpeed * Time.deltaTime
+        );
+            yield return null;
+        }
+
+        // 保證最後位置精準
+        Door.transform.position = FinaltargetPosition.position;
+
+        ClickClose.SetActive(true);   //點擊使用
+                                     
+    }
+    public void ClickGoOtherScence()//點擊才到下個場地
+    {
+        if (Door.transform.position == FinaltargetPosition.position)
+        {
+            GoOtherScene();
+        }
     }
     private void GoOtherScene()  //換場景與解鎖關卡
     {

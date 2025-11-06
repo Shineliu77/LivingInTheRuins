@@ -31,6 +31,8 @@ public class IteamOpenOnTable : MonoBehaviour
                     if (FindObjectOfType<TeachGM>().CustomerNumber == 1)
                     {
                         FindObjectOfType<TeachGM>().OpenTeach3();
+                        LiveTwoDChangeImage LiveTwoDChangeImageManager = FindObjectOfType<LiveTwoDChangeImage>();
+                        LiveTwoDChangeImageManager.LiveTDChangeImgOk = true;
                     }
                     if (FindObjectOfType<TeachGM>().CustomerNumber == 2)
                     {
