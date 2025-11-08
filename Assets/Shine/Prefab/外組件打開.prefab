@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 60
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: c3b16ad8fd048454e828f9d4fab0e0f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   OriginalSize: {x: 0, y: 0, z: 0}
   currentProcessorIndex: -1
   currentReagentsIndex: -1
+  OpenCount: 0
 --- !u!114 &-2638602415890854520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee1e9a5d708f154299b258d3a318d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SetIteamOpenObj: {fileID: 0}
 --- !u!1001 &4835168987850365857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,7 +234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2607142250069738334, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_SortingOrder
-      value: 65
+      value: 201
       objectReference: {fileID: 0}
     - target: {fileID: 4811456988864406551, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_Name
@@ -392,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202198935239242734, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_SortingOrder
-      value: 65
+      value: 201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -451,7 +453,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1819166377029881970, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_SortingOrder
-      value: 65
+      value: 201
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -526,6 +528,7 @@ MonoBehaviour:
   - {fileID: -1601931343, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   - {fileID: -1361594671, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   - {fileID: 1859648843, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  LiveTDChangeImgOk: 0
 --- !u!4 &7277014255343593689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}

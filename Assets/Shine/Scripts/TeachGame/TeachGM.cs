@@ -269,7 +269,7 @@ public class TeachGM : MonoBehaviour
         yield return new WaitUntil(() => !Teach10.activeSelf);
         yield return StartCoroutine(CloseDoor());
     }
-   
+
     private IEnumerator CloseDoor()
     {
         Door.SetActive(true);
@@ -278,7 +278,7 @@ public class TeachGM : MonoBehaviour
         while (Vector3.Distance(Door.transform.position, MiddletargetPosition.position) > 0.01f)
         {
             Door.transform.position = Vector3.MoveTowards(Door.transform.position, MiddletargetPosition.position, MiddledoorSpeed * Time.deltaTime);
-            yield return null;  
+            yield return null;
         }
         Door.transform.position = MiddletargetPosition.position;
 
@@ -296,7 +296,7 @@ public class TeachGM : MonoBehaviour
         Door.transform.position = FinaltargetPosition.position;
 
         ClickClose.SetActive(true);   //點擊使用
-                                     
+
     }
     public void ClickGoOtherScence()//點擊才到下個場地
     {
@@ -321,3 +321,4 @@ public class TeachGM : MonoBehaviour
     }
 
 }
+
