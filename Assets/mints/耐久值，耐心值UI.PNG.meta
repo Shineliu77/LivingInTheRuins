@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_5603_0
+      name: "\u6A5F\u68B0\u503C\u9435\u689D"
       rect:
         serializedVersion: 2
         x: 340
@@ -118,7 +118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_1
+      name: "\u6A5F\u68B0\u503C\u900F\u660E"
       rect:
         serializedVersion: 2
         x: 767
@@ -139,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_2
+      name: "\u6A5F\u68B0\u503C\u7C43"
       rect:
         serializedVersion: 2
         x: 1179
@@ -160,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_3
+      name: "\u6A5F\u68B0\u503C\u7D05"
       rect:
         serializedVersion: 2
         x: 1526
@@ -181,7 +181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_4
+      name: "\u6A5F\u68B0\u503C\u7C43\u5E95"
       rect:
         serializedVersion: 2
         x: 1910
@@ -202,7 +202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_5
+      name: "\u6A5F\u68B0\u503C\u7D05\u5E95"
       rect:
         serializedVersion: 2
         x: 2448
@@ -223,7 +223,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_6
+      name: "\u8010\u5FC3\u503C\u7D05\u5E95"
       rect:
         serializedVersion: 2
         x: 689
@@ -244,7 +244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_7
+      name: "\u8010\u5FC3\u503C\u85CD\u5E95"
       rect:
         serializedVersion: 2
         x: 1272
@@ -265,7 +265,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_8
+      name: "\u8010\u5FC3\u503C\u9435\u689D"
       rect:
         serializedVersion: 2
         x: 1905
@@ -286,7 +286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_9
+      name: "\u8010\u5FC3\u503C\u900F\u660E"
       rect:
         serializedVersion: 2
         x: 1859
@@ -307,7 +307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_10
+      name: "\u8010\u5FC3\u503C\u85CD\u689D"
       rect:
         serializedVersion: 2
         x: 1340
@@ -328,7 +328,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_5603_11
+      name: "\u8010\u5FC3\u503C\u7D05\u689D"
       rect:
         serializedVersion: 2
         x: 801
@@ -359,18 +359,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IMG_5603_0: -2102067979
-      IMG_5603_1: -1679424362
-      IMG_5603_10: -903143053
-      IMG_5603_11: -1954144550
-      IMG_5603_2: -728570399
-      IMG_5603_3: -1033480601
-      IMG_5603_4: -845995007
-      IMG_5603_5: 712663860
-      IMG_5603_6: -455060567
-      IMG_5603_7: -471229766
-      IMG_5603_8: 1114026894
-      IMG_5603_9: -184867135
+      "\u6A5F\u68B0\u503C\u7C43": -728570399
+      "\u6A5F\u68B0\u503C\u7C43\u5E95": -845995007
+      "\u6A5F\u68B0\u503C\u7D05": -1033480601
+      "\u6A5F\u68B0\u503C\u7D05\u5E95": 712663860
+      "\u6A5F\u68B0\u503C\u900F\u660E": -1679424362
+      "\u6A5F\u68B0\u503C\u9435\u689D": -2102067979
+      "\u8010\u5FC3\u503C\u7D05\u5E95": -455060567
+      "\u8010\u5FC3\u503C\u7D05\u689D": -1954144550
+      "\u8010\u5FC3\u503C\u85CD\u5E95": -471229766
+      "\u8010\u5FC3\u503C\u85CD\u689D": -903143053
+      "\u8010\u5FC3\u503C\u900F\u660E": -184867135
+      "\u8010\u5FC3\u503C\u9435\u689D": 1114026894
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
