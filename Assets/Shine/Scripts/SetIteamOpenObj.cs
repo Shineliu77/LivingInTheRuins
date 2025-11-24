@@ -16,30 +16,49 @@ public class SetIteamOpenObj : MonoBehaviour
     public int currentProcessorIndex = -1;
     public int currentReagentsIndex = -1;
     public int OpenCount;
-
+    public List<int> IDs = new List<int>();
     // Start is called before the first frame update
     void Start()
     {
         if (Application.loadedLevelName == "TeachGame")
         {
             CloseIteamObj();
-            IteamObj[ID].SetActive(true);
-            switch (ID)
+            //IteamObj[ID].SetActive(true);
+            // switch (ID)
+            // {
+            // case 0:
+            //       IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
+
+            //   MaintenanceProjectName = ProcessorImage[ProcessorID].name;
+            //   break;
+            //  case 1:
+            //    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
+            //    MaintenanceProjectName = CircuitBoard.name;
+            //     break;
+            // case 2:
+            //  IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
+            //    MaintenanceProjectName = ReagentsImage[ReagentsID].name;
+
+            //    break;
+            // }
+            foreach (int id in IDs)
             {
-                case 0:
-                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
+                IteamObj[id].SetActive(true);
 
-                    MaintenanceProjectName = ProcessorImage[ProcessorID].name;
-                    break;
-                case 1:
-                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
-                    MaintenanceProjectName = CircuitBoard.name;
-                    break;
-                case 2:
-                    IteamObj[ID].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
-                    MaintenanceProjectName = ReagentsImage[ReagentsID].name;
+                switch (id)
+                {
+                    case 0:
+                        IteamObj[id].GetComponent<SpriteRenderer>().sprite = ProcessorImage[ProcessorID];
+                        break;
 
-                    break;
+                    case 1:
+                        IteamObj[id].GetComponent<SpriteRenderer>().sprite = CircuitBoard;
+                        break;
+
+                    case 2:
+                        IteamObj[id].GetComponent<SpriteRenderer>().sprite = ReagentsImage[ReagentsID];
+                        break;
+                }
             }
         }
 
@@ -133,6 +152,6 @@ public class SetIteamOpenObj : MonoBehaviour
 
             }
         }
-       
+
     }
 }

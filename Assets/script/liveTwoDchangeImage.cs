@@ -16,7 +16,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-      
+
         {
             // 確認碰撞的物件是 brokecircle 時的處理
             if (collision.gameObject.CompareTag("brokecircle") && LiveTDChangeImgOk == true)
@@ -28,7 +28,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 {
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     Debug.Log("圖片已更換為 changeSprites[0]");
-
+                    Destroy(collision.gameObject);
                     /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
                      if (teachScript != null)
                      {

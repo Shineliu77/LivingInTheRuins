@@ -29,34 +29,31 @@ public class Dragging : MonoBehaviour
         offset = transform.position - Camera.main.ScreenToWorldPoint(mousePos);
         drag = true;
 
-        if (Application.loadedLevelName == "FirstGame")
+        Debug.Log("じン 秨﹍╈Σ1");
+        if (gameObject.CompareTag("brokecircle"))  //盢ㄤэΘpublicご礚猭ち传笆礶
         {
 
-            Debug.Log("じン 秨﹍╈Σ1");
-            if (gameObject.CompareTag("brokecircle"))  //盢ㄤэΘpublicご礚猭ち传笆礶
-            {
+            Debug.Log("じンbrokecircle秨﹍╈Σ");
 
-                Debug.Log("じンbrokecircle秨﹍╈Σ");
-
-                FindObjectOfType<RabbitGM>().Takecircle();
-            }
-
-            if (gameObject.CompareTag("square"))  //盢ㄤэΘpublicご礚猭ち传笆礶
-            {
-
-                Debug.Log("じンbrokecircle秨﹍╈Σ");
-
-                FindObjectOfType<RabbitGM>().Takesquare();
-            }
-
-            if (gameObject.CompareTag("triangle"))  //盢ㄤэΘpublicご礚猭ち传笆礶
-            {
-
-                Debug.Log("じンbrokecircle秨﹍╈Σ");
-
-                FindObjectOfType<RabbitGM>().Taketriangle();
-            }
+            FindObjectOfType<RabbitGM>().Takecircle();
         }
+
+        if (gameObject.CompareTag("square"))  //盢ㄤэΘpublicご礚猭ち传笆礶
+        {
+
+            Debug.Log("じンbrokecircle秨﹍╈Σ");
+
+            FindObjectOfType<RabbitGM>().Takesquare();
+        }
+
+        if (gameObject.CompareTag("triangle"))  //盢ㄤэΘpublicご礚猭ち传笆礶
+        {
+
+            Debug.Log("じンbrokecircle秨﹍╈Σ");
+
+            FindObjectOfType<RabbitGM>().Taketriangle();
+        }
+
     }
 
     private void OnMouseUp()

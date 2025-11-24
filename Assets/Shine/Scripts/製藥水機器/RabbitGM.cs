@@ -37,7 +37,7 @@ public class RabbitGM : MonoBehaviour
 
     public Transform needle; // 指針物件（需拖曳到 Inspector）
     public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
-
+    public bool ShowbeforeTeach4RFix = false;
     public Animator MachineAni;
     float SaveMachineDurability;
     bool isRun;
@@ -110,6 +110,15 @@ public class RabbitGM : MonoBehaviour
                     Stopwatch.gameObject.SetActive(true);
 
 
+                    if (Application.loadedLevelName == "TeachGame") //如果再新手交關
+                    {
+                        if (!FindObjectOfType<TeachGM>().teachThree4)
+                        {
+                            FindObjectOfType<TeachGM>().OpenBTeachThree4();
+                            // FindObjectOfType<TeachGM>().teachThree4 = true;
+                        }
+                    }
+
                     Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - normalizedTime;
                     float zRotation = (1f - normalizedTime) * maxRotation;
                     needle.localEulerAngles = new Vector3(0, 0, -zRotation);
@@ -155,42 +164,42 @@ public class RabbitGM : MonoBehaviour
             }
 
         }
-        if (Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
+        //if ( Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
+        // {
+        AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
+        if (canSpawn == true)
         {
-            AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (canSpawn == true)
+            if (stateInfo2.IsName("work circle") && stateInfo2.normalizedTime > 0.98f)  //生成圓
             {
-                if (stateInfo2.IsName("work circle") && stateInfo2.normalizedTime > 0.98f)  //生成圓
-                {
-                    Debug.Log("開始work circle");
-                    SpawnObject(0);
-                    canSpawn = false;
-                    //  Stopwatch.gameObject.SetActive(false);
+                Debug.Log("開始work circle");
+                SpawnObject(0);
+                canSpawn = false;
+                //  Stopwatch.gameObject.SetActive(false);
 
-                }
+            }
 
-                AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成方
-                if (stateInfo3.IsName("work square") && stateInfo3.normalizedTime > 0.98f)
-                {
-                    Debug.Log("開始work square");
-                    SpawnObject(1);
-                    canSpawn = false;
-                    // Stopwatch.gameObject.SetActive(false);
+            AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成方
+            if (stateInfo3.IsName("work square") && stateInfo3.normalizedTime > 0.98f)
+            {
+                Debug.Log("開始work square");
+                SpawnObject(1);
+                canSpawn = false;
+                // Stopwatch.gameObject.SetActive(false);
 
-                }
+            }
 
-                AnimatorStateInfo stateInfo4 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成角
+            AnimatorStateInfo stateInfo4 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成角
 
-                if (stateInfo4.IsName("work triangle") && stateInfo4.normalizedTime > 0.98f)
-                {
-                    Debug.Log("開始work triangle");
-                    SpawnObject(2);
-                    canSpawn = false;
-                    //  Stopwatch.gameObject.SetActive(false);
+            if (stateInfo4.IsName("work triangle") && stateInfo4.normalizedTime > 0.98f)
+            {
+                Debug.Log("開始work triangle");
+                SpawnObject(2);
+                canSpawn = false;
+                //  Stopwatch.gameObject.SetActive(false);
 
-                }
             }
         }
+        // }
     }
 
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
@@ -281,6 +290,19 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             canSpawn = false;
+
+            if (Application.loadedLevelName == "TeachGame")   //f確保不提前跑出
+            {
+                if (!FindObjectOfType<TeachGM>().TeachThree5.activeSelf && FindObjectOfType<TeachGM>().teacheachThree5 == true && FindObjectOfType<TeachGM>().beforeTeach4RFix == false)
+                {
+                    FindObjectOfType<TeachGM>().OpenBeforeTeach4RFix();
+                    FindObjectOfType<TeachGM>().beforeTeach4RFix = true;
+                }
+                else
+                {
+                    ShowbeforeTeach4RFix = true;
+                }
+            }
         }
 
         if (prefabIndex == 1)//方形

@@ -38,6 +38,7 @@ public class ItemSlot : MonoBehaviour
                 var rb = pcbInContact.GetComponent<Rigidbody2D>();
                 if (rb != null) rb.velocity = Vector2.zero;
                 hasPCB = true; // PCB 放入
+
                 drag.enabled = false;
                 // if (SetIteamOpenObj != null)
                 //   {
@@ -56,9 +57,10 @@ public class ItemSlot : MonoBehaviour
                 var parentObj = GetComponentInParent<SetIteamOpenObj>();
                 if (parentObj != null)
                 {
-                    // parentObj.OpenCount -= 1;
-                    //  if (parentObj.OpenCount == 0)
-                    //  {
+                    if (Application.loadedLevelName == "TeachGame")
+                    {
+                        FindObjectOfType<TeachGM>().OpenTeach9();
+                    }
                     parentObj.ResetSize();
                     Debug.Log("縮小 外組件打開");
                     // }

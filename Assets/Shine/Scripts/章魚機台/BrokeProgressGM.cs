@@ -27,6 +27,8 @@ public class BrokeProgressGM : MonoBehaviour
 
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
+    public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
+    private bool isFixMachineShow = false;
     bool MachineDurabilityFix = false;  //不可修
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
@@ -72,6 +74,9 @@ public class BrokeProgressGM : MonoBehaviour
             {
                 MachineUI.gameObject.SetActive(true);
                 MachineDurabilityFix = false;    //不可維修
+                isFixMachineShow = false;
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                FixMachineShow.SetActive(false);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
@@ -125,7 +130,16 @@ public class BrokeProgressGM : MonoBehaviour
             if (!MachineDurabilityFix)
             {
                 MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
+
+            if (Application.loadedLevelName == "TeachGame" && FindObjectOfType<TeachGM>().teachTwo3 == false)  //新手教學關使用
+            {
+                FindObjectOfType<TeachGM>().OpenTeachTwo3();
+
             }
         }
     }
@@ -135,14 +149,27 @@ public class BrokeProgressGM : MonoBehaviour
         while (MachineDurabilityFix)
         {
             float repairAmount = MachineDurability * 0.005f;
-            // float repairAmount = MachineDurability * 0.1f;
+            //float repairAmount = MachineDurability * 0.1f;
             MachineDurability_Script += repairAmount;
 
             if (MachineDurability_Script > MachineDurability)
+            {
                 MachineDurability_Script = MachineDurability;
+                if (MachineDurability_Script >= MachineDurability)  //回滿關起來
+                {
+                    MachineDurabilityFix = false; //停止修
+                    isFixMachineShow = false;
+                    FixMachineShow.SetActive(false);
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                }
+
+            }
+
             SaveRemainingValue = MachineDurability_Script;
             MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
             yield return new WaitForSeconds(1f);
+
+
         }
     }
     // private void OnCollisionExit2D(Collision2D hit)  //停止恢復

@@ -19,7 +19,7 @@ public class DraggableReturn2D : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = transform.position - new Vector3(mouseWorldPos.x, mouseWorldPos.y, transform.position.z);
             isDragging = true;
-            if (Application.loadedLevelName == "FirstGame")
+            // if (Application.loadedLevelName == "FirstGame")
             {
                 Debug.Log("PCB ¶}©l©ì¦²1");
                 if (GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().isDragging == true)

@@ -23,7 +23,7 @@ public class CustomerGM : MonoBehaviour
             targetPoint = GameObject.Find("顧客定位點").transform;
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
         }
-            if (Application.loadedLevelName == "FirstGame")
+        if (Application.loadedLevelName == "FirstGame")
         {
             targetPoint = GameObject.Find(PosName).transform;
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
@@ -81,9 +81,9 @@ public class CustomerGM : MonoBehaviour
             }
             else
             {
-               
-                    OnArrived();
-                
+
+                OnArrived();
+
                 hasArrived = true;
 
             }
@@ -131,6 +131,8 @@ public class CustomerGM : MonoBehaviour
                 FindObjectOfType<ScoreGM>().AddScore();
                 FindObjectOfType<TeachGM>().OpenTeach10();
                 Destroy(hit.gameObject);
+                //Finished = true;
+                Destroy(hit.gameObject);
             }
         }
 
@@ -145,41 +147,14 @@ public class CustomerGM : MonoBehaviour
                 Destroy(hit.gameObject);
                 Finished = true;
 
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-                // if(hasArrived == true)
-                // { 
-                //FindObjectOfType<FirstGame>().ProduceIteam(); 
-                // }
-
-
             }
             if (hit.gameObject.name == "fixeditemOpenFinished2")
             {
                 FindObjectOfType<ScoreGM>().AddScore();
 
                 Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
             }
-            if (hit.gameObject.name == "fixeditemOpenFinished3")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
 
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished4")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
-
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-            }
         }
     }
 }

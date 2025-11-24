@@ -5,7 +5,7 @@ using UnityEngine;
 public class IteamOpenOnTable : MonoBehaviour
 {
     public float SetScale;
-  
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +13,7 @@ public class IteamOpenOnTable : MonoBehaviour
     }
 
     // Update is called once per frame
-  
+
     private void OnCollisionEnter2D(Collision2D coll)
     {//tagªºfixiemª««~¸I¼²
         if (Application.loadedLevelName == "TeachGame")

@@ -41,6 +41,8 @@ public class CrabGM : MonoBehaviour
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
     bool MachineDurabilityFix = false;  //不可修
+    public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
+    private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
     void Start()
@@ -113,6 +115,10 @@ public class CrabGM : MonoBehaviour
             {
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;
+                if (Application.loadedLevelName == "TeachGame")
+                {
+                    FindObjectOfType<TeachGM>().OpenTeachEightThree();
+                }
             }
         }
     }
@@ -122,6 +128,7 @@ public class CrabGM : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("brokePCB"))
         {
+            Debug.Log("碰到電路板");
             ProduceMonster();
             Destroy(coll.gameObject);
             canSpawnPCB = true;
@@ -144,8 +151,8 @@ public class CrabGM : MonoBehaviour
         isRun = true;
         if (Application.loadedLevelName == "TeachGame")
         {
-            MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
-            MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
+            //   MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+            //  MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
         }
         else
         {

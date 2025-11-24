@@ -30,20 +30,19 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 if (changeSprites.Length > 0)
                 {
                     spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
-                    transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
-                    if (transform.parent.GetComponent<DraggableReturn2D>())
-                    {
-                        if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
-                        {
-                            transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
-                        }
-                    }
-                    if (Application.loadedLevelName == "TeachGame")
-                    {
-                        transform.parent.gameObject.name = "fixeditemOpenFinished2";
-                        FindObjectOfType<TeachGM>().OpenTeach9();
+                                                              //transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+                                                              // if (transform.parent.GetComponent<DraggableReturn2D>())
+                                                              // {
+                                                              //  if (transform.parent.GetComponent<SetIteamOpenObj>().OpenCount == 0)
+                                                              //  {
+                                                              //     transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
+                                                              // }
+                                                              // }
 
-                    }
+                    transform.parent.gameObject.name = "fixeditemOpenFinished2";
+                    //  FindObjectOfType<TeachGM>().OpenTeach9();
+                    FindObjectOfType<TeachGM>().OpenTeachEightTwo();
+
                     Debug.Log("圖片已更換為 changeSprites[3]");
                 }
                 else

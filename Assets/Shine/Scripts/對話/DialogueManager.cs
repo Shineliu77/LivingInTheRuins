@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         string path = Path.Combine(Application.streamingAssetsPath, ExcelFileName);
-
+        // string path2 = Path.Combine(Application.streamingAssetsPath, ExcelFileName2);
         if (!File.Exists(path))
         {
             Debug.LogError("❌ 找不到檔案：" + path);
@@ -46,24 +46,62 @@ public class DialogueManager : MonoBehaviour
 
         dialogueLines.Clear();
 
-        // 跳過標題列，從第1列開始讀（索引從 1）
+        // 跳過標題列，從第1列開始讀（索引從 1）   //避免回傳錯誤
         for (int i = 1; i < table.Rows.Count; i++)
         {
             var row = table.Rows[i];
-            string speaker = row[1].ToString().Trim(); // B欄：角色
-            string content = row[2].ToString().Trim(); // C欄：對話內容
-            string imageFile = row[3].ToString().Trim();    // D欄
-            string audioFile = row[4].ToString().Trim();    // E欄
-            string imagePath = Path.Combine(Application.streamingAssetsPath, "Img", imageFile);
-            string audioPath = Path.Combine(Application.streamingAssetsPath, "Sound", audioFile);
+            string speaker = "";
+            string content = "";
+            string imageFile = "";
+            string imageFile2 = "";
+            string imageFile3 = "";
+            string audioFile = "";
+            string CGFile = "";
+            string BGFile = "";
+
+
+            if (ExcelFileName == "Dialog.xlsx")   //教學使用
+            {
+                // var row = table.Rows[i];
+                //string speaker = row[1].ToString().Trim(); // B欄：角色
+                // string content = row[2].ToString().Trim(); // C欄：對話內容
+                //string imageFile = row[3] == null ? "" : row[3].ToString().Trim();    // D欄
+                speaker = GetCellString(row, 1); // B欄：角色
+                content = GetCellString(row, 2); // C欄：對話內容
+                imageFile = GetCellString(row, 3);   // D欄
+                audioFile = GetCellString(row, 4);  // E欄
+            }
+
+            if (ExcelFileName == "Story.xlsx")   //劇情使用
+            {
+                speaker = GetCellString(row, 1); // B欄：角色
+                content = GetCellString(row, 2); // C欄：對話內容
+                imageFile = GetCellString(row, 3);   // D欄  角色圖1
+                imageFile2 = GetCellString(row, 4); // E    角色圖2
+                imageFile3 = GetCellString(row, 5); // F    角色圖3
+                audioFile = GetCellString(row, 9); // J 音效
+                CGFile = GetCellString(row, 10); // k CG圖
+                BGFile = GetCellString(row, 11); // L bg圖
+            }
 
             DialogueLine dialogue = new DialogueLine
             {
                 speaker = speaker,
                 content = content,
                 imageFile = imageFile,
-                audioFile = audioFile
+                imageFile2 = imageFile2,
+                imageFile3 = imageFile3,
+                audioFile = audioFile,
+                CGFile = CGFile,
+                BGFile = BGFile
             };
+            //路徑
+            string imagePath = Path.Combine(Application.streamingAssetsPath, "Img", "Louise",imageFile);
+            string imagePath2 = Path.Combine(Application.streamingAssetsPath, "Img", imageFile2);
+            string imagePath3 = Path.Combine(Application.streamingAssetsPath, "Img", imageFile3);
+            string audioPath = Path.Combine(Application.streamingAssetsPath, "Sound", audioFile);
+            string CGimagePath = Path.Combine(Application.streamingAssetsPath, "Img", CGFile);
+            string BGimagePath = Path.Combine(Application.streamingAssetsPath, "Img", BGFile);
 
             // 載入圖片
             if (File.Exists(imagePath))
@@ -74,6 +112,21 @@ public class DialogueManager : MonoBehaviour
                 dialogue.image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
             }
 
+            if (File.Exists(imagePath2))  //仔入圖片2
+            {
+                byte[] imgData = File.ReadAllBytes(imagePath2);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(imgData);
+                dialogue.image2 = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
+            if (File.Exists(imagePath3))  //仔入圖片3
+            {
+                byte[] imgData = File.ReadAllBytes(imagePath3);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(imgData);
+                dialogue.image3 = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
+
             // 載入音檔（建議為 .wav）
             if (File.Exists(audioPath))
             {
@@ -82,6 +135,21 @@ public class DialogueManager : MonoBehaviour
                 dialogue.audio = www.GetAudioClip();
             }
 
+            if (File.Exists(CGimagePath))  //仔入CG圖片
+            {
+                byte[] imgData = File.ReadAllBytes(CGimagePath);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(imgData);
+                dialogue.CGImage = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
+
+            if (File.Exists(BGimagePath))  //仔入bg圖片
+            {
+                byte[] imgData = File.ReadAllBytes(BGimagePath);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(imgData);
+                dialogue.BGImage = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
             dialogueLines.Add(dialogue);
         }
 
@@ -90,5 +158,16 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log($"【{line.speaker}】：{line.content}｜圖片：{line.imageFile}｜音檔：{line.audioFile}");
         }
+    }
+
+    private string GetCellString(DataRow row, int index)  //防止欄數不同報錯
+    {
+        if (index >= row.ItemArray.Length)
+            return "";
+
+        if (row[index] == null)
+            return "";
+
+        return row[index].ToString().Trim();
     }
 }
