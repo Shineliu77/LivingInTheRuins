@@ -115,7 +115,7 @@ MonoBehaviour:
     m_Value: 32
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.8726415, g: 1, b: 0.9110134, a: 1}
+    m_Value: {r: 0.89201385, g: 1, b: 0.8745098, a: 1}
   hueShift:
     m_OverrideState: 1
     m_Value: 5
@@ -137,7 +137,7 @@ MonoBehaviour:
   active: 1
   redOutRedIn:
     m_OverrideState: 1
-    m_Value: 115
+    m_Value: 100
   redOutGreenIn:
     m_OverrideState: 1
     m_Value: 1
@@ -180,13 +180,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.13
+    m_Value: 0.2
   intensity:
     m_OverrideState: 1
-    m_Value: 0.45
+    m_Value: 0.5
   scatter:
     m_OverrideState: 1
-    m_Value: 0.85
+    m_Value: 1
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -485,7 +485,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.07
+    m_Value: 0.12
 --- !u!114 &1798415284718276234
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -501,13 +501,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.84506327, y: 0.9269822, z: 1, w: 0.026809545}
+    m_Value: {x: 0.8288567, y: 0.9350022, z: 1, w: 0.026809545}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.9887037, y: 1, z: 0.9666616, w: 0}
+    m_Value: {x: 0.9767277, y: 1, z: 0.9957582, w: 0}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.91455686, y: 1, z: 0.95524806, w: -7.303359e-10}
+    m_Value: {x: 0.9265381, y: 1, z: 0.99139607, w: -7.303359e-10}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -535,13 +535,13 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.89382386, z: 0.97024995, w: 0}
+    m_Value: {x: 1, y: 0.9523023, z: 0.9750899, w: 0}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.9994964, z: 0.99937916, w: 0}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.9241015, y: 1, z: 0.9787749, w: 0.05361931}
+    m_Value: {x: 0.91883284, y: 0.9405538, z: 1, w: 0.05361931}
 --- !u!114 &5107990612353417481
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -560,7 +560,7 @@ MonoBehaviour:
     m_Value: -0.25
   xMultiplier:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.65
   yMultiplier:
     m_OverrideState: 1
     m_Value: 0.82
