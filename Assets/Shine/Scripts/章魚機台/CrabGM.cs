@@ -74,6 +74,8 @@ public class CrabGM : MonoBehaviour
             {
                 MachineUI.gameObject.SetActive(true);
                 MachineDurabilityFix = false;    //不可維修
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                FixMachineShow.SetActive(false);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
@@ -184,6 +186,9 @@ public class CrabGM : MonoBehaviour
             if (!MachineDurabilityFix)
             {
                 MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
             }
         }
@@ -198,7 +203,13 @@ public class CrabGM : MonoBehaviour
             MachineDurability_Script += repairAmount;
 
             if (MachineDurability_Script > MachineDurability)
-                MachineDurability_Script = MachineDurability;
+                if (MachineDurability_Script >= MachineDurability)  //回滿關起來
+                {
+                    MachineDurabilityFix = false; //停止修
+                    isFixMachineShow = false;
+                    FixMachineShow.SetActive(false);
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                };
             SaveRemainingValue = MachineDurability_Script;
             MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
             yield return new WaitForSeconds(1f);

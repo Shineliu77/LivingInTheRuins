@@ -11,7 +11,7 @@ public class DraggableReturn2D : MonoBehaviour
         originalPosition = transform.position; // 記錄原始位置
     }
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         if (this.enabled)
         {
@@ -22,12 +22,38 @@ public class DraggableReturn2D : MonoBehaviour
             // if (Application.loadedLevelName == "FirstGame")
             {
                 Debug.Log("PCB 開始拖曳1");
-                if (GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().isDragging == true)
+                // if (GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().isDragging == true)
+                if (gameObject.CompareTag("PCB"))
                 {
 
                     Debug.Log("撥放crab拿走動畫");
                     //GameObject.FindWithTag("PCB").GetComponent<CrabGM>().MachineAni.SetTrigger("takeout");
                     FindObjectOfType<CrabGM>().TakePCB();
+                    Debug.Log("元件 開始拖曳1");
+                }
+
+                else if (gameObject.CompareTag("brokecircle"))  //將其改成public仍無法切換動畫
+                {
+
+                    Debug.Log("元件brokecircle開始拖曳");
+
+                    FindObjectOfType<RabbitGM>().Takecircle();
+                }
+
+                else if (gameObject.CompareTag("square"))  //將其改成public仍無法切換動畫
+                {
+
+                    Debug.Log("元件brokecircle開始拖曳");
+
+                    FindObjectOfType<RabbitGM>().Takesquare();
+                }
+
+                else if (gameObject.CompareTag("triangle"))  //將其改成public仍無法切換動畫
+                {
+
+                    Debug.Log("元件brokecircle開始拖曳");
+
+                    FindObjectOfType<RabbitGM>().Taketriangle();
                 }
             }
         }

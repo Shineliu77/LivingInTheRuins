@@ -53,6 +53,8 @@ public class MakeAPotion : MonoBehaviour
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
     bool MachineDurabilityFix = false;  //不可修
+    public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
+    private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     void Start()
     {
@@ -105,6 +107,9 @@ public class MakeAPotion : MonoBehaviour
             if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
             {
                 MachineDurabilityFix = false;   //不可維修
+                isFixMachineShow = false;
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                FixMachineShow.SetActive(false);
                 if (stateInfo.normalizedTime >= 0.77f)
                 {
 
@@ -240,6 +245,9 @@ public class MakeAPotion : MonoBehaviour
             if (isRun)
             {
                 MachineDurabilityFix = false;
+                isFixMachineShow = false;
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                FixMachineShow.SetActive(false);
                 if (repairCoroutine != null)
                 {
                     StopCoroutine(repairCoroutine);
@@ -249,6 +257,9 @@ public class MakeAPotion : MonoBehaviour
             else if (!MachineDurabilityFix)
             {
                 MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
             }
         }
@@ -262,8 +273,20 @@ public class MakeAPotion : MonoBehaviour
             // float repairAmount = MachineDurability * 0.1f;
             MachineDurability_Script += repairAmount;
 
+            // if (MachineDurability_Script > MachineDurability)
+            //  MachineDurability_Script = MachineDurability;
+
             if (MachineDurability_Script > MachineDurability)
+            {
                 MachineDurability_Script = MachineDurability;
+                if (MachineDurability_Script >= MachineDurability)  //回滿關起來
+                {
+                    MachineDurabilityFix = false; //停止修
+                    isFixMachineShow = false;
+                    FixMachineShow.SetActive(false);
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                }
+            }
 
             //  同步更新 SaveMachineDurability
             SaveMachineDurability = MachineDurability_Script;
@@ -298,6 +321,7 @@ public class MakeAPotion : MonoBehaviour
         {
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
+            DestroyPrefabButton.Add(CurrentPotions);
             canSpawnPotions = false;
         }
 
@@ -305,6 +329,7 @@ public class MakeAPotion : MonoBehaviour
         {
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
+            DestroyPrefabButton.Add(CurrentPotions);
             canSpawnPotions = false;
         }
 
@@ -312,6 +337,7 @@ public class MakeAPotion : MonoBehaviour
         {
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
+            DestroyPrefabButton.Add(CurrentPotions);
             canSpawnPotions = false;
         }
 
@@ -319,6 +345,7 @@ public class MakeAPotion : MonoBehaviour
         {
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
+            DestroyPrefabButton.Add(CurrentPotions);
             canSpawnPotions = false;
         }
 

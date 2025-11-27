@@ -32,11 +32,11 @@ public class SlotOnTable : MonoBehaviour
                 }
 
                 // 重新允許拖曳
-                var dragScript = itemInContact.GetComponent<Dragging>();
-                if (dragScript != null)
-                {
-                    dragScript.enabled = true;
-                }
+                //   var dragScript = itemInContact.GetComponent<Dragging>();
+                // if (dragScript != null)
+                // {
+                //     dragScript.enabled = true;
+                //  }
 
                 var dragScript2 = itemInContact.GetComponent<DraggableReturn2D>();  //會返回原位的 (不要的話註解這邊)
                 if (dragScript2 != null)
@@ -88,12 +88,12 @@ public class SlotOnTable : MonoBehaviour
         }
 
         // 禁用拖曳
-        var dragScript = obj.GetComponent<Dragging>();  //不會返回原位的
+        // var dragScript = obj.GetComponent<Dragging>();  //不會返回原位的
 
-        if (dragScript != null)
-        {
-            dragScript.enabled = false;
-        }
+        // if (dragScript != null)
+        // {
+        //     dragScript.enabled = false;
+        // }
 
 
         var drag = obj.GetComponent<DraggableReturn2D>();  //會返回原位的 (不要的話註解這邊)
@@ -104,7 +104,7 @@ public class SlotOnTable : MonoBehaviour
         }
 
 
-       
+
         Debug.Log($" {obj.name} 放入 {slotPoint.name}");
     }
 
@@ -119,11 +119,11 @@ public class SlotOnTable : MonoBehaviour
                 rb.bodyType = RigidbodyType2D.Dynamic;
             }
 
-            Dragging dragScript = itemInContact.GetComponent<Dragging>();
-            if (dragScript != null)
-            {
-                dragScript.enabled = true; // 重新允許拖曳
-            }
+            //  Dragging dragScript = itemInContact.GetComponent<Dragging>();
+            //  if (dragScript != null)
+            // {
+            //     dragScript.enabled = true; // 重新允許拖曳
+            //}
 
             hasItem = false;
             itemInContact = null;

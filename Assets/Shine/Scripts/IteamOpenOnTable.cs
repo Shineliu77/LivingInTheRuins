@@ -43,8 +43,8 @@ public class IteamOpenOnTable : MonoBehaviour
         }
 
         //讓brokePCB可以拿出來給crab
-        if (Application.loadedLevelName == "FirstGame")
-        {
+       // if (Application.loadedLevelName == "FirstGame")
+       // {
             if (coll.gameObject.CompareTag("fixeditemOpen"))
             {
                 this.GetComponent<Collider2D>().enabled = false;
@@ -100,5 +100,5 @@ public class IteamOpenOnTable : MonoBehaviour
             }
         }
 
-    }
+   // }
 }

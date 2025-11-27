@@ -57,6 +57,8 @@ public class RabbitGM : MonoBehaviour
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
     bool MachineDurabilityFix = false;  //不可修
+    public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
+    private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
     void Start()
@@ -139,9 +141,14 @@ public class RabbitGM : MonoBehaviour
                         Stopwatch.gameObject.SetActive(false);
                         isRun = false;
                         MachineDurabilityFix = true; // 動畫結束後允許修復
+                        isFixMachineShow = true;
+                        FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                        FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                     }
                     MachineDurabilityFix = false;   //不可維修
-
+                    isFixMachineShow = false;
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    FixMachineShow.SetActive(false);
                 }  //倒數計時
 
 
@@ -231,7 +238,11 @@ public class RabbitGM : MonoBehaviour
         {
             if (isRun)
             {
-                MachineDurabilityFix = false;
+
+                MachineDurabilityFix = false; //停止修
+                isFixMachineShow = false;
+                FixMachineShow.SetActive(false);
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();
                 if (repairCoroutine != null)
                 {
                     StopCoroutine(repairCoroutine);
@@ -241,6 +252,9 @@ public class RabbitGM : MonoBehaviour
             else if (!MachineDurabilityFix)
             {
                 MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
             }
         }
@@ -254,9 +268,20 @@ public class RabbitGM : MonoBehaviour
             //float repairAmount = MachineDurability * 0.1f;
             MachineDurability_Script += repairAmount;
 
+            //if (MachineDurability_Script > MachineDurability)
+            //  MachineDurability_Script = MachineDurability;
             if (MachineDurability_Script > MachineDurability)
+            {
                 MachineDurability_Script = MachineDurability;
+                if (MachineDurability_Script >= MachineDurability)  //回滿關起來
+                {
+                    MachineDurabilityFix = false; //停止修
+                    isFixMachineShow = false;
+                    FixMachineShow.SetActive(false);
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                }
 
+            }
             //  同步更新 SaveMachineDurability
             SaveMachineDurability = MachineDurability_Script;
 
@@ -289,6 +314,7 @@ public class RabbitGM : MonoBehaviour
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            DestroyPrefabButton.Add(CurrentObject);
             canSpawn = false;
 
             if (Application.loadedLevelName == "TeachGame")   //f確保不提前跑出
@@ -309,6 +335,7 @@ public class RabbitGM : MonoBehaviour
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            DestroyPrefabButton.Add(CurrentObject);
             canSpawn = false;
         }
 
@@ -316,6 +343,7 @@ public class RabbitGM : MonoBehaviour
         {
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
+            DestroyPrefabButton.Add(CurrentObject);
             canSpawn = false;
         }
 
