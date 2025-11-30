@@ -109,8 +109,8 @@ public class TeachGM : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // StartCoroutine(CloseDoor());
-       // ClickGoOtherScence();
+        // StartCoroutine(CloseDoor());
+        // ClickGoOtherScence();
         RabbitButton.interactable = false;
         ProductCustomer();
         teachThree4 = false;
@@ -269,6 +269,7 @@ public class TeachGM : MonoBehaviour
             // IteamOpenPrefab.GetComponent<SetIteamOpenObj>().ID = 1;
 
             var obj = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
+            GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
             obj.IDs.Add(1);
             obj.IDs.Add(2);
             obj.ReagentsID = 2;
@@ -426,6 +427,7 @@ public class TeachGM : MonoBehaviour
     public void OpenTeachEightTwo()  //處理電路板
     {
         TeachEightTwo.SetActive(true);
+        GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
     }
 
 

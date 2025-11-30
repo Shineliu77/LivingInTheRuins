@@ -43,7 +43,7 @@ public class StoryFirst : MonoBehaviour
                 dialogue.CloseDialoguePanel.SetActive(true);
             }
 
-            if (dialogue.currentLine == 60)   //全部看完後
+            if (dialogue.currentLine == 61)   //全部看完後
             {
                 SceneManager.LoadScene("TeachGame");
             }

@@ -147,14 +147,41 @@ public class CustomerGM : MonoBehaviour
                 Destroy(hit.gameObject);
                 Finished = true;
 
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+                // if(hasArrived == true)
+                // { 
+                //FindObjectOfType<FirstGame>().ProduceIteam(); 
+                // }
+
+
             }
             if (hit.gameObject.name == "fixeditemOpenFinished2")
             {
                 FindObjectOfType<ScoreGM>().AddScore();
 
                 Destroy(hit.gameObject);
-            }
+                Finished = true;
 
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished3")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+            }
+            if (hit.gameObject.name == "fixeditemOpenFinished4")
+            {
+                FindObjectOfType<ScoreGM>().AddScore();
+
+                Destroy(hit.gameObject);
+                Finished = true;
+
+                FindObjectOfType<FirstGame>().ClearIteamPrefab();
+            }
         }
     }
 }
