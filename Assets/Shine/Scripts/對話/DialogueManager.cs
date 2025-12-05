@@ -59,6 +59,8 @@ public class DialogueManager : MonoBehaviour
             string CGFile = "";
             string BGFile = "";
 
+            string bgmFile = ""; // O 欄
+            string sfxFile = ""; // P 欄
 
             if (ExcelFileName == "Dialog.xlsx")   //教學使用
             {
@@ -82,6 +84,8 @@ public class DialogueManager : MonoBehaviour
                 audioFile = GetCellString(row, 9); // J 音效
                 CGFile = GetCellString(row, 10); // k CG圖
                 BGFile = GetCellString(row, 11); // L bg圖
+                bgmFile = GetCellString(row, 14);    // O 背景音樂
+                sfxFile = GetCellString(row, 15);    // P 特效音
             }
 
             DialogueLine dialogue = new DialogueLine
@@ -93,7 +97,9 @@ public class DialogueManager : MonoBehaviour
                 imageFile3 = imageFile3,
                 audioFile = audioFile,
                 CGFile = CGFile,
-                BGFile = BGFile
+                BGFile = BGFile,
+                bgmFile = bgmFile,
+                sfxFile = sfxFile
             };
             //路徑
             string imagePath = Path.Combine(Application.streamingAssetsPath, "Img", "Louise",imageFile);
@@ -149,6 +155,25 @@ public class DialogueManager : MonoBehaviour
                 Texture2D tex = new Texture2D(2, 2);
                 tex.LoadImage(imgData);
                 dialogue.BGImage = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
+            // 從 Resources/BGM 載入背景音樂 只要填檔名即可
+            if (!string.IsNullOrEmpty(bgmFile))
+            {
+                string bgmName = Path.GetFileNameWithoutExtension(bgmFile);
+                dialogue.bgmClip = Resources.Load<AudioClip>("BGM/" + bgmName);
+
+                if (dialogue.bgmClip == null)
+                    Debug.LogWarning("找不到 BGM 音檔 Resources/BGM/" + bgmName);
+            }
+
+            // 從 Resources/SFX 載入特效音
+            if (!string.IsNullOrEmpty(sfxFile))
+            {
+                string sfxName = Path.GetFileNameWithoutExtension(sfxFile);
+                dialogue.sfxClip = Resources.Load<AudioClip>("SFX/" + sfxName);
+
+                if (dialogue.sfxClip == null)
+                    Debug.LogWarning("找不到 SFX 音檔 Resources/SFX/" + sfxName);
             }
             dialogueLines.Add(dialogue);
         }

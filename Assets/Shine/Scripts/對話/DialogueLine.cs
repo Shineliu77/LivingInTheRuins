@@ -10,7 +10,8 @@ public class DialogueLine
     public string audioFile;
     public string CGFile;
     public string BGFile;
-  
+    public string bgmFile;   // O 欄：背景音樂檔名
+    public string sfxFile;   // P 欄：特效音檔名
 
 
 
@@ -20,4 +21,6 @@ public class DialogueLine
     public Sprite CGImage;
     public Sprite BGImage;
     public AudioClip audio;    // 音效資源
+    public AudioClip bgmClip; // 從 Resources/BGM 載入
+    public AudioClip sfxClip; // 從 Resources/SFX 載入
 }
