@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f16296e2b63c8a74789f508be0e8922d
+guid: 23e22745beea5cd44a46c33f1d392e30
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,43 +97,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u9078\u55AE"
+      name: UI13_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 43
-        width: 1325
-        height: 2990
+        x: 140
+        y: 129
+        width: 615
+        height: 645
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a8b3ce537e9d234db8876e96af3c0d9
-      internalID: -1718485423
+      spriteID: f735ee25a469d164d95e5cac42285635
+      internalID: -44591556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u500B\u8A2D\u5B9A\u8ABF\u6574"
+      name: UI13_1
       rect:
         serializedVersion: 2
-        x: 1390
-        y: 360
-        width: 2015
-        height: 2826
+        x: 857
+        y: 132
+        width: 632
+        height: 660
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bda42bdaf2c7cd942aa58d9b714bab7d
-      internalID: 1095960125
+      spriteID: a80210a09e9a1a343a8e1a4c9480bae6
+      internalID: 2099621653
       vertices: []
       indices: 
       edges: []
@@ -149,8 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u500B\u8A2D\u5B9A\u8ABF\u6574": 1095960125
-      "\u9078\u55AE": -1718485423
+      UI13_0: -44591556
+      UI13_1: 2099621653
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
