@@ -120,6 +120,7 @@ public class CrabGM : MonoBehaviour
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     FindObjectOfType<TeachGM>().OpenTeachEightThree();
+                    GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = false;
                 }
             }
         }

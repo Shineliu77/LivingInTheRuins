@@ -49,7 +49,7 @@ public class RabbitGM : MonoBehaviour
     public GameObject[] ObjectPrefabs;         // 多項可生成物件
     public Transform ObjectPop;         // 生成點
     public int maxObjects = 5;           // 生成上限
-    private GameObject CurrentObject;    // 該生成點當前物件
+    public GameObject CurrentObject;    // 該生成點當前物件
     public static List<GameObject> allSpawnedObjects = new List<GameObject>(); // 全域已生成物件紀錄
 
     private bool canSpawn = false;
@@ -61,6 +61,7 @@ public class RabbitGM : MonoBehaviour
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
+    public Button[] RabbitButton;   //兔子按鈕
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -71,7 +72,35 @@ public class RabbitGM : MonoBehaviour
     // Update is called once per frame
     void Update() //無效
     {
+        if (Application.loadedLevelName == "TeachGame")
+        {
 
+            // if (FindObjectOfType<TeachGM>().RabbitButton.interactable == true)  //新手關如果沒鎖的話
+
+            if (FindObjectOfType<TeachGM>().TeachGMLockRabbitButton == true)  //新手關如果沒鎖的話
+            {
+                if (allSpawnedObjects.Count >= maxObjects)
+                {
+                    LockRabbitButtons();
+                }
+                else
+                {
+                    UnlockRabbitButtons();
+                }
+            }
+
+        }
+        else if (Application.loadedLevelName != "TeachGame")  //其他
+        {
+            if (allSpawnedObjects.Count >= maxObjects)
+            {
+                LockRabbitButtons();
+            }
+            else
+            {
+                UnlockRabbitButtons();
+            }
+        }
         //   if (isStopwatch && ScriptStopwatchTimer > 0)
         //  {
         // Stopwatch.gameObject.SetActive(true);
@@ -323,6 +352,17 @@ public class RabbitGM : MonoBehaviour
                 {
                     FindObjectOfType<TeachGM>().OpenBeforeTeach4RFix();
                     FindObjectOfType<TeachGM>().beforeTeach4RFix = true;
+
+                    var teach = FindObjectOfType<TeachGM>();  //禁止拖曳
+                    if (teach != null)
+                    {
+                        teach.lockRegisteredObject();
+                    }
+                    else
+                    {
+                        // fallback（保險）
+                        CurrentObject.GetComponent<BoxCollider2D>().enabled = false;
+                    }  //不可拖曳
                 }
                 else
                 {
@@ -356,6 +396,7 @@ public class RabbitGM : MonoBehaviour
             allSpawnedObjects.Remove(obj);
             Debug.Log($" 移除物件：{obj.name} (目前剩餘：{allSpawnedObjects.Count})");
         }
+
     }
 
     //判斷要不要產生怪物
@@ -442,4 +483,23 @@ public class RabbitGM : MonoBehaviour
         // MachineAni.SetTrigger("takeTriangle");
         MachineAni.SetTrigger("takeTriangle");
     }
+
+
+
+    private void LockRabbitButtons()
+    {
+        for (int i = 0; i < RabbitButton.Length; i++)
+        {
+            RabbitButton[i].interactable = false;
+        }
+    }
+
+    private void UnlockRabbitButtons()
+    {
+        for (int i = 0; i < RabbitButton.Length; i++)
+        {
+            RabbitButton[i].interactable = true;
+        }
+    }
 }
+

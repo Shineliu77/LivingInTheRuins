@@ -56,6 +56,9 @@ public class MakeAPotion : MonoBehaviour
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
+
+    public GameObject[] MakeLiquidItem;//生成液體的物件
+
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -66,6 +69,18 @@ public class MakeAPotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Application.loadedLevelName != "TeachGame")  //其他
+        {
+            if (allSpawnedPotions.Count >= maxPotions)
+            {
+                LockMakeLiquidItem();
+            }
+            else
+            {
+                UnlockMakeLiquidItem();
+            }
+        }
+
         if (isStopwatch && ScriptStopwatchTimer > 0)
         {
             Stopwatch.gameObject.SetActive(true);
@@ -90,6 +105,7 @@ public class MakeAPotion : MonoBehaviour
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     Potions[SelectPotionID].SetActive(true);
+                  
 
                     Stopwatch.gameObject.SetActive(false);
                 }
@@ -421,4 +437,21 @@ public class MakeAPotion : MonoBehaviour
         }
     }
 
+    private void LockMakeLiquidItem()
+    {
+        for (int i = 0; i < MakeLiquidItem.Length; i++)
+        {
+            MakeLiquidItem[i].GetComponent<DraggableReturn2D>();
+            MakeLiquidItem[i].GetComponent<DraggableReturn2D>().enabled = false;
+        }
+    }
+
+    private void UnlockMakeLiquidItem()
+    {
+        for (int i = 0; i < MakeLiquidItem.Length; i++)
+        {
+            MakeLiquidItem[i].GetComponent<DraggableReturn2D>();
+            MakeLiquidItem[i].GetComponent<DraggableReturn2D>().enabled = true;
+        }
+    }
 }

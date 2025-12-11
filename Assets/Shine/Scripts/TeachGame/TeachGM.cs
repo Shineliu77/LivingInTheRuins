@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class TeachGM : MonoBehaviour
 {
+    [HideInInspector] public GameObject lockedObject; // 被 Rabbit 鎖住的 object (可能是 CurrentObject 或 IteamOpenPrefab)
     #region 產生顧客
     [Header("顧客")]
     public GameObject Customer;
@@ -38,7 +39,7 @@ public class TeachGM : MonoBehaviour
     public GameObject TeachTwo3;
     private bool teach2 = false;//第二段
     private bool teachTwo = false;
-    private bool teachTwo2 = false;
+    public bool teachTwo2 = false;
     public bool teachTwo3 = false;
     #endregion
     #region 第三段說明
@@ -54,7 +55,7 @@ public class TeachGM : MonoBehaviour
     public GameObject BeforeTeach4R;                 //兔子使用
     private bool beforeTeach4R = false;
     public GameObject TeachThree4;                 //操作
-    public bool teachThree4 = false;
+    public bool teachThree4;
     public bool teachThree4ForbeforeTeach4RWaitRabbit = false;
     public GameObject BeforeTeach4RWaitRabbit;       //等兔子使用
     private bool beforeTeach4RWaitRabbit = false;
@@ -65,8 +66,11 @@ public class TeachGM : MonoBehaviour
     public GameObject Teach4; //第一段
     public GameObject TeachFour;
     bool isTeach4;         //第一段
+    bool isTeachFour = false;
     private bool teach4 = false;
+    //public bool teach4Customer = false;  //還客人
     public Button RabbitButton;   //兔子按鈕
+    public bool TeachGMLockRabbitButton = false;  // 教學用鎖定
     #endregion
     #region 第五段說明
     public GameObject Teach5;
@@ -76,9 +80,12 @@ public class TeachGM : MonoBehaviour
     #region 第六段說明
     public GameObject Teach6;
     public GameObject BeforeTeach6;
+    bool isTeach6;
+    bool beforeTeach6 = false;
     #endregion
     #region 第七段說明
     public Collider2D[] MakeAPotionIteams;
+    public bool TeachGMLockMakeAPotionIteams = false;  // 教學用鎖定
     public GameObject Teach7;
     public bool isTeach7;
 
@@ -90,7 +97,7 @@ public class TeachGM : MonoBehaviour
     public GameObject TeachEightThree;
     private bool teach8 = false;//第二段
     private bool teachEight = false;
-    private bool teachEightThree = false;
+    private bool teachEightThree;
     #endregion
     #region 第9段說明
     public GameObject Teach9;
@@ -98,7 +105,7 @@ public class TeachGM : MonoBehaviour
     #region 第10段說明
     public GameObject Teach10;
     #endregion
-
+    public GameObject FixMachineDurability;  //機器耐久維修物
     public GameObject ScorePanel;  //分數面板
     public GameObject Door; //鐵門
     public GameObject ClickClose; //點擊換場
@@ -106,17 +113,16 @@ public class TeachGM : MonoBehaviour
     public Transform FinaltargetPosition; //最終停頓點
     public float MiddledoorSpeed; //中間速度
     public float FinaldoorSpeed;//最後速度
-    // Start is called before the first frame update
+                                // Start is called before the first frame update
     void Start()
     {
-        // StartCoroutine(CloseDoor());
-        // ClickGoOtherScence();
+
         RabbitButton.interactable = false;
+        FindObjectOfType<RabbitGM>().RabbitButton[0].interactable = false;
         ProductCustomer();
-        teachThree4 = false;
-        // beforeTeach4RWaitRabbit = false;
+        // teachThree4 = false;
         TeachThree4.SetActive(false);
-        //  BeforeTeach4RWaitRabbit.SetActive(false);
+        FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
     }
 
     void Update()
@@ -125,7 +131,10 @@ public class TeachGM : MonoBehaviour
         {
             IteamPrefab.GetComponent<BoxCollider2D>().enabled = true;
         }
-
+        if (IteamPrefab && CustomerNumber == 2 && !BeforeTeach6.active && beforeTeach6 == true)
+        {
+            IteamPrefab.GetComponent<DraggableReturn2D>().enabled = true;
+        }
 
         if (teach2 == true && !Teach2.active && teachTwo == false)  //打開第二個教學面板的第二段
         {
@@ -138,12 +147,25 @@ public class TeachGM : MonoBehaviour
             TeachTwo2.SetActive(true);
             teachTwo2 = true;
         }
-        if (teachTwo3 == true)  //確定開啟才可以拖曳
+
+        if (!TeachTwo.active && teachTwo2 == true && !TeachTwo2.active)  //確定開啟才可以拖曳 修理
         {
-            IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
+            FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = true;
 
         }
 
+        if (teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計還可拖曳     不可拖曳也要開否則可拿起
+                                                     // if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳
+        {
+            FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
+            IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
+
+        }
+        //  if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳
+        // {
+        //    IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
+
+        //
         //  if (IteamOpenPrefab && !Teach2.active && !TeachTwo.active & !IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled)
         //  {
         // IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
@@ -180,21 +202,62 @@ public class TeachGM : MonoBehaviour
             teacheachThree5 = true;
         }
 
-
+        //  if (!TeachThree4.activeSelf && teachThree4 == true && !TeachThree5.activeSelf && teacheachThree5 == true && teachThree4ForbeforeTeach4RWaitRabbit == true && !BeforeTeach4RWaitRabbit.activeSelf && beforeTeach4RWaitRabbit == true && !TeachThree5.activeSelf && teacheachThree5 == true && !BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)//元件拖曳
+        // if (!TeachThree4.activeSelf && teachThree4 && !TeachThree5.activeSelf && teacheachThree5 == true && teachThree4ForbeforeTeach4RWaitRabbit == true && !BeforeTeach4RWaitRabbit.activeSelf && beforeTeach4RWaitRabbit == true && !TeachThree5.activeSelf && teacheachThree5 == true && !BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)//元件拖曳
+        //if (!BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)
+        // if (!TeachThree4.activeSelf && teachThree4 && !TeachThree5.activeSelf && teacheachThree5 == true && teachThree4ForbeforeTeach4RWaitRabbit == true && !BeforeTeach4RWaitRabbit.activeSelf && beforeTeach4RWaitRabbit == true && !TeachThree5.activeSelf && teacheachThree5 == true && !BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)//元件拖曳
+        //if (!BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)
+        if (teachThree4)
+        {
+            // UnlockRegisteredObject();
+            //GameObject.FindWithTag("brokecircle").GetComponent<DraggableReturn2D>().enabled = false;
+            lockRegisteredObject();
+        }
+        if (TeachThree5.activeSelf)
+        {
+            // UnlockRegisteredObject();
+            //GameObject.FindWithTag("brokecircle").GetComponent<DraggableReturn2D>().enabled = false;
+            lockRegisteredObject();
+        }
+        if (BeforeTeach4RWaitRabbit.activeSelf)
+        {
+            // UnlockRegisteredObject();
+            // GameObject.FindWithTag("brokecircle").GetComponent<DraggableReturn2D>().enabled = false;
+            lockRegisteredObject();
+        }
+        if (!BeforeTeach4RFix.activeSelf && beforeTeach4RFix == true)
+        {
+            //  FindObjectOfType<RabbitGM>().CurrentObject.GetComponent<BoxCollider2D>().enabled = true;
+            UnlockRegisteredObject();
+            //GameObject.FindWithTag("brokecircle").GetComponent<DraggableReturn2D>().enabled = true;
+        }
         if (!TeachThree4.activeSelf && teachThree4ForbeforeTeach4RWaitRabbit == true && !BeforeTeach4RWaitRabbit.activeSelf && beforeTeach4RWaitRabbit == true && !TeachThree5.activeSelf && teacheachThree5 == true && beforeTeach4RFix == false && FindObjectOfType<RabbitGM>().ShowbeforeTeach4RFix == true)  //確保所有人關起才可以
+                                                                                                                                                                                                                                                                                                                 //  if (!TeachThree4.activeSelf && teachThree4ForbeforeTeach4RWaitRabbit == true && !BeforeTeach4RWaitRabbit.activeSelf && beforeTeach4RWaitRabbit == true && !TeachThree5.activeSelf && teacheachThree5 == true && FindObjectOfType<RabbitGM>().ShowbeforeTeach4RFix == true)  //確保所有人關起才可以
         {
             BeforeTeach4RFix.SetActive(true);
             beforeTeach4RFix = true;
             FindObjectOfType<RabbitGM>().ShowbeforeTeach4RFix = false;
         }
 
-        if (!Teach4.active && isTeach4 && CustomerNumber == 1)
+        if (!Teach4.active && isTeach4 && isTeachFour == false && CustomerNumber == 1)
         {
             if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
             {
-                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+                // GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
                 IteamOpenPrefab.name = "fixeditemOpenFinished1";
                 TeachFour.SetActive(true);
+                isTeachFour = true;
+            }
+        }
+
+        if (!Teach4.active && isTeach4 && !TeachFour.active && isTeachFour == true && CustomerNumber == 1)   //還客人
+        {
+            FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = true;
+            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
+            {
+                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+                // IteamOpenPrefab.name = "fixeditemOpenFinished1";
+                // TeachFour.SetActive(true);
 
             }
         }
@@ -205,19 +268,28 @@ public class TeachGM : MonoBehaviour
         //   IteamPrefab = null;
         //}
 
-
+        if (!Teach6.active && isTeach6 && CustomerNumber == 2)
+        {
+            MakeAPotionIteams[0].enabled = false;
+            MakeAPotionIteams[1].enabled = false;
+            MakeAPotionIteams[2].enabled = true;
+            MakeAPotionIteams[3].enabled = false;
+            TeachGMLockMakeAPotionIteams = true;
+            FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = true;
+        }
 
         if (!Teach7.active && isTeach7 && CustomerNumber == 2)
         {
             Time.timeScale = 1;
         }
 
+
         if (teach8 == true && !Teach8.activeSelf && !teachEight)  //打開第八個教學面板的第二段
         {
-
             TeachEight.SetActive(true);
             teachEight = true;
         }
+
     }
     public void ProductCustomer()
     {
@@ -240,9 +312,12 @@ public class TeachGM : MonoBehaviour
                 Teach1.SetActive(true);
             }
 
-            if (CustomerNumber == 2 && !BeforeTeach6.activeSelf)  //修是試管前 換玩家試
+            if (CustomerNumber == 2 && !BeforeTeach6.activeSelf && beforeTeach6 == false)  //修是試管前 換玩家試
             {
+
                 BeforeTeach6.SetActive(true);
+                IteamPrefab.GetComponent<DraggableReturn2D>().enabled = false;
+                beforeTeach6 = true;
             }
         }
     }
@@ -305,6 +380,7 @@ public class TeachGM : MonoBehaviour
         // if (Allteach3Close == true)
         // {
         RabbitButton.interactable = true;     //兔子按鈕
+        TeachGMLockRabbitButton = true;
 
         //  }
 
@@ -398,11 +474,10 @@ public class TeachGM : MonoBehaviour
 
     public void OpenTeach6()
     {
+
         Teach6.SetActive(true);
-        MakeAPotionIteams[0].enabled = false;
-        MakeAPotionIteams[1].enabled = false;
-        MakeAPotionIteams[2].enabled = true;
-        MakeAPotionIteams[3].enabled = false;
+
+        isTeach6 = true;
     }
     public void OpenTeach7()
     {
@@ -436,11 +511,20 @@ public class TeachGM : MonoBehaviour
         TeachEightThree.SetActive(true);
         teachEightThree = true;
     }
+
+    public void CloseTeachEightThree()  //處理電路板
+    {
+        if (teachEightThree == true)
+        {
+            GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = true;
+        }
+    }
     public void OpenTeach9()
     {
         Teach9.SetActive(true);
 
     }
+
     public void OpenTeach10()
     {
         Teach10.SetActive(true);
@@ -512,5 +596,46 @@ public class TeachGM : MonoBehaviour
     public void ClearIteamPrefab()
     {
         IteamPrefab = null;
+    }
+
+    public void RegisterLockedObject(GameObject obj)
+    {
+
+        lockedObject = obj;
+        var col = lockedObject.GetComponent<Collider2D>();
+        if (col) col.enabled = false; // 鎖住碰撞（避免拖曳）
+                                      // 如果你是用 DraggableReturn2D 控制拖曳，也可以關掉那個 component：
+        var drag = lockedObject.GetComponent<DraggableReturn2D>();
+        if (drag) drag.enabled = false;
+    }
+
+    public void lockRegisteredObject()
+    {
+        RabbitGM rabbit = FindObjectOfType<RabbitGM>();
+        if (rabbit == null || rabbit.CurrentObject == null)
+        {
+            Debug.LogWarning("[TeachGM] 沒找到 RabbitGM 或 CurrentObject");
+            return;
+        }
+
+        GameObject obj = rabbit.CurrentObject;
+
+        // 鎖住（禁止拖曳 + 禁用碰撞）
+        var drag = obj.GetComponent<DraggableReturn2D>();
+        if (drag != null) drag.enabled = false;
+
+        Debug.Log("[TeachGM] 已鎖住：" + obj.name);
+    }
+    public void UnlockRegisteredObject()
+    {
+        RabbitGM rabbit = FindObjectOfType<RabbitGM>();
+        if (rabbit == null || rabbit.CurrentObject == null) return;
+
+        GameObject obj = rabbit.CurrentObject;
+
+        var drag = obj.GetComponent<DraggableReturn2D>();
+        if (drag != null) drag.enabled = true;
+
+        Debug.Log("[TeachGM] 已解鎖：" + obj.name);
     }
 }
