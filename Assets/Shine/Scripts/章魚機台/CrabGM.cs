@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq;
 public class CrabGM : MonoBehaviour
 {
     public float MachineDurability;
@@ -45,10 +45,23 @@ public class CrabGM : MonoBehaviour
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
 
+    float getInLength;
+    float workLength;
+    float totalLength;
     void Start()
     {
         MachineDurability_Script = MachineDurability;
         SaveRemainingValue = MachineUIBar.fillAmount;
+
+        Animator animator = GetComponent<Animator>();
+
+        getInLength = animator.runtimeAnimatorController
+            .animationClips.First(c => c.name == "get in").length;
+
+        workLength = animator.runtimeAnimatorController
+            .animationClips.First(c => c.name == "work").length;
+
+        totalLength = getInLength + workLength;
 
     }
 
@@ -56,7 +69,7 @@ public class CrabGM : MonoBehaviour
     void Update()
     {
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("get in"))
+        if (stateInfo.IsName("get in") || stateInfo.IsName("work"))
         {
 
             if (stateInfo.normalizedTime >= 0.99f)
@@ -70,50 +83,73 @@ public class CrabGM : MonoBehaviour
                 MachineDurability_Script = SaveRemainingValue;
 
             }
-            if (stateInfo.normalizedTime < 0.99f)
+            if (stateInfo.IsName("get in") || stateInfo.IsName("work"))
             {
-                MachineUI.gameObject.SetActive(true);
-                MachineDurabilityFix = false;    //不可維修
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
-                FixMachineShow.SetActive(false);
-                float animationLength = stateInfo.length; // 動畫總秒數
-                float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
-                float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
+                if (stateInfo.normalizedTime < 0.99f)
+                {
+                    //if(stateInfo.IsName("work")){ MachineUI.gameObject.SetActive(true); }
+                    MachineUI.gameObject.SetActive(true);
+                    MachineDurabilityFix = false;    //不可維修
+                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    FixMachineShow.SetActive(false);
+                    //float animationLength = stateInfo.length; // 動畫總秒數
+                    //float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
+                    // float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
 
-                SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
+                    float currentTimeInSeconds = 0f;
 
-                MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
-                if (MachineUIBar.fillAmount > 0.5f)
-                {
-                    MachineUIBar.sprite = MachineUIBarSprites[0];
-                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+                    if (stateInfo.IsName("get in"))
+                    {
+                        currentTimeInSeconds =
+                            getInLength * Mathf.Clamp01(stateInfo.normalizedTime);
+                    }
+                    else if (stateInfo.IsName("work"))
+                    {
+                        currentTimeInSeconds =
+                            getInLength +
+                            (workLength * Mathf.Clamp01(stateInfo.normalizedTime));
+                    }
+
+
+                    SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
+
+                    MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
+                    if (MachineUIBar.fillAmount > 0.5f)
+                    {
+                        MachineUIBar.sprite = MachineUIBarSprites[0];
+                        MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+                    }
+                    else
+                    {
+                        MachineUIBar.sprite = MachineUIBarSprites[1];
+                        MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                    }
+                    //MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
+                    // float fillAmount = 1f - (currentTimeInSeconds / animationLength);
+                    MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / totalLength);
+                    float fillAmount = 1f - (currentTimeInSeconds / totalLength);
+                    float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
+                    needle.localEulerAngles = new Vector3(0, 0, -zRotation);
+                    // if (stateInfo.normalizedTime < 0.5f)
+                    if (1f - (currentTimeInSeconds / totalLength) > 0.5f)
+                    {
+                        MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[0];
+                        MachineUIOutside.sprite = MachineUISpritesOutside[0]; //圓形計時器外框原色
+                    }
+                    else
+                    {
+                        MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
+                        MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
+                    }
                 }
-                else
-                {
-                    MachineUIBar.sprite = MachineUIBarSprites[1];
-                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
-                }
-                MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
-                float fillAmount = 1f - (currentTimeInSeconds / animationLength);
-                float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
-                needle.localEulerAngles = new Vector3(0, 0, -zRotation);
-                if (stateInfo.normalizedTime < 0.5f)
-                {
-                    MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[0];
-                    MachineUIOutside.sprite = MachineUISpritesOutside[0]; //圓形計時器外框原色
-                }
-                else
-                {
-                    MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
-                    MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
-                }
+
             }
         }
         if (canSpawnPCB && CurrentPCB == null)   //生成PCB
         {
 
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("hold") && stateInfo.normalizedTime > 0.25f)
+            if (stateInfo.IsName("pull out") && stateInfo2.normalizedTime > 0.6f)
             {
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;

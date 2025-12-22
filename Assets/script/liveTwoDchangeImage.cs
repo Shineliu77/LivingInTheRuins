@@ -9,6 +9,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     public bool LiveTDChangeImgOk = false;
+    public bool isLiveTDChangeImgOk = false;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // 獲取 SpriteRenderer 組件
@@ -36,6 +37,9 @@ public class LiveTwoDChangeImage : MonoBehaviour
                          teachScript.IsAfterChangeImage();
                      }*/
                     transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
+
+                    LiveTDChangeImgOk = false;
+
                     if (Application.loadedLevelName == "TeachGame")
                     {
                         FindObjectOfType<TeachGM>().OpenTeach4();
@@ -62,7 +66,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
         if (Application.loadedLevelName == "FirstGame")
         {
             SetIteamOpenObj obj = GetComponentInParent<SetIteamOpenObj>();
-            if (collision.gameObject.CompareTag("brokecircle"))
+            if (collision.gameObject.CompareTag("brokecircle") && isLiveTDChangeImgOk == false)
             {
                 Debug.Log("碰到 brokecircle！");
                 // 當 ProcessorImage 為 1 時才更換圖片
@@ -85,6 +89,8 @@ public class LiveTwoDChangeImage : MonoBehaviour
                         RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
                         Destroy(collision.gameObject);
 
+                        isLiveTDChangeImgOk = true;
+
                     }
                     else
                     {
@@ -93,7 +99,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                 }
             }
             // 確認碰撞的物件是 square 時的處理
-            if (collision.gameObject.CompareTag("square"))
+            if (collision.gameObject.CompareTag("square") && isLiveTDChangeImgOk == false)
             {
                 Debug.Log("碰到 square！");
                 // 當 ProcessorImage 為 1 時才更換圖片
@@ -114,6 +120,9 @@ public class LiveTwoDChangeImage : MonoBehaviour
                         Debug.Log("圖片已更換為 changeSprites[1]");
                         RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
                         Destroy(collision.gameObject);  //刪除
+
+                        isLiveTDChangeImgOk = true;
+
                     }
                     else
                     {
@@ -123,7 +132,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
             }
 
             // 確認碰撞的物件是 triangle 時的處理
-            if (collision.gameObject.CompareTag("triangle"))
+            if (collision.gameObject.CompareTag("triangle") && isLiveTDChangeImgOk == false)
             {
                 Debug.Log("碰到 triangle！");
                 // 當 ProcessorImage 為 2 時才更換圖片
@@ -143,6 +152,8 @@ public class LiveTwoDChangeImage : MonoBehaviour
                         Debug.Log("圖片已更換為 changeSprites[2]");
                         RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
                         Destroy(collision.gameObject);  //刪除
+
+                        isLiveTDChangeImgOk = true;
                     }
                     else
                     {

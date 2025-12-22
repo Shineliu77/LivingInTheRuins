@@ -11,6 +11,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public LiquidPopOut liquidPopOut; // 呼叫 LiquidPopOut 程式
+    public bool isliveTwoDchangeImageIiquidOk = false;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // 獲取 SpriteRenderer 組件
@@ -66,7 +67,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
             SetIteamOpenObj obj = GetComponentInParent<SetIteamOpenObj>();
 
             // 確認碰撞的物件是 redIiquid 時的處理
-            if (collision.gameObject.CompareTag("redIiquid"))
+            if (collision.gameObject.CompareTag("redIiquid") && isliveTwoDchangeImageIiquidOk == false)
             {
                 Debug.Log("碰到 redIiquid！");
                 // 當 Foropener.currentImageIndex 為 3 時才更換圖片
@@ -82,6 +83,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                             transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                         }
                     }
+                    isliveTwoDchangeImageIiquidOk = true;
                     Debug.Log("圖片已更換為 changeSprites[0]");
                 }
                 else
@@ -95,7 +97,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                 }
             }
             // 確認碰撞的物件是 yellowIiquid 時的處理
-            if (collision.gameObject.CompareTag("yellowIiquid"))
+            if (collision.gameObject.CompareTag("yellowIiquid") && isliveTwoDchangeImageIiquidOk == false)
             {
                 Debug.Log("碰到 yellowIiquid！");
 
@@ -111,6 +113,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                             transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                         }
                     }
+                    isliveTwoDchangeImageIiquidOk = true;
                     Debug.Log("圖片已更換為 changeSprites[1]");
                 }
                 else
@@ -125,7 +128,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
             }
 
             // 確認碰撞的物件是 blueIiquid 時的處理
-            if (collision.gameObject.CompareTag("blueIiquid"))
+            if (collision.gameObject.CompareTag("blueIiquid") && isliveTwoDchangeImageIiquidOk == false)
             {
                 Debug.Log("碰到 blueIiquid！");
 
@@ -141,6 +144,8 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                             transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                         }
                     }
+
+                    isliveTwoDchangeImageIiquidOk = true;
                     Debug.Log("圖片已更換為 changeSprites[2]");
                 }
                 else
@@ -162,7 +167,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
             }
             // 確認碰撞的物件是 greenIiquid 時的處理
-            if (collision.gameObject.CompareTag("greenIiquid"))
+            if (collision.gameObject.CompareTag("greenIiquid") && isliveTwoDchangeImageIiquidOk == false)
             {
                 Debug.Log("碰到 greenIiquid！");
                 // 當 Foropener.currentImageIndex 為 3 時才更換圖片
@@ -178,6 +183,8 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
                             transform.parent.GetComponent<DraggableReturn2D>().enabled = true;
                         }
                     }
+
+                    isliveTwoDchangeImageIiquidOk = true;
                     Debug.Log("圖片已更換為 changeSprites[3]");
                 }
                 else

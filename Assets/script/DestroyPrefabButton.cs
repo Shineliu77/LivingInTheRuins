@@ -12,9 +12,11 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
     public Sprite ButtonOrigin;
     public Sprite ButtonChangeOrigin;
     public Sprite ButtonChangeCantClick;
+    private bool controlRabbit = false;
     public void Start()
     {
         ButtonTarget.sprite = ButtonOrigin;
+
     }
 
     public static List<GameObject> allSpawnOrder = new List<GameObject>();
@@ -31,7 +33,32 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
         allSpawnOrder.Remove(obj);
     }
 
+    // void Update()
+    // {
+    //if (allSpawnOrder.Count == 0)
+    //{
+    //     ButtonTarget.sprite = ButtonOrigin;
+    //}
+    //  if (FindObjectOfType<RabbitGM>().SpawnOK == true && controlRabbit&& ClickTime != -1)  //確定生成好與有回收 有刪除次數
+    // {
+    //   ControlRabbit();
+    //   controlRabbit = false;
+    // FindObjectOfType<RabbitGM>().SpawnOK = false;
+    // }
+    // }
+    void OnDestroy()
+    {
+        var rabbit = FindObjectOfType<RabbitGM>();
 
+    }
+
+    void OnRabbitWaitFinished()
+    {
+        if (!controlRabbit || ClickTime < 0) return;
+
+        FindObjectOfType<RabbitGM>().PlayTakeAnimation();
+        controlRabbit = false;
+    }
 
     public void DestroyPrev()
     {
@@ -58,8 +85,15 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
             return;
         }
         // 從各自系統刪除
-        RabbitGM.allSpawnedObjects.Remove(target);
+        //RabbitGM.allSpawnedObjects.Remove(target);
+        bool isRabbit = RabbitGM.allSpawnedObjects.Remove(target);
         MakeAPotion.allSpawnedPotions.Remove(target);
+        if (isRabbit)
+        {
+            //controlRabbit = true;
+            var rabbit = FindObjectOfType<RabbitGM>();
+            rabbit.PlayTakeAnimation();
+        }
         Remove(target);
         //真的刪除物件
         Destroy(target);
@@ -80,6 +114,8 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
     {
         if (allSpawnOrder.Count == 0 || ClickTime == 0)  //沒內容不啟動
             return;
+        else if (allSpawnOrder.Count == 0)
+            return;
 
         if (ClickTime > 0)
             ButtonTarget.sprite = ButtonChangeOrigin;
@@ -89,5 +125,10 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
     {
         if (ClickTime > 0)
             ButtonTarget.sprite = ButtonOrigin;
+    }
+
+    public void ControlRabbit()
+    {
+        FindObjectOfType<RabbitGM>().RequestTake();
     }
 }

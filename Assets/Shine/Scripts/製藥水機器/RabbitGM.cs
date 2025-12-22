@@ -34,6 +34,7 @@ public class RabbitGM : MonoBehaviour
 
     // public GameObject[] Potions;
     // public int SelectPotionID;
+    private bool pendingTake = false;
 
     public Transform needle; // 指針物件（需拖曳到 Inspector）
     public float maxRotation = -360f; // 旋轉範圍（滿格時的角度）
@@ -53,14 +54,15 @@ public class RabbitGM : MonoBehaviour
     public static List<GameObject> allSpawnedObjects = new List<GameObject>(); // 全域已生成物件紀錄
 
     private bool canSpawn = false;
-
+    public bool SpawnOK = false;
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
     bool MachineDurabilityFix = false;  //不可修
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
-
+                                       // public System.Action OnWaitFinished;
+    private bool waitEventSent = false;
     public Button[] RabbitButton;   //兔子按鈕
     void Start()
     {
@@ -198,7 +200,6 @@ public class RabbitGM : MonoBehaviour
 
                 }
             }
-
         }
         //if ( Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
         // {
@@ -211,7 +212,7 @@ public class RabbitGM : MonoBehaviour
                 SpawnObject(0);
                 canSpawn = false;
                 //  Stopwatch.gameObject.SetActive(false);
-
+                //SpawnOK = true;
             }
 
             AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成方
@@ -221,7 +222,7 @@ public class RabbitGM : MonoBehaviour
                 SpawnObject(1);
                 canSpawn = false;
                 // Stopwatch.gameObject.SetActive(false);
-
+                //SpawnOK = true;
             }
 
             AnimatorStateInfo stateInfo4 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成角
@@ -232,11 +233,53 @@ public class RabbitGM : MonoBehaviour
                 SpawnObject(2);
                 canSpawn = false;
                 //  Stopwatch.gameObject.SetActive(false);
-
+                // SpawnOK = true;
             }
         }
         // }
+        // AnimatorStateInfo stateInfo5 = MachineAni.GetCurrentAnimatorStateInfo(0);  //非手持等待  不能切動畫
+        //if (stateInfo5.IsName("wait circle") || stateInfo5.IsName("wait square") || stateInfo5.IsName("wait triangle") && stateInfo5.normalizedTime > 0.99f)  //但會接著吻合條件動畫會直接跳
+        //if (stateInfo5.normalizedTime > 0.99f)  //但會接著吻合條件動畫會直接跳
+        //{
+        // if(stateInfo5.IsName("take away circle") || stateInfo5.IsName("take away triangle") || stateInfo5.IsName("take away square"))  //直接刪無法導向
+        //  if(stateInfo5.IsName("wait circle") && stateInfo5.normalizedTime > 0.99f || stateInfo5.IsName("wait square")|| stateInfo5.IsName("wait triangle") )
+        //   {
+        //   SpawnOK = true;
+        // }
+        // }
+
+
     }
+    public enum WorkType
+    {
+        None,
+        Circle,
+        Square,
+        Triangle
+    }
+    public void RequestTake()
+    {
+        pendingTake = true;
+    }
+
+    public void OnWaitStateEntered()
+    {
+        if (!pendingTake) return;
+
+        pendingTake = false;
+
+        AnimatorStateInfo state = MachineAni.GetCurrentAnimatorStateInfo(0);
+
+        ResetAllTakeTriggers();
+
+        if (state.IsName("wait circle"))
+            MachineAni.SetTrigger("takecircle");
+        else if (state.IsName("wait square"))
+            MachineAni.SetTrigger("takeSquare");
+        else if (state.IsName("wait triangle"))
+            MachineAni.SetTrigger("takeTriangle");
+    }
+    public WorkType currentWork = WorkType.None;
 
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
@@ -244,12 +287,14 @@ public class RabbitGM : MonoBehaviour
         Reset();
         //如果觸發按鈕的話
         canSpawn = true;
+        currentWork = WorkType.Circle;
         MachineAni.SetTrigger("IdleToWalkCircle");
         ProduceMonster();
     }
     public void RabbitSquaare()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
         Reset();
+        currentWork = WorkType.Square;
         canSpawn = true;
         MachineAni.SetTrigger("IdleToSquare");
         ProduceMonster();
@@ -257,10 +302,39 @@ public class RabbitGM : MonoBehaviour
     public void RabbittTriangle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
         Reset();
+        currentWork = WorkType.Triangle;
         canSpawn = true;
         MachineAni.SetTrigger("IdleToTriangle");
         ProduceMonster();
     }
+
+    void ResetAllTakeTriggers()
+    {
+        MachineAni.ResetTrigger("takecircle");
+        MachineAni.ResetTrigger("takeSquare");
+        MachineAni.ResetTrigger("takeTriangle");
+    }
+
+    public void PlayTakeAnimation()
+    {
+        AnimatorStateInfo state = MachineAni.GetCurrentAnimatorStateInfo(0);
+
+        ResetAllTakeTriggers();
+
+        if (state.IsName("wait circle"))
+        {
+            MachineAni.SetTrigger("takecircle");
+        }
+        else if (state.IsName("wait square"))
+        {
+            MachineAni.SetTrigger("takeSquare");
+        }
+        else if (state.IsName("wait triangle"))
+        {
+            MachineAni.SetTrigger("takeTriangle");
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
     {
         if (hit.gameObject == FixMachineDurability)
@@ -467,20 +541,16 @@ public class RabbitGM : MonoBehaviour
     public void Takecircle()
     {
 
-        // MachineAni.SetTrigger("takecircle");
         MachineAni.SetTrigger("takecircle");
     }
 
     public void Takesquare()
     {
 
-        // MachineAni.SetTrigger("takesquare");
         MachineAni.SetTrigger("takeSquare");
     }
     public void Taketriangle()
     {
-
-        // MachineAni.SetTrigger("takeTriangle");
         MachineAni.SetTrigger("takeTriangle");
     }
 

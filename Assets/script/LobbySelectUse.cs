@@ -19,7 +19,7 @@ public class LobbySelectUse : MonoBehaviour
     private Vector3 startScale;
     private Vector3 midScale;
     private Vector3 endScale;
-
+    private bool zoomLocked = false; // 是否禁止再次縮放
     //文字縮放
     private Vector3 textStartScale;
     private Vector3 textMidScale;
@@ -79,7 +79,7 @@ public class LobbySelectUse : MonoBehaviour
             if (time >= 1f)
             {
                 isZooming = false;
-
+                zoomLocked = false;   // 解鎖
                 CloseLobbySelect();
 
                 if (!string.IsNullOrEmpty(nextSceneName))
@@ -95,6 +95,8 @@ public class LobbySelectUse : MonoBehaviour
     }
     public void ChangeLevelSelect()  //進入關卡選擇  //縮放失效
     {
+        if (isZooming || zoomLocked) return; // 鎖定就不再執行
+        zoomLocked = true; // 一開始就鎖住，直到縮回完成
         // 取得目前物件的初始縮放值
         startScale = ChangeSize.transform.localScale;
 
