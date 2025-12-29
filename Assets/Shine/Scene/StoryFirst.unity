@@ -8769,7 +8769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUI: {fileID: 5611772543915012060}
-  interval: 5
+  interval: 3.5
   autoPlayOnStart: 0
   AutoState: {fileID: 1606340332}
 --- !u!224 &7240019795252813562
@@ -8871,7 +8871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &7729016482273722650
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -38,6 +38,12 @@ public class DialogueUI : MonoBehaviour
 
     void Start()
     {
+        if (Application.loadedLevelName != "TeachGame")
+        {
+            CGImageUse.gameObject.SetActive(false);
+            BGImageUse.gameObject.SetActive(false);
+        }
+
         dialogueManager = this.GetComponent<DialogueManager>();
         nextButton.onClick.AddListener(ShowNextLine);
         ShowNextLine(); // 一開始顯示第一句

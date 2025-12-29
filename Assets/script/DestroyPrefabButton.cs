@@ -109,18 +109,43 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
         }
     }
 
+    bool HasValidSpawnObject()
+    {
+        for (int i = allSpawnOrder.Count - 1; i >= 0; i--)
+        {
+            var obj = allSpawnOrder[i];
+
+            if (obj == null)
+            {
+                allSpawnOrder.RemoveAt(i);
+                continue;
+            }
+
+            var drag = obj.GetComponent<DraggableReturn2D>();
+            if (drag != null && drag.enabled == false)
+                continue;
+
+            return true;
+        }
+        return false;
+    }
+
+
     //點擊換圖
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (allSpawnOrder.Count == 0 || ClickTime == 0)  //沒內容不啟動
-            return;
-        else if (allSpawnOrder.Count == 0)
+        //if (allSpawnOrder.Count == 0 || ClickTime == 0)  //沒內容不啟動
+        //   return;
+        // else if (allSpawnOrder.Count == 0)
+        // return;
+        if (!HasValidSpawnObject() || ClickTime <= 0)
             return;
 
         if (ClickTime > 0)
             ButtonTarget.sprite = ButtonChangeOrigin;
 
     }
+
     public void OnPointerUp(PointerEventData eventData)
     {
         if (ClickTime > 0)

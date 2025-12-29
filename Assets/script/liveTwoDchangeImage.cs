@@ -30,6 +30,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     Debug.Log("圖片已更換為 changeSprites[0]");
                     RabbitGM.RemoveSpawnedObject(collision.gameObject);   //刪除物件與恢復場景數
+                    DestroyPrefabButton.Remove(collision.gameObject);
                     Destroy(collision.gameObject);
                     /* NewPlayerTeach teachScript = FindObjectOfType<NewPlayerTeach>(); //僅在碰撞到 brokecircle 才開啟教學
                      if (teachScript != null)
