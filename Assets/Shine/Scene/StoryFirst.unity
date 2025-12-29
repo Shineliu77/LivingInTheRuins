@@ -8577,7 +8577,7 @@ MonoBehaviour:
   dialogueImage3: {fileID: 7571867707723282983}
   CGImageUse: {fileID: 3794043808450438264}
   BGImageUse: {fileID: 6383294613901308743}
-  Duration: 1
+  Duration: 0.5
   bgmSource: {fileID: 1757938364}
   sfxSource: {fileID: 1153003220}
   voiceSource: {fileID: 1354719706}
