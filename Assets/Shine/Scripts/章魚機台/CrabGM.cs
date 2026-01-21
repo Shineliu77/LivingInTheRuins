@@ -44,7 +44,13 @@ public class CrabGM : MonoBehaviour
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
+    private bool touchingFixMachine; //耐久維修物是否碰撞中
 
+    //電路板
+    private bool touchingbrokePCB;
+    private GameObject currentbrokePCB;
+
+    //動畫
     float getInLength;
     float workLength;
     float totalLength;
@@ -64,7 +70,72 @@ public class CrabGM : MonoBehaviour
         totalLength = getInLength + workLength;
 
     }
+    void OnEnable()    //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
+    }
 
+    void OnDisable()   //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+    }
+
+    void OnCollisionStay2D(Collision2D coll)  //碰撞
+    {
+        if (coll.gameObject.CompareTag("brokePCB"))
+        {
+            touchingbrokePCB = true;
+            currentbrokePCB = coll.gameObject;
+        }
+
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D coll)  //結束碰撞
+    {
+        if (coll.gameObject == currentbrokePCB)
+        {
+            touchingbrokePCB = false;
+            currentbrokePCB = null;
+        }
+
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = false;
+        }
+    }
+
+    //  滑鼠放開事件
+    void OnItemReleased(DraggableReturn2D item)
+    {
+        //if (!touchingbrokePCB) return;
+        //放開時碰到電路板
+        if (touchingbrokePCB && currentbrokePCB != null)
+        {
+            //Destroy(item.gameObject); //這兩都ok
+            canSpawnPCB = true;
+            MachineAni.SetTrigger("IdleToWalk");
+            ProduceMonster();
+            Destroy(currentbrokePCB);
+            touchingbrokePCB = false;
+            currentbrokePCB = null;
+            return;
+        }
+        // 放開時碰到修理元件
+        if (touchingFixMachine && !MachineDurabilityFix)
+        {
+            //Destroy(item.gameObject); //這兩都ok
+            MachineDurabilityFix = true;
+            isFixMachineShow = true;
+            FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                                            //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+            repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            return;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -90,7 +161,7 @@ public class CrabGM : MonoBehaviour
                     //if(stateInfo.IsName("work")){ MachineUI.gameObject.SetActive(true); }
                     MachineUI.gameObject.SetActive(true);
                     MachineDurabilityFix = false;    //不可維修
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                     FixMachineShow.SetActive(false);
                     //float animationLength = stateInfo.length; // 動畫總秒數
                     //float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
@@ -163,18 +234,18 @@ public class CrabGM : MonoBehaviour
     }
 
     // 碰撞進入
-    private void OnCollisionEnter2D(Collision2D coll) //碰撞觸發動畫
-    {
-        if (coll.gameObject.CompareTag("brokePCB"))
-        {
-            Debug.Log("碰到電路板");
-            ProduceMonster();
-            Destroy(coll.gameObject);
-            canSpawnPCB = true;
-            MachineAni.SetTrigger("IdleToWalk");
+    // private void OnCollisionEnter2D(Collision2D coll) //碰撞觸發動畫
+    // {
+    // if (coll.gameObject.CompareTag("brokePCB"))
+    // {
+    //  Debug.Log("碰到電路板");
+    // ProduceMonster();
+    //  Destroy(coll.gameObject);
+    // canSpawnPCB = true;
+    // MachineAni.SetTrigger("IdleToWalk");
 
-        }
-    }
+    // }
+    // }
     public void HoldPCB() //撥放持續拿PCB動畫
     {
         MachineAni.SetBool("hold", true);
@@ -206,30 +277,31 @@ public class CrabGM : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
-    {
-        if (hit.gameObject == FixMachineDurability)
-        {
-            //  if (isRun)
-            // {
-            //   MachineDurabilityFix = false;
-            //  if (repairCoroutine != null)
-            //   {
-            //    StopCoroutine(repairCoroutine);
-            //   repairCoroutine = null;
-            //}
-            // }
-            // else if (!MachineDurabilityFix)
-            if (!MachineDurabilityFix)
-            {
-                MachineDurabilityFix = true;
-                isFixMachineShow = true;
-                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
-                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-            }
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D coll) //觸發機器耐久恢復
+
+    // {
+    // if (coll.gameObject == FixMachineDurability)
+    // {
+    // if (isRun)
+    // {
+    // MachineDurabilityFix = false;
+    //if (repairCoroutine != null)
+    // {
+    //  StopCoroutine(repairCoroutine);
+    // repairCoroutine = null;
+    // }
+    // }
+    // else if (!MachineDurabilityFix)
+    //  if (!MachineDurabilityFix)
+    // {
+    // MachineDurabilityFix = true;
+    // isFixMachineShow = true;
+    // FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+    // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+    // repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+    //}
+    //}
+    //}
 
     private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
     {
@@ -245,7 +317,7 @@ public class CrabGM : MonoBehaviour
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 };
             SaveRemainingValue = MachineDurability_Script;
             MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;

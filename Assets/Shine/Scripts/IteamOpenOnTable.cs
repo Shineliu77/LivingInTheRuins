@@ -5,6 +5,8 @@ using UnityEngine;
 public class IteamOpenOnTable : MonoBehaviour
 {
     public float SetScale;
+    public bool touchingFixedItemOpen;  //碰撞外組件打開
+    private GameObject currentFixedItemOpen;
 
     // Start is called before the first frame update
     void Start()
@@ -12,46 +14,75 @@ public class IteamOpenOnTable : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    void OnEnable()   //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
+        Debug.Log(gameObject.name + " 已啟用，開始監聽拖拽放開事件");
 
-    private void OnCollisionEnter2D(Collision2D coll)
-    {//tag的fixiem物品碰撞
-        if (Application.loadedLevelName == "TeachGame")
+    }
+    void OnDisable()    //取消滑鼠放開事件
+                        // private void OnDisableMouse()    //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+        Debug.Log(gameObject.name + " 已停用，移除監聽");
+    }
+
+    private void OnCollisionStay2D(Collision2D coll)  //碰撞
+    {
+        Debug.Log("事件廣播已接收！目前放開的物件是: " + coll.gameObject.name);
+        if (coll.gameObject.CompareTag("fixeditemOpen"))
         {
-            if (coll.gameObject.CompareTag("fixeditemOpen"))
-            {
-                this.GetComponent<Collider2D>().enabled = false;
-                coll.gameObject.GetComponent<DraggableReturn2D>().enabled = false;
-                coll.transform.parent = this.transform;
-                coll.transform.localPosition = Vector3.zero;
-                coll.transform.localScale = Vector3.one * SetScale;
-
-                if (Application.loadedLevelName == "TeachGame")
-                {
-                    if (FindObjectOfType<TeachGM>().CustomerNumber == 1)
-                    {
-                        FindObjectOfType<TeachGM>().OpenTeach3();
-                        LiveTwoDChangeImage LiveTwoDChangeImageManager = FindObjectOfType<LiveTwoDChangeImage>();
-                        LiveTwoDChangeImageManager.LiveTDChangeImgOk = true;
-                    }
-                    if (FindObjectOfType<TeachGM>().CustomerNumber == 2)
-                    {
-                        FindObjectOfType<TeachGM>().OpenTeach6();
-                    }
-                }
-            }
+            //touchingFixedItemOpen = true;
+            currentFixedItemOpen = coll.gameObject;
         }
+    }
+    private void OnCollisionExit2D(Collision2D coll)  //結束碰撞
+    {
+        if (coll.gameObject.CompareTag("fixeditemOpen"))
+        {
+            // touchingFixedItemOpen = false;
+            currentFixedItemOpen = null;
+        }
+    }
 
-        //讓brokePCB可以拿出來給crab
-       // if (Application.loadedLevelName == "FirstGame")
-       // {
-            if (coll.gameObject.CompareTag("fixeditemOpen"))
+    void OnItemReleased(DraggableReturn2D item)
+    {
+        if (touchingFixedItemOpen) return;  //避免重觸發
+        if (currentFixedItemOpen != null)
+        {
+            if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen"))
             {
-                this.GetComponent<Collider2D>().enabled = false;
-                coll.gameObject.GetComponent<DraggableReturn2D>().enabled = false;
-                coll.transform.parent = this.transform;
-                coll.transform.localPosition = Vector3.zero;
-                coll.transform.localScale = Vector3.one * SetScale;
+                item.GetComponent<Collider2D>().enabled = false;
+                item.GetComponent<DraggableReturn2D>().enabled = false;
+                item.transform.parent = this.transform;
+                item.transform.localPosition = Vector3.zero;
+                item.transform.localScale = Vector3.one * SetScale;
+                touchingFixedItemOpen = true;
+                if (FindObjectOfType<TeachGM>().CustomerNumber == 1)
+                {
+                    FindObjectOfType<TeachGM>().OpenTeach3();
+                    LiveTwoDChangeImage LiveTwoDChangeImageManager = FindObjectOfType<LiveTwoDChangeImage>();
+                    LiveTwoDChangeImageManager.LiveTDChangeImgOk = true;
+                    //touchingFixedItemOpen = true;
+                }
+                if (FindObjectOfType<TeachGM>().CustomerNumber == 2)
+                {
+                    FindObjectOfType<TeachGM>().OpenTeach6();
+                }
+
+            }
+
+            //讓brokePCB可以拿出來給crab
+            // if (Application.loadedLevelName == "FirstGame")
+            // {
+            if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen"))
+            {
+                item.GetComponent<Collider2D>().enabled = false;
+                item.GetComponent<DraggableReturn2D>().enabled = false;
+                item.transform.parent = this.transform;
+                item.transform.localPosition = Vector3.zero;
+                item.transform.localScale = Vector3.one * SetScale;
+                touchingFixedItemOpen = true;
                 Debug.Log("偵測到 fixeditemOpen 碰撞！");
 
                 // 檢查是否有顯示 CircuitBoard
@@ -59,12 +90,12 @@ public class IteamOpenOnTable : MonoBehaviour
                 {
                     // 檢查這個物件是否有子物件
                     Debug.Log("找到brokePCB了！");
-                    if (coll.transform.childCount > 0)
+                    if (item.gameObject.transform.childCount > 0)
                     {
                         Debug.Log("找到brokePCB了2！");
                         // 嘗試找到 brokePCB 子物件
                         Transform brokeChild = null;
-                        foreach (Transform child in coll.transform)
+                        foreach (Transform child in item.gameObject.transform)
                         {
                             if (child.CompareTag("brokePCB"))
                             {
@@ -99,6 +130,9 @@ public class IteamOpenOnTable : MonoBehaviour
                 else { Debug.Log("目前沒有啟用的 CircuitBoard，因此不允許拖曳"); }
             }
         }
-
-   // }
+    }
 }
+
+
+// }
+//}

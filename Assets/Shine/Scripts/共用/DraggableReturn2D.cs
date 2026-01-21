@@ -1,14 +1,16 @@
 using UnityEngine;
-
+using System;
 public class DraggableReturn2D : MonoBehaviour
 {
     private Vector3 originalPosition;      // 原始位置
     public bool isDragging = false;       // 是否正在拖曳
     private Vector3 offset;                // 滑鼠點擊時的偏移
-
+    public static event Action<DraggableReturn2D> OnReleased;  //放開滑鼠用
+    private Collider2D col;
     void Start()
     {
         originalPosition = transform.position; // 記錄原始位置
+        col = GetComponent<Collider2D>();
     }
 
     public void OnMouseDown()
@@ -68,11 +70,12 @@ public class DraggableReturn2D : MonoBehaviour
         }
     }
 
-    void OnMouseUp()
+    public void OnMouseUp()
     {
         if (this.enabled)
         {
             isDragging = false;
+            OnReleased?.Invoke(this);
             if (this.gameObject.tag == "fixeditemOpen")
             {
                 if (this.transform.parent.childCount > 0)
@@ -82,11 +85,13 @@ public class DraggableReturn2D : MonoBehaviour
             {
                 // 放開滑鼠，回到原位（可改成用協程慢慢移動）
                 transform.position = originalPosition;
+
             }
+
         }
     }
 
-
+    public Collider2D GetCollider() => col;
     public void SetNewOrigin(Vector3 newPos)
     {
         //if (!gameObject.CompareTag("brokePCB"))

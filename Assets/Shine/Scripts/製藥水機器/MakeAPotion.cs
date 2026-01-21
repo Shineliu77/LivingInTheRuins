@@ -56,8 +56,11 @@ public class MakeAPotion : MonoBehaviour
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
-
-    public GameObject[] MakeLiquidItem;//生成液體的物件
+    private bool touchingFixMachine;  //耐久維修物是否碰撞中
+    //生成液體的物件
+    public GameObject[] MakeLiquidItem;
+    private GameObject CurrentChoseLiquidItem;
+    private bool Teach = false;  //教學面板開過
 
     void Start()
     {
@@ -65,7 +68,135 @@ public class MakeAPotion : MonoBehaviour
         MachineDurability_Script = MachineDurability;
 
     }
+    void OnEnable()    //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
+    }
 
+    void OnDisable()   //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+    }
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("Red") || coll.gameObject.CompareTag("Yellow") || coll.gameObject.CompareTag("Blue") || coll.gameObject.CompareTag("Green"))
+        {
+            CurrentChoseLiquidItem = coll.gameObject;
+        }
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = true;
+        }
+    }
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("Red") || coll.gameObject.CompareTag("Yellow") || coll.gameObject.CompareTag("Blue") || coll.gameObject.CompareTag("Green"))
+        {
+            CurrentChoseLiquidItem = null;
+        }
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = false;
+        }
+
+    }
+    private void OnItemReleased(DraggableReturn2D Item)
+    {
+        if (CurrentChoseLiquidItem != null)
+        {
+            if (Application.loadedLevelName == "TeachGame")
+            {
+                if (Item.tag == "Red")
+                {
+                    Reset();
+                    SelectPotionID = 0;
+                    MachineAni.SetTrigger("idelTOmoveRR");
+                    ProduceMonster();
+                }
+                if (Item.tag == "Yellow")
+                {
+                    Reset();
+                    SelectPotionID = 1;
+                    MachineAni.SetTrigger("idelTOmoveYY");
+                    ProduceMonster();
+
+                }
+                if (Item.tag == "Blue")
+                {
+                    Reset();
+                    SelectPotionID = 2;
+                    MachineAni.SetTrigger("idelTOmoveBB");
+                    ProduceMonster();
+
+                }
+                if (Item.tag == "Green")
+                {
+                    Reset();
+                    SelectPotionID = 3;
+                    MachineAni.SetTrigger("idelTOmoveGG");
+                    ProduceMonster();
+                }
+            }
+
+            if (Application.loadedLevelName == "FirstGame")  //第一關使用  碰撞觸發生成與計時器與怪物
+            {
+                if (Item.tag == "Red")
+                {
+
+                    Reset();
+                    //SpawnObject(0);
+                    canSpawnPotions = true;
+                    MachineAni.SetTrigger("idelTOmoveRR");
+                    ProduceMonster();
+                }
+                if (Item.tag == "Yellow")
+                {
+                    Reset();
+                    canSpawnPotions = true;
+                    MachineAni.SetTrigger("idelTOmoveYY");
+                    ProduceMonster();
+                }
+
+                if (Item.tag == "Blue")
+                {
+                    Reset();
+                    canSpawnPotions = true;
+                    MachineAni.SetTrigger("idelTOmoveBB");
+                    ProduceMonster();
+                }
+                if (Item.tag == "Green")
+                {
+                    Reset();
+                    canSpawnPotions = true;
+                    MachineAni.SetTrigger("idelTOmoveGG");
+                    ProduceMonster();
+                }
+            }
+        }
+        if (touchingFixMachine && !MachineDurabilityFix)
+        {
+            if (isRun)
+            {
+                MachineDurabilityFix = false;
+                isFixMachineShow = false;
+                // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                FixMachineShow.SetActive(false);
+                if (repairCoroutine != null)
+                {
+                    StopCoroutine(repairCoroutine);
+                    repairCoroutine = null;
+                }
+            }
+            else if (!isRun)
+            {
+                MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -105,31 +236,41 @@ public class MakeAPotion : MonoBehaviour
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     Potions[SelectPotionID].SetActive(true);
-                  
+
 
                     Stopwatch.gameObject.SetActive(false);
                 }
                 Stopwatch.gameObject.SetActive(false);
                 isRun = false;
+                if (Teach) return; //不重開
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     FindObjectOfType<TeachGM>().OpenTeach8();
+                    Teach = true;
                 }
             }
         }
-        if (isRun)
+        // if (isRun)
         {
-            AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
+            if (isRun)
             {
                 MachineDurabilityFix = false;   //不可維修
                 isFixMachineShow = false;
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 FixMachineShow.SetActive(false);
-                if (stateInfo.normalizedTime >= 0.77f)
+            }
+            AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
+            {
+
+
+                if (stateInfo.normalizedTime >= 0.85f)
                 {
 
                     MachineDurability_Script = SaveMachineDurability;
+                    DeductDurability();
+                    //  isRun = false;
+
 
                 }
                 else
@@ -149,140 +290,142 @@ public class MakeAPotion : MonoBehaviour
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (canSpawnPotions == true)
             {
-                if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.77f)
+                if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(0);
-                    canSpawnPotions = false;
+                    //canSpawnPotions = false;
                     // Stopwatch.gameObject.SetActive(false);
+                    // MachineAni.SetBool("idelTOmoveR",true);
 
                 }
-                if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.77f)
+                if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(1);
-                    canSpawnPotions = false;
+                    //canSpawnPotions = false;
                 }
-                if (stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.77f)
+                if (stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(2);
-                    canSpawnPotions = false;
+                    //canSpawnPotions = false;
                 }
-                if (stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.77f)
+                if (stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(3);
-                    canSpawnPotions = false;
+                    //canSpawnPotions = false;
                 }
 
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D hit)
-    {
-        if (Application.loadedLevelName == "TeachGame")
-        {
-            if (hit.collider.tag == "Red")
-            {
-                Reset();
-                SelectPotionID = 0;
-                ProduceMonster();
-            }
-            if (hit.collider.tag == "Yellow")
-            {
-                Reset();
-                SelectPotionID = 1;
-                ProduceMonster();
+    //private void OnCollisionEnter2D(Collision2D hit)
+    // {
+    //   if (Application.loadedLevelName == "TeachGame")
+    // {
+    //   if (hit.collider.tag == "Red")
+    //  {
+    //  Reset();
+    //  SelectPotionID = 0;
+    //ProduceMonster();
+    //}
+    //if (hit.collider.tag == "Yellow")
+    //{
+    //  Reset();
+    //SelectPotionID = 1;
+    //ProduceMonster();
 
-            }
-            if (hit.collider.tag == "Blue")
-            {
-                Reset();
-                SelectPotionID = 2;
-                ProduceMonster();
+    //            }
+    //          if (hit.collider.tag == "Blue")
+    //        {
+    //          Reset();
+    //        SelectPotionID = 2;
+    //      ProduceMonster();
+    //
+    //}
+    //           if (hit.collider.tag == "Green")
+    //         {
+    //           Reset();
+    //         SelectPotionID = 3;
+    //       ProduceMonster();
+    // }
+    //}
 
-            }
-            if (hit.collider.tag == "Green")
-            {
-                Reset();
-                SelectPotionID = 3;
-                ProduceMonster();
-            }
-        }
+    //       if (Application.loadedLevelName == "FirstGame")  //第一關使用  碰撞觸發生成與計時器與怪物
+    //     {
+    //       if (hit.collider.tag == "Red")
+    //     {
+    //       Reset();
+    //     canSpawnPotions = true;
+    //   ProduceMonster();
+    //}
+    //if (hit.collider.tag == "Yellow")
+    //           {
+    //             Reset();
+    //           canSpawnPotions = true;
+    //         ProduceMonster();
+    //   }
 
-        if (Application.loadedLevelName == "FirstGame")  //第一關使用  碰撞觸發生成與計時器與怪物
-        {
-            if (hit.collider.tag == "Red")
-            {
-                Reset();
-                canSpawnPotions = true;
-                ProduceMonster();
-            }
-            if (hit.collider.tag == "Yellow")
-            {
-                Reset();
-                canSpawnPotions = true;
-                ProduceMonster();
-            }
-
-            if (hit.collider.tag == "Blue")
-            {
-                Reset();
-                canSpawnPotions = true;
-                ProduceMonster();
-            }
-            if (hit.collider.tag == "Green")
-            {
-                Reset();
-                canSpawnPotions = true;
-                ProduceMonster();
-            }
+    // if (hit.collider.tag == "Blue")
+    // {
+    //   Reset();
+    // canSpawnPotions = true;
+    // ProduceMonster();
+    //}
+    //if (hit.collider.tag == "Green")
+    // {
+    //   Reset();
+    // canSpawnPotions = true;
+    // ProduceMonster();
+    //}
 
 
-            //if (hit.gameObject == FixMachineDurability)  //觸發機器耐久恢復
-            //{
+    //if (hit.gameObject == FixMachineDurability)  //觸發機器耐久恢復
+    //{
 
-            //  if (isRun)
-            // {
-            //     MachineDurabilityFix = false;   //不可維修
-            //  }
-            // else if (!MachineDurabilityFix ||!isRun)
-            // {
-            //    MachineDurabilityFix = true;
-            //   repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-            // }
-            // }
+    //  if (isRun)
+    // {
+    //     MachineDurabilityFix = false;   //不可維修
+    //  }
+    // else if (!MachineDurabilityFix ||!isRun)
+    // {
+    //    MachineDurabilityFix = true;
+    //   repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+    // }
+    // }
 
-        }
-    }
+    //}
+    //}
 
-    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
-    {
-        if (hit.gameObject == FixMachineDurability)
-        {
-            if (isRun)
-            {
-                MachineDurabilityFix = false;
-                isFixMachineShow = false;
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
-                FixMachineShow.SetActive(false);
-                if (repairCoroutine != null)
-                {
-                    StopCoroutine(repairCoroutine);
-                    repairCoroutine = null;
-                }
-            }
-            else if (!MachineDurabilityFix)
-            {
-                MachineDurabilityFix = true;
-                isFixMachineShow = true;
-                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
-                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-            }
-        }
-    }
+    // private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    //{
+    // if (hit.gameObject == FixMachineDurability)
+    // {
+    // if (isRun)
+    // {
+    //  MachineDurabilityFix = false;
+    // isFixMachineShow = false;
+    // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+    // FixMachineShow.SetActive(false);
+    //if (repairCoroutine != null)
+    //{
+    //  StopCoroutine(repairCoroutine);
+    //  repairCoroutine = null;
+    //}
+    //}
+    //else if (!MachineDurabilityFix)
+    //{
+    // MachineDurabilityFix = true;
+    // isFixMachineShow = true;
+    // FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+    //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+    //repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+    // }
+    //}
+    //}
 
     private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
     {
+        MachineDurability_Script = SaveMachineDurability;
         while (MachineDurabilityFix)
         {
             float repairAmount = MachineDurability * 0.005f;
@@ -300,7 +443,7 @@ public class MakeAPotion : MonoBehaviour
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 }
             }
 

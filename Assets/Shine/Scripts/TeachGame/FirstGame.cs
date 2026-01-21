@@ -17,7 +17,7 @@ public class FirstGame : MonoBehaviour
     [Range(1, 10)]
     public int maxConcurrentCustomers = 3;  // 需求：固定 3（可保留彈性）
     #endregion
-    
+
     #region 顧客生成
     [Header("顧客 Prefab")]
     public GameObject Customer;
@@ -80,7 +80,8 @@ public class FirstGame : MonoBehaviour
 
         }
         // 安全開關（避免 Null 例外）
-        for (int i = 0; i < customerSpawnPoints.Length; i++) {
+        for (int i = 0; i < customerSpawnPoints.Length; i++)
+        {
             if (IteamPrefab[i] != null)
             {
                 var col = IteamPrefab[i].GetComponent<BoxCollider2D>();
@@ -174,9 +175,9 @@ public class FirstGame : MonoBehaviour
 
         Transform spawn = customerSpawnPoints[seatIndex];
         GameObject customerGO = Instantiate(Customer, StartPos.position, StartPos.rotation);
-        customerGO.GetComponent<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber+1);
+        customerGO.GetComponent<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
         customerGO.GetComponent<CustomerGM>().ID = CustomerNumber;
-        GameObject IteamGO= Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
+        GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
         IteamGO.transform.parent = customerGO.transform;
         IteamGO.transform.localPosition = Vector3.zero;
         IteamPrefab.Add(IteamGO);
@@ -205,7 +206,7 @@ public class FirstGame : MonoBehaviour
     {
         if (customerGO == null) return;
 
-        
+
 
         // 釋放座位
         var marker = customerGO.GetComponent<FirstGameCustomerMarker>();
@@ -236,9 +237,9 @@ public class FirstGame : MonoBehaviour
 
     public void ProduceIteam(int ID)
     {
-        
-            IteamPrefab.Add(Instantiate(Iteam, customerSpawnPoints[ID].position, Iteam.transform.rotation)as GameObject);
-        
+
+        IteamPrefab.Add(Instantiate(Iteam, customerSpawnPoints[ID].position, Iteam.transform.rotation) as GameObject);
+
     }
 
     public void ClearIteamPrefab()
@@ -252,10 +253,10 @@ public class FirstGame : MonoBehaviour
         {
             IteamOpenPrefab = Instantiate(IteamOpen, IteamOpenProduce.position, IteamOpenProduce.rotation);
             var set = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
-             if (set != null)
-             {
-             set.ID = 0;
-             set.ProcessorID = 0;
+            if (set != null)
+            {
+                set.ID = 0;
+                set.ProcessorID = 0;
             }
             GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
         }

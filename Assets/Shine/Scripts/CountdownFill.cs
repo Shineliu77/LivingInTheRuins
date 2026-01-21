@@ -14,12 +14,13 @@ public class CountdownFill : MonoBehaviour
 
     public GameObject ShouldDestroy; //當耐心值歸零 刪掉整個耐心值物
     public float timer;
-
+    private Collider2D isShouldDestroycollCoustomer; //是否碰到客人
     void Start()
     {
         timer = countdownTime;
         fillImage.fillAmount = 1f;
         fillImageOutside.sprite = changeTargetfillImageeOutside;
+        isShouldDestroycollCoustomer = gameObject.GetComponent<Collider2D>();
     }
 
     void Update()
@@ -57,27 +58,27 @@ public class CountdownFill : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D hit)
-    {
+  //  private void OnTriggerEnter2D(Collider2D hit)
+   // {
         // 確認碰撞的物件是fixeditemOpenFinished時的處理
-        if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName == "FirstGame")     //新手教學與關卡共通
-        {
-            if (hit.gameObject.name == "fixeditemOpenFinished1")
-            {
-                Destroy(ShouldDestroy);
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished2")
-            {
-                Destroy(ShouldDestroy);
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished3")
-            {
-                Destroy(ShouldDestroy);
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished4")
-            {
-                Destroy(ShouldDestroy);
-            }
-        }
-    }
+     //   if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName == "FirstGame")     //新手教學與關卡共通
+      //  {
+         //   if (hit.gameObject.name == "fixeditemOpenFinished1")
+         //   {
+          //      Destroy(ShouldDestroy);
+          //  }
+          //  if (hit.gameObject.name == "fixeditemOpenFinished2")
+         //   {
+          //      Destroy(ShouldDestroy);
+          //  }
+          //  if (hit.gameObject.name == "fixeditemOpenFinished3")
+          //  {
+          //      Destroy(ShouldDestroy);
+         //   }
+          //  if (hit.gameObject.name == "fixeditemOpenFinished4")
+          //  {
+          //      Destroy(ShouldDestroy);
+          //  }
+       // }
+   // }
 }

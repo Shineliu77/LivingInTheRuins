@@ -57,6 +57,7 @@ public class RabbitGM : MonoBehaviour
     public bool SpawnOK = false;
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
+    private bool touchingFixMachine;  //耐久維修物是否碰撞中
     bool MachineDurabilityFix = false;  //不可修
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
@@ -70,7 +71,33 @@ public class RabbitGM : MonoBehaviour
         MachineDurability_Script = MachineDurability;
 
     }
+    void OnEnable()    //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
+    }
 
+    void OnDisable()   //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+    }
+
+    void OnCollisionStay2D(Collision2D coll)  //碰撞
+    {
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = true;
+
+        }
+    }
+    void OnCollisionExit2D(Collision2D coll)  //結束碰撞
+    {
+
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = false;
+
+        }
+    }
     // Update is called once per frame
     void Update() //無效
     {
@@ -174,11 +201,11 @@ public class RabbitGM : MonoBehaviour
                         MachineDurabilityFix = true; // 動畫結束後允許修復
                         isFixMachineShow = true;
                         FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                        FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+                                                        // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                     }
                     MachineDurabilityFix = false;   //不可維修
                     isFixMachineShow = false;
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                     FixMachineShow.SetActive(false);
                 }  //倒數計時
 
@@ -335,9 +362,11 @@ public class RabbitGM : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    //private void OnCollisionStay2D(Collision2D hit)  //觸發機器耐久恢復
+    private void OnItemReleased(DraggableReturn2D hit)  //觸發機器耐久恢復
     {
-        if (hit.gameObject == FixMachineDurability)
+        // if (hit.gameObject == FixMachineDurability)
+        if (touchingFixMachine && !MachineDurabilityFix)
         {
             if (isRun)
             {
@@ -345,19 +374,19 @@ public class RabbitGM : MonoBehaviour
                 MachineDurabilityFix = false; //停止修
                 isFixMachineShow = false;
                 FixMachineShow.SetActive(false);
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();
+                // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();
                 if (repairCoroutine != null)
                 {
                     StopCoroutine(repairCoroutine);
                     repairCoroutine = null;
                 }
             }
-            else if (!MachineDurabilityFix)
+            else if (!isRun)
             {
                 MachineDurabilityFix = true;
                 isFixMachineShow = true;
                 FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+                //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
             }
         }
@@ -381,7 +410,7 @@ public class RabbitGM : MonoBehaviour
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 }
 
             }
@@ -555,7 +584,7 @@ public class RabbitGM : MonoBehaviour
     }
 
 
-
+    //場景物件數達上限鎖住與未達解鎖
     private void LockRabbitButtons()
     {
         for (int i = 0; i < RabbitButton.Length; i++)

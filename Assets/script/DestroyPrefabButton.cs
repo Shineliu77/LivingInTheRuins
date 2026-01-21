@@ -13,6 +13,7 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
     public Sprite ButtonChangeOrigin;
     public Sprite ButtonChangeCantClick;
     private bool controlRabbit = false;
+    public bool controlDestory = false;
     public void Start()
     {
         ButtonTarget.sprite = ButtonOrigin;
@@ -99,7 +100,7 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
         Destroy(target);
 
         Debug.Log($"刪除：{target.name}");
-
+        controlDestory = true;
         ClickTime--;
 
         if (ClickTime == 0)  //只能按兩次
@@ -121,9 +122,9 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
                 continue;
             }
 
-            var drag = obj.GetComponent<DraggableReturn2D>();
-            if (drag != null && drag.enabled == false)
-                continue;
+            // var drag = obj.GetComponent<DraggableReturn2D>();
+            // if (drag != null && drag.enabled == false)
+            //   continue;
 
             return true;
         }

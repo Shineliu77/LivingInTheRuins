@@ -14,6 +14,9 @@ public class CustomerGM : MonoBehaviour
     public string PosName;
     public int ID;
     public bool isProduceIteam;
+    private Collider2D isCollCustomer;//是否碰撞客人
+                                      // private bool collProduceIteam;
+                                      // private GameObject currentcollProduceIteam;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -28,9 +31,41 @@ public class CustomerGM : MonoBehaviour
             targetPoint = GameObject.Find(PosName).transform;
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
         }
+        isCollCustomer = gameObject.GetComponent<Collider2D>();
+    }
+    void OnEnable()    //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
     }
 
-    // Update is called once per frame
+    void OnDisable()   //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+    }
+    // private void OnCollisionStay2D(Collision2D coll)
+    //{
+    // if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName != "TeachGame")
+    // {
+    //  if (coll.gameObject.name == "fixeditemOpenFinished1" || coll.gameObject.name == "fixeditemOpenFinished2" || coll.gameObject.name == "fixeditemOpenFinished3" || coll.gameObject.name == "fixeditemOpenFinished4")
+    //  {
+    //      collProduceIteam = true;
+    // }
+    // }
+    // }
+
+    // private void OnCollisionExit2D(Collision2D coll)
+    // {
+    //  if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName != "TeachGame")
+    // {
+    //   if (coll.gameObject.name == "fixeditemOpenFinished1" || coll.gameObject.name == "fixeditemOpenFinished2" || coll.gameObject.name == "fixeditemOpenFinished3" || coll.gameObject.name == "fixeditemOpenFinished4")
+    //  {
+    //     collProduceIteam = false;
+    //  }
+    //}
+
+
+    //  }
+
     void Update()
     {
         # region 控制顧客腳色移動
@@ -115,72 +150,70 @@ public class CustomerGM : MonoBehaviour
 
 
     }
-    private void OnTriggerEnter2D(Collider2D hit)
+
+    private void OnItemReleased(DraggableReturn2D hit)
     {
-        // 確認碰撞的物件是fixeditemOpenFinished時的處理
-        if (Application.loadedLevelName == "TeachGame")
+        Collider2D CollShouldDestroy = hit.GetComponent<Collider2D>();
+        if (isCollCustomer != null && CollShouldDestroy != null && isCollCustomer.IsTouching(CollShouldDestroy))
         {
-            if (hit.gameObject.name == "fixeditemOpenFinished1")
+            // 確認碰撞的物件是fixeditemOpenFinished時的處理
+            if (Application.loadedLevelName == "TeachGame")
             {
-                FindObjectOfType<ScoreGM>().AddScore();
-                FindObjectOfType<TeachGM>().OpenTeach5();
-                Destroy(hit.gameObject);
+                if (hit.gameObject.name == "fixeditemOpenFinished1")
+                {
+                    FindObjectOfType<ScoreGM>().AddScore();
+                    FindObjectOfType<TeachGM>().OpenTeach5();
+                    FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;   //重製外組件打開觸發
+                    Destroy(hit.gameObject);
+                    CountdownFill countdownScript = GetComponent<CountdownFill>();
+                    if (countdownScript != null && countdownScript.ShouldDestroy != null)
+                    {
+                        // 叫 CountdownFill 的子物件去死
+                        Destroy(countdownScript.ShouldDestroy);
+                    }
+                }
+                if (hit.gameObject.name == "fixeditemOpenFinished2")
+                {
+                    FindObjectOfType<ScoreGM>().AddScore();
+                    FindObjectOfType<TeachGM>().OpenTeach10();
+                    FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                    Destroy(hit.gameObject);
+                    CountdownFill countdownScript = GetComponent<CountdownFill>();
+                    if (countdownScript != null && countdownScript.ShouldDestroy != null)
+                    {
+                        // 叫 CountdownFill 的子物件去死
+                        Destroy(countdownScript.ShouldDestroy);
+                    }
+                    //Finished = true;
+                    // Destroy(hit.gameObject);
+                }
             }
-            if (hit.gameObject.name == "fixeditemOpenFinished2")
+
+
+            //第一關使用  
+            if (Application.loadedLevelName != "TeachGame")  //只能刪掉耐心值 對話無
             {
-                FindObjectOfType<ScoreGM>().AddScore();
-                FindObjectOfType<TeachGM>().OpenTeach10();
-                Destroy(hit.gameObject);
-                //Finished = true;
-                Destroy(hit.gameObject);
-            }
-        }
+                if (hit.name.Contains("fixeditemOpenFinished"))
+                {
+                    FindObjectOfType<ScoreGM>().AddScore();
+                    FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                    Destroy(hit.gameObject);
+                    CountdownFill countdownScript = GetComponent<CountdownFill>();
+                    if (countdownScript != null && countdownScript.ShouldDestroy != null)
+                    {
+                        // 叫 CountdownFill 的子物件去死
+                        Destroy(countdownScript.ShouldDestroy);
+                    }
+                    Finished = true;
+                    FindObjectOfType<FirstGame>().ClearIteamPrefab();
+                    // if(hasArrived == true)
+                    // { 
+                    //FindObjectOfType<FirstGame>().ProduceIteam(); 
+                    // }
 
 
-        //第一關使用  
-        if (Application.loadedLevelName == "FirstGame")
-        {
-            if (hit.gameObject.name == "fixeditemOpenFinished1")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
+                }
 
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-                // if(hasArrived == true)
-                // { 
-                //FindObjectOfType<FirstGame>().ProduceIteam(); 
-                // }
-
-
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished2")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
-
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished3")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
-
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
-            }
-            if (hit.gameObject.name == "fixeditemOpenFinished4")
-            {
-                FindObjectOfType<ScoreGM>().AddScore();
-
-                Destroy(hit.gameObject);
-                Finished = true;
-
-                FindObjectOfType<FirstGame>().ClearIteamPrefab();
             }
         }
     }

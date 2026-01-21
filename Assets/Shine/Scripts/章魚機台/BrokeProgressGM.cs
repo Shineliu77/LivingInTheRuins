@@ -31,13 +31,12 @@ public class BrokeProgressGM : MonoBehaviour
     private bool isFixMachineShow = false;
     bool MachineDurabilityFix = false;  //不可修
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
+    private bool touchingFixMachine;  //耐久維修物是否碰撞中
 
-    void Start()
-    {
-        MachineDurability_Script = MachineDurability;
-        SaveRemainingValue = MachineUIBar.fillAmount;
+    //外駔件
+    private bool touchingFixedItem;
+    private GameObject currentFixedItem;
 
-    }
 
     //隨機判斷要不要產生怪物 但 新手教學關卡要產生怪物
     bool isProduceMonster;
@@ -46,6 +45,92 @@ public class BrokeProgressGM : MonoBehaviour
     public Transform ProducePos;
     public float DeductMachineDurability;//扣除機器耐久
     bool isRun;
+
+
+    void Start()
+    {
+        MachineDurability_Script = MachineDurability;
+        SaveRemainingValue = MachineUIBar.fillAmount;
+
+    }
+    void OnEnable()    //檢查滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased += OnItemReleased;
+    }
+
+    void OnDisable()   //取消滑鼠放開事件
+    {
+        DraggableReturn2D.OnReleased -= OnItemReleased;
+    }
+
+    void OnCollisionStay2D(Collision2D coll)  //碰撞
+    {
+        if (coll.gameObject.CompareTag("fixeditem"))
+        {
+            touchingFixedItem = true;
+            currentFixedItem = coll.gameObject;
+        }
+
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = true;
+            // MachineDurabilityFix = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D coll)  //結束碰撞
+    {
+        if (coll.gameObject == currentFixedItem)
+        {
+            touchingFixedItem = false;
+            currentFixedItem = null;
+        }
+
+        if (coll.gameObject == FixMachineDurability)
+        {
+            touchingFixMachine = false;
+            //MachineDurabilityFix = false;
+        }
+    }
+
+    //  滑鼠放開事件
+    void OnItemReleased(DraggableReturn2D item)
+    {
+        // 放開時碰到 fixeditem
+        if (touchingFixedItem && currentFixedItem != null)
+        {
+            Debug.Log("放開滑鼠：fixeditem");
+
+            currentFixedItem.SetActive(false);
+            MachineAni.SetTrigger("IdleToWalk");
+            ProduceMonster();
+
+            touchingFixedItem = false;
+            currentFixedItem = null;
+            return;
+        }
+
+        // 放開時碰到修理元件
+        if (touchingFixMachine && !MachineDurabilityFix)
+        {
+            Debug.Log("放開滑鼠：FixMachine");
+
+            MachineDurabilityFix = true;
+            isFixMachineShow = true;
+            FixMachineShow.SetActive(true);//機器維修會顯示在機器上的圖
+            //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture(); //換回去
+            repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+
+            if (Application.loadedLevelName == "TeachGame" &&
+                !FindObjectOfType<TeachGM>().teachTwo3) //新手教學關使用
+            {
+                {
+                    FindObjectOfType<TeachGM>().OpenTeachTwo3();
+                }
+            }
+
+        }
+    }
 
     void Update()
     {
@@ -75,7 +160,7 @@ public class BrokeProgressGM : MonoBehaviour
                 MachineUI.gameObject.SetActive(true);
                 MachineDurabilityFix = false;    //不可維修
                 isFixMachineShow = false;
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 FixMachineShow.SetActive(false);
                 float animationLength = stateInfo.length; // 動畫總秒數
                 float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
@@ -115,34 +200,34 @@ public class BrokeProgressGM : MonoBehaviour
     }
 
     // 碰撞進入
-    private void OnCollisionEnter2D(Collision2D coll)
-    {//tag的fixiem物品碰撞
-        if (coll.gameObject.CompareTag("fixeditem"))
-        {
+    //  private void OnCollisionEnter2D(Collision2D coll)
+    //{//tag的fixiem物品碰撞
+    // if (coll.gameObject.CompareTag("fixeditem"))
+    // {
 
-            coll.gameObject.SetActive(false);
-            MachineAni.SetTrigger("IdleToWalk");
-            ProduceMonster();
-        }
+    // coll.gameObject.SetActive(false);
+    // MachineAni.SetTrigger("IdleToWalk");
+    // ProduceMonster();
+    // }
 
-        if (coll.gameObject == FixMachineDurability)
-        {
-            if (!MachineDurabilityFix)
-            {
-                MachineDurabilityFix = true;
-                isFixMachineShow = true;
-                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
-                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-            }
+    // if (coll.gameObject == FixMachineDurability)
+    //  {
+    // if (!MachineDurabilityFix)
+    //  {
+    //  MachineDurabilityFix = true;
+    //  isFixMachineShow = true;
+    // FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+    //  FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+    //   repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+    // }
 
-            if (Application.loadedLevelName == "TeachGame" && FindObjectOfType<TeachGM>().teachTwo3 == false)  //新手教學關使用
-            {
-                FindObjectOfType<TeachGM>().OpenTeachTwo3();
+    // if (Application.loadedLevelName == "TeachGame" && FindObjectOfType<TeachGM>().teachTwo3 == false)  //新手教學關使用
+    // {
+    //   FindObjectOfType<TeachGM>().OpenTeachTwo3();
 
-            }
-        }
-    }
+    // }
+    // }
+    //  }
 
     private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
     {
@@ -160,7 +245,7 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
-                    FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 }
 
             }
