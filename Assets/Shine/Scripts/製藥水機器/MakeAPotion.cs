@@ -175,7 +175,7 @@ public class MakeAPotion : MonoBehaviour
         }
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            if (isRun)
+            if (isRun && MachineDurability_Script < MachineDurability)
             {
                 MachineDurabilityFix = false;
                 isFixMachineShow = false;
@@ -187,7 +187,7 @@ public class MakeAPotion : MonoBehaviour
                     repairCoroutine = null;
                 }
             }
-            else if (!isRun)
+            else if (!isRun && MachineDurability_Script < MachineDurability)
             {
                 MachineDurabilityFix = true;
                 isFixMachineShow = true;
