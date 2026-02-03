@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1445649009185227899}
   - component: {fileID: -6369418498421756999}
   - component: {fileID: -3992076678281539388}
+  - component: {fileID: -7080350171211043146}
   m_Layer: 0
   m_Name: "\u597D\u65B9"
   m_TagString: square
@@ -185,3 +186,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-7080350171211043146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3287382048044914801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 7591477383362060351}
+  OtiangePic: {fileID: -1361594671, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  ChangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}

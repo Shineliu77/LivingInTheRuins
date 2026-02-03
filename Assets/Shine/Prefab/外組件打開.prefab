@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 287031863378497351}
   - component: {fileID: -4794119307231285332}
   - component: {fileID: -2638602415890854520}
+  - component: {fileID: -5688052044950609392}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6\u6253\u958B"
   m_TagString: fixeditemOpen
@@ -225,6 +226,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetIteamOpenObj: {fileID: 0}
+--- !u!114 &-5688052044950609392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777248801548755955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 4673435071298451836}
+  OtiangePic: {fileID: 21300000, guid: c3b16ad8fd048454e828f9d4fab0e0f7, type: 3}
+  ChangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}
 --- !u!1001 &4835168987850365857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,6 +548,7 @@ MonoBehaviour:
   - {fileID: 1859648843, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
   LiveTDChangeImgOk: 0
   isLiveTDChangeImgOk: 0
+  CurrenrLiveTDChangeImg: 0
 --- !u!4 &7277014255343593689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}

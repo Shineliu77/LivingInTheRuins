@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 3492966443212368905}
   - component: {fileID: 6361667587423278059}
   - component: {fileID: 7740897447156281463}
+  - component: {fileID: -2108966093913342150}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6"
   m_TagString: fixeditem
@@ -305,6 +306,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-2108966093913342150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701423482168420879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 5252771801232554846}
+  OtiangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}
+  ChangePic: {fileID: 21300000, guid: c3b16ad8fd048454e828f9d4fab0e0f7, type: 3}
 --- !u!1 &5230932487871801806
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3147526494492053467}
   - component: {fileID: 8655172832926672447}
   - component: {fileID: -6370384477747240810}
+  - component: {fileID: -3570040364531559132}
   m_Layer: 0
   m_Name: "\u597D\u5713"
   m_TagString: brokecircle
@@ -185,3 +186,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-3570040364531559132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9202337193065592550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 3446167373516079341}
+  OtiangePic: {fileID: -1601931343, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  ChangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}

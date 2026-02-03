@@ -6,11 +6,13 @@ public class DraggableReturn2D : MonoBehaviour
     public bool isDragging = false;       // 是否正在拖曳
     private Vector3 offset;                // 滑鼠點擊時的偏移
     public static event Action<DraggableReturn2D> OnReleased;  //放開滑鼠用
+    private FixMachineDurabilityChangeImage ChangeImageOBJ;//換圖共用
     private Collider2D col;
     void Start()
     {
         originalPosition = transform.position; // 記錄原始位置
         col = GetComponent<Collider2D>();
+        ChangeImageOBJ = GetComponent<FixMachineDurabilityChangeImage>();
     }
 
     public void OnMouseDown()
@@ -88,6 +90,22 @@ public class DraggableReturn2D : MonoBehaviour
 
             }
 
+        }
+    }
+
+    //滑鼠經過換圖
+    public void OnMouseEnter()
+    {
+        if (ChangeImageOBJ != null)
+        {
+            ChangeImageOBJ.ChangePicture();
+        }
+    }
+    public void OnMouseExit()
+    {
+        if (ChangeImageOBJ != null)
+        {
+            ChangeImageOBJ.ChangeOrigin();
         }
     }
 

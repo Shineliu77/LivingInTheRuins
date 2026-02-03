@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 863615537636847513}
   - component: {fileID: 5183820174963766918}
   - component: {fileID: 385567841760763928}
+  - component: {fileID: -3049869071417647156}
   m_Layer: 0
   m_Name: "\u597D\u89D2"
   m_TagString: triangle
@@ -185,3 +186,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-3049869071417647156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707781910038797896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 8094991881959207270}
+  OtiangePic: {fileID: 1859648843, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  ChangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}

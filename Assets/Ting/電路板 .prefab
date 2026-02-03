@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4669543171487578867}
   - component: {fileID: 6603803010233459226}
   - component: {fileID: 808020194965136493}
+  - component: {fileID: -4688889962866708676}
   m_Layer: 0
   m_Name: "\u96FB\u8DEF\u677F "
   m_TagString: PCB
@@ -172,3 +173,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-4688889962866708676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145697323038434478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 5248816768589385130}
+  OtiangePic: {fileID: 2028890515, guid: f1c0484ad2c40fb44abd67c042aca727, type: 3}
+  ChangePic: {fileID: 21300000, guid: 67c3d0464772eff4899bc8af51a48ff5, type: 3}

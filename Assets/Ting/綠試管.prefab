@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6540361473289424453}
   - component: {fileID: 1345836587096610062}
   - component: {fileID: 2981483793497787385}
+  - component: {fileID: -3256590018633084030}
   m_Layer: 0
   m_Name: "\u7DA0\u8A66\u7BA1"
   m_TagString: greenIiquid
@@ -185,3 +186,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-3256590018633084030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633677788938951849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 2560110879377021962}
+  OtiangePic: {fileID: -622067836, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  ChangePic: {fileID: -40068898, guid: a6bd4a437e92b834b8bb594c0569e325, type: 3}

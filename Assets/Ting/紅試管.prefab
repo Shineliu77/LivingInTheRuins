@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7375582694585259256}
   - component: {fileID: 3183688754727334726}
   - component: {fileID: 5197462919817197332}
+  - component: {fileID: -1113418419264419983}
   m_Layer: 0
   m_Name: "\u7D05\u8A66\u7BA1"
   m_TagString: redIiquid
@@ -185,3 +186,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDragging: 0
+--- !u!114 &-1113418419264419983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263636577550700947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetChange: {fileID: 3924039876388523822}
+  OtiangePic: {fileID: -261587270, guid: e4670cebe0535c84aa820fe00884450b, type: 3}
+  ChangePic: {fileID: 786147508, guid: a6bd4a437e92b834b8bb594c0569e325, type: 3}
