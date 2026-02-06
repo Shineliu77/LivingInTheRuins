@@ -96,7 +96,7 @@ public class DraggableReturn2D : MonoBehaviour
     //·Æ¹«¸g¹L´«¹Ï
     public void OnMouseEnter()
     {
-        if (ChangeImageOBJ != null)
+        if (ChangeImageOBJ != null && this.enabled == true)
         {
             ChangeImageOBJ.ChangePicture();
         }
