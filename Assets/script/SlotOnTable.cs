@@ -111,7 +111,7 @@ public class SlotOnTable : MonoBehaviour
         DraggableReturn2D drag = itemInContact.GetComponent<DraggableReturn2D>();
         if (drag != null)
         {
-            drag.enabled = true;
+           // drag.enabled = true;
             // 重要的是：點擊取出的那一刻，物件應該立刻跟隨滑鼠，否則它會留在原位
             drag.OnMouseDown();
         }
@@ -176,7 +176,7 @@ public class SlotOnTable : MonoBehaviour
         var drag = obj.GetComponent<DraggableReturn2D>();  //會返回原位的 (不要的話註解這邊)
         if (drag != null)
         {
-            drag.enabled = false;
+            //drag.enabled = false;
             drag.SetNewOrigin(slotPoint.position);
         }
 
