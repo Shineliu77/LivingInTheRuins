@@ -51,6 +51,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     if (changeSprites.Length > 0)
                     {
+                        AudioManager.Instance.PlaySfx(5);                                              //音效
                         spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
                                                                   //transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                                                                   // if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -88,6 +89,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     if (obj.currentReagentsIndex == 0 && changeSprites.Length > 0)
                     {
+                        AudioManager.Instance.PlaySfx(5);                                              //音效
                         spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                         if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -118,6 +120,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     if (obj.currentReagentsIndex == 1 && changeSprites.Length > 1)
                     {
+                        AudioManager.Instance.PlaySfx(5);                                              //音效
                         spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                         if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -149,6 +152,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     if (obj.currentReagentsIndex == 2 && changeSprites.Length > 2)
                     {
+                        AudioManager.Instance.PlaySfx(5);                                              //音效
                         spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[0]
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                         if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -188,6 +192,7 @@ public class liveTwoDchangeImageIiquid : MonoBehaviour
 
                     if (obj.currentReagentsIndex == 3 && changeSprites.Length > 3)
                     {
+                        AudioManager.Instance.PlaySfx(5);                                              //音效
                         spriteRenderer.sprite = changeSprites[3];
                         transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                         if (transform.parent.GetComponent<DraggableReturn2D>())

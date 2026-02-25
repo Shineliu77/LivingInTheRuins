@@ -14,7 +14,7 @@ public class LobbySelectUse : MonoBehaviour
 
     private bool isZooming = false;
     private float elapsed = 0f;
-
+    private bool isCLick = false;
     //圖示縮放
     private Vector3 startScale;
     private Vector3 midScale;
@@ -65,10 +65,16 @@ public class LobbySelectUse : MonoBehaviour
                 state = ZoomState.ZoomOut;
                 elapsed = 0f; // 重置時間
             }
+            if (!isCLick)
+            {
+                AudioManager.Instance.PlaySfx(5);
+                isCLick = true;
+            }
         }
         //  縮小階段：從 midScale 漸變回 endScale
         else if (state == ZoomState.ZoomOut)
         {
+            isCLick = false;
             ChangeSize.transform.localScale = Vector3.Lerp(midScale, endScale, time);
             if (TextObject != null)
             {

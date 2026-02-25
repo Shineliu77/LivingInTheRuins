@@ -62,6 +62,12 @@ public class MakeAPotion : MonoBehaviour
     private GameObject CurrentChoseLiquidItem;
     private bool Teach = false;  //教學面板開過
 
+    //確保動畫播完才可以修
+    private bool isRed;
+    private bool isYellow;
+    private bool tisBlue;
+    private bool tisGreen;
+    private bool MachineDurabilityEmpty = false; //耐久歸零
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -110,31 +116,41 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 0;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveRR");
                     ProduceMonster();
+                    isRed = false;
                 }
                 if (Item.tag == "Yellow")
                 {
                     Reset();
                     SelectPotionID = 1;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveYY");
                     ProduceMonster();
-
+                    isYellow = false;
                 }
                 if (Item.tag == "Blue")
                 {
                     Reset();
                     SelectPotionID = 2;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveBB");
                     ProduceMonster();
-
+                    tisBlue = false;
                 }
                 if (Item.tag == "Green")
                 {
                     Reset();
                     SelectPotionID = 3;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveGG");
                     ProduceMonster();
+                    tisGreen = false;
                 }
             }
 
@@ -146,37 +162,51 @@ public class MakeAPotion : MonoBehaviour
                     Reset();
                     //SpawnObject(0);
                     canSpawnPotions = true;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveRR");
                     ProduceMonster();
+                    isRed = false;
                 }
                 if (Item.tag == "Yellow")
                 {
                     Reset();
                     canSpawnPotions = true;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveYY");
                     ProduceMonster();
+                    isYellow = false;
                 }
 
                 if (Item.tag == "Blue")
                 {
                     Reset();
                     canSpawnPotions = true;
+                    AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.SetTrigger("idelTOmoveBB");
                     ProduceMonster();
+                    tisBlue = false;
                 }
                 if (Item.tag == "Green")
                 {
                     Reset();
                     canSpawnPotions = true;
+                    AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveGG");
                     ProduceMonster();
+                    tisGreen = false;
                 }
             }
         }
         if (touchingFixMachine && !MachineDurabilityFix)
         {
+            AudioManager.Instance.PlaySfx(2);             //音效
+            //if (isRun && MachineDurability_Script < MachineDurability&& (isRed == false || isYellow == false || tisBlue == false || tisGreen == false))
             if (isRun && MachineDurability_Script < MachineDurability)
             {
+                MachineAni.speed = 1;                         //動
                 MachineDurabilityFix = false;
                 isFixMachineShow = false;
                 // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
@@ -189,6 +219,7 @@ public class MakeAPotion : MonoBehaviour
             }
             else if (!isRun && MachineDurability_Script < MachineDurability)
             {
+                MachineAni.speed = 0;                         //不動
                 MachineDurabilityFix = true;
                 isFixMachineShow = true;
                 FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
@@ -205,6 +236,15 @@ public class MakeAPotion : MonoBehaviour
             if (allSpawnedPotions.Count >= maxPotions)
             {
                 LockMakeLiquidItem();
+                // MachineDurabilityEmpty = false;
+            }
+            else if (MachineDurabilityEmpty == true)
+            {
+                LockMakeLiquidItem();
+            }
+            else if (MachineDurabilityEmpty == false)
+            {
+                UnlockMakeLiquidItem();
             }
             else
             {
@@ -214,6 +254,7 @@ public class MakeAPotion : MonoBehaviour
 
         if (isStopwatch && ScriptStopwatchTimer > 0)
         {
+            MachineAni.speed = 1;                         //動
             Stopwatch.gameObject.SetActive(true);
             ScriptStopwatchTimer -= Time.deltaTime;
             Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
@@ -313,7 +354,35 @@ public class MakeAPotion : MonoBehaviour
                     SpawnObject(3);
                     //canSpawnPotions = false;
                 }
-
+                if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.01f)
+                {
+                    isRed = false;
+                    isYellow = false;
+                    tisBlue = false;
+                    tisGreen = false;
+                    LockMakeLiquidItem();
+                }
+            }
+            AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo3.IsName("red work") && stateInfo2.normalizedTime > 0.99f)
+            {
+                isRed = true;
+                UnlockMakeLiquidItem();
+            }
+            if (stateInfo3.IsName("yellow work") && stateInfo2.normalizedTime > 0.99f)
+            {
+                isYellow = true;
+                UnlockMakeLiquidItem();
+            }
+            if (stateInfo3.IsName("blue work") && stateInfo2.normalizedTime > 0.99f)
+            {
+                tisBlue = true;
+                UnlockMakeLiquidItem();
+            }
+            if (stateInfo3.IsName("green work") && stateInfo2.normalizedTime > 0.99f)
+            {
+                tisGreen = true;
+                UnlockMakeLiquidItem();
             }
         }
     }
@@ -438,8 +507,11 @@ public class MakeAPotion : MonoBehaviour
             if (MachineDurability_Script > MachineDurability)
             {
                 MachineDurability_Script = MachineDurability;
+
                 if (MachineDurability_Script >= MachineDurability)  //回滿關起來
                 {
+                    MachineDurabilityEmpty = false;
+                    MachineAni.speed = 1;                         //動
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
@@ -481,6 +553,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawnPotions = false;
         }
 
@@ -489,6 +562,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawnPotions = false;
         }
 
@@ -497,6 +571,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawnPotions = false;
         }
 
@@ -505,6 +580,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawnPotions = false;
         }
 
@@ -568,16 +644,34 @@ public class MakeAPotion : MonoBehaviour
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[0];  //耐久值外框原色
+            UnlockMakeLiquidItem();
+            MachineDurabilityEmpty = false;
+        }
+        else if (SaveMachineDurability / MachineDurability <= 0f)      //耐久值歸零不能使用                                   
+        {
+            Debug.Log("耐久值歸零");
+            MachineDurabilityEmpty = true;
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+            LockMakeLiquidItem();
+        }
+        else if (SaveMachineDurability / MachineDurability > 0f)      //耐久值不為零                          
+        {
+            Debug.Log("耐久值不為零");
+            MachineDurabilityEmpty = false;
+            UnlockMakeLiquidItem();
         }
         else
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
         }
-        if (MachineDurabilityBar.fillAmount == 0)
-        {
-
-        }
+        //  if (MachineDurabilityBar.fillAmount <= 0)
+        //   {
+        // MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+        // MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+        // LockMakeLiquidItem();
+        //}
     }
 
     private void LockMakeLiquidItem()

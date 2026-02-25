@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444fb886c79789d42bdbc8717e82163f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ClickButton: []
 --- !u!114 &136275048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2264,6 +2265,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManger
       objectReference: {fileID: 0}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[0].name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[1].name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    - target: {fileID: 7778269901745577572, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
+      propertyPath: sfxSounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
     - target: {fileID: 8413870912591043970, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2588,6 +2625,18 @@ MonoBehaviour:
       - m_Target: {fileID: 7052827778390185056}
         m_TargetAssemblyTypeName: DialogueAutoPlayer, Assembly-CSharp
         m_MethodName: RunTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4554,6 +4603,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!82 &1153003220 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 7316588092346627026, guid: 8f7f04d9dce5d7a409aec459c606aa0e, type: 3}
@@ -4657,6 +4718,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4843,6 +4916,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1242128185}
         m_TargetAssemblyTypeName: ControlDialogueState, Assembly-CSharp
         m_MethodName: Control
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5061,6 +5146,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: TeachGame
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1273632623
@@ -5504,6 +5601,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6825,6 +6934,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1679133913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7268,6 +7401,18 @@ MonoBehaviour:
       - m_Target: {fileID: 7052827778390185056}
         m_TargetAssemblyTypeName: DialogueAutoPlayer, Assembly-CSharp
         m_MethodName: StopTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 136275047}
+        m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
+        m_MethodName: ClickButtonSfx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

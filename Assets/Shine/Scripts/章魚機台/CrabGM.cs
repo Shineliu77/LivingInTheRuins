@@ -45,7 +45,7 @@ public class CrabGM : MonoBehaviour
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     private bool touchingFixMachine; //耐久維修物是否碰撞中
-
+    private bool iswork = false;//一次只能使用一個
     //電路板
     private bool touchingbrokePCB;
     private GameObject currentbrokePCB;
@@ -113,10 +113,13 @@ public class CrabGM : MonoBehaviour
     {
         //if (!touchingbrokePCB) return;
         //放開時碰到電路板
-        if (touchingbrokePCB && currentbrokePCB != null)
+        if (touchingbrokePCB && currentbrokePCB != null && iswork == false)
         {
+            AudioManager.Instance.PlaySfx(1);             //音效
+            MachineAni.speed = 1;                         //動
             //Destroy(item.gameObject); //這兩都ok
             canSpawnPCB = true;
+            iswork = true;
             MachineAni.SetTrigger("IdleToWalk");
             ProduceMonster();
             Destroy(currentbrokePCB);
@@ -127,13 +130,18 @@ public class CrabGM : MonoBehaviour
         // 放開時碰到修理元件
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            //Destroy(item.gameObject); //這兩都ok
-            MachineDurabilityFix = true;
-            isFixMachineShow = true;
-            FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
-                                            //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
-            repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-            return;
+            AudioManager.Instance.PlaySfx(2);             //音效
+            if (MachineDurability_Script < MachineDurability)
+            {
+                MachineAni.speed = 0;                         //不動
+                                                              //Destroy(item.gameObject); //這兩都ok
+                MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
+                                                //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+                return;
+            }
         }
     }
     // Update is called once per frame
@@ -158,6 +166,7 @@ public class CrabGM : MonoBehaviour
             {
                 if (stateInfo.normalizedTime < 0.99f)
                 {
+                    MachineAni.speed = 1;
                     //if(stateInfo.IsName("work")){ MachineUI.gameObject.SetActive(true); }
                     MachineUI.gameObject.SetActive(true);
                     MachineDurabilityFix = false;    //不可維修
@@ -222,6 +231,7 @@ public class CrabGM : MonoBehaviour
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("pull out") && stateInfo2.normalizedTime > 0.6f)
             {
+                AudioManager.Instance.PlaySfx(3);                                                        //音效
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;
                 if (Application.loadedLevelName == "TeachGame")
@@ -230,6 +240,17 @@ public class CrabGM : MonoBehaviour
                     GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = false;
                 }
             }
+        }
+        AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);
+        if ((stateInfo3.IsName("pull out") && stateInfo3.normalizedTime > 0.01f) || (stateInfo.IsName("hold") && stateInfo3.normalizedTime > 0.01f || stateInfo.IsName("take out") && stateInfo3.normalizedTime > 0.01f))
+        {
+            MachineAni.speed = 1;
+            MachineDurabilityFix = false;    //不可維修
+            FixMachineShow.SetActive(false);
+        }
+        if (stateInfo.IsName("take out") && stateInfo3.normalizedTime > 0.99f)
+        {
+            iswork = false;
         }
     }
 
@@ -259,12 +280,13 @@ public class CrabGM : MonoBehaviour
     void ProduceMonster()
     {
         isRun = true;
-        if (Application.loadedLevelName == "TeachGame")
-        {
-            //   MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
-            //  MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
-        }
-        else
+        // if (Application.loadedLevelName == "TeachGame")
+        // {
+        //   MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+        //  MonsterPrefab.GetComponent<MonsterGM>().InitTarget("crab");
+        //}
+        //else
+        if (Application.loadedLevelName != "TeachGame")
         {
             //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
             isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
@@ -305,6 +327,7 @@ public class CrabGM : MonoBehaviour
 
     private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
     {
+        MachineDurability_Script = SaveRemainingValue;
         while (MachineDurabilityFix)
         {
             float repairAmount = MachineDurability * 0.005f;
@@ -316,6 +339,7 @@ public class CrabGM : MonoBehaviour
                 {
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
+                    MachineAni.speed = 1;         //動
                     FixMachineShow.SetActive(false);
                     // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 };

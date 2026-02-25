@@ -11,7 +11,7 @@ public class FirstGame : MonoBehaviour
     [Tooltip("可在 Inspector 自行設定一關的秒數")]
     public float levelDurationSeconds;
     public float RemainingLevelTime => Mathf.Max(0f, levelEndTime - Time.time);
-    public Image MImage, SIMage;
+    public Image MImage00, MImage0, SIMage00, SIMage0;
     public Sprite[] TimeSprite;
     [Header("同時在場顧客上限")]
     [Range(1, 10)]
@@ -35,7 +35,7 @@ public class FirstGame : MonoBehaviour
     [Header("組件")]
     public GameObject Iteam;
     public List<GameObject> IteamPrefab;
-
+    private bool touchingopener = false;
 
     [Header("打開的組件")]
     public GameObject IteamOpen;
@@ -47,6 +47,9 @@ public class FirstGame : MonoBehaviour
     public Collider2D[] MakeAPotionIteams;
     #endregion
 
+    private GameObject IteamGO;
+    private GameObject customerGO;
+    public Vector3[] originalPosition;
     void Start()
     {
         MakeAPotionIteams[0].enabled = true;
@@ -65,20 +68,26 @@ public class FirstGame : MonoBehaviour
 
         // 開場先把可用位置補滿到上限
         TryFillCustomerSlots();
+        AudioManager.Instance.PlaySfx(4);             //音效
     }
 
     void Update()
     {
         float remain = RemainingLevelTime;
         // 文字：MM:SS
-        if (MImage != null)
+        if (MImage0 != null)
         {
-            int m = Mathf.FloorToInt(remain / 10) % 10;
-            int s = Mathf.FloorToInt(remain % 10f);
-            MImage.sprite = TimeSprite[m];
-            SIMage.sprite = TimeSprite[s];
+            int m00 = Mathf.FloorToInt(remain / 60) / 10;
+            int m0 = Mathf.FloorToInt(remain / 60) % 10;
+            int s00 = Mathf.FloorToInt(remain % 60) / 10;
+            int s0 = Mathf.FloorToInt(remain % 60) % 10;
+            MImage00.sprite = TimeSprite[m00];
+            MImage0.sprite = TimeSprite[m0];
+            SIMage00.sprite = TimeSprite[s00];
+            SIMage0.sprite = TimeSprite[s0];
 
         }
+
         // 安全開關（避免 Null 例外）
         for (int i = 0; i < customerSpawnPoints.Length; i++)
         {
@@ -86,13 +95,23 @@ public class FirstGame : MonoBehaviour
             {
                 var col = IteamPrefab[i].GetComponent<BoxCollider2D>();
                 if (col) col.enabled = true;
+
+                // touchingopener = true;
             }
         }
         if (IteamOpenPrefab != null)
+        //if (IteamOpenPrefab != null || FindObjectOfType<IteamOpenOnTable>().hasitem == false)
         {
             var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
+
             if (col) col.enabled = true;
+
         }
+        //if (GameObject.FindWithTag("fixeditemOpen"))
+        // {
+        //  var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
+        // if (col) col.enabled = true;
+        //}
 
         // 時間到：停止再補客；等場上顧客清空後結束/換場
         if (Time.time >= levelEndTime)
@@ -169,6 +188,17 @@ public class FirstGame : MonoBehaviour
     /// <summary>
     /// 在指定站位生成顧客，並綁定回報事件
     /// </summary>
+    // void OnEnable()    //檢查滑鼠放開事件
+    //{
+    //    DraggableReturn2D.OnReleased += OnItemReleased;
+    //}
+
+    //void OnDisable()   //取消滑鼠放開事件
+    //{
+    //  DraggableReturn2D.OnReleased -= OnItemReleased;
+    // }
+
+
     private void SpawnCustomerAt(int seatIndex)
     {
         if (Customer == null || customerSpawnPoints == null || seatIndex < 0 || seatIndex >= customerSpawnPoints.Length) return;
@@ -177,11 +207,13 @@ public class FirstGame : MonoBehaviour
         GameObject customerGO = Instantiate(Customer, StartPos.position, StartPos.rotation);
         customerGO.GetComponent<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
         customerGO.GetComponent<CustomerGM>().ID = CustomerNumber;
-        GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
-        IteamGO.transform.parent = customerGO.transform;
-        IteamGO.transform.localPosition = Vector3.zero;
-        IteamPrefab.Add(IteamGO);
+        //GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
+        //IteamGO.transform.parent = customerGO.transform;
+        //IteamGO.transform.localPosition = Vector3.zero;
 
+
+
+        //IteamPrefab.Add(IteamGO);
         seatOccupied[seatIndex] = true;
         activeCustomers.Add(customerGO);
         CustomerNumber++;
@@ -196,7 +228,29 @@ public class FirstGame : MonoBehaviour
         marker.Owner = this;
 
     }
+    public void SpawnIteamGO(Transform parentCustomer, int seatIndex)
+    {
+        if (Iteam == null) return;
 
+        // 使用傳進來的 seatIndex 確保位置正確
+        GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[seatIndex].position, Iteam.transform.rotation);
+
+        // 將父物件設為傳進來的那個顧客
+        IteamGO.transform.SetParent(parentCustomer);
+
+        // 歸零座標，讓它完美對準顧客
+        IteamGO.transform.localPosition = Vector3.zero;
+
+        IteamPrefab.Add(IteamGO);
+    }
+    //void OnItemReleased(DraggableReturn2D item)
+    // {
+    // if (touchingopener)
+    //  {
+    //     IteamGO.transform.parent = customerGO.transform;
+    //    IteamGO.transform.localPosition = Vector3.zero;
+    // }
+    //}
     /// <summary>
     /// 由顧客在「事件處理完成、要離場」時呼叫此方法
     /// 你可以在顧客腳本處理完畢後呼叫：FindObjectOfType<FirstGame>().NotifyCustomerFinished(gameObject);
@@ -205,8 +259,7 @@ public class FirstGame : MonoBehaviour
     public void NotifyCustomerFinished(GameObject customerGO)
     {
         if (customerGO == null) return;
-
-
+        AudioManager.Instance.PlaySfx(4);             //音效
 
         // 釋放座位
         var marker = customerGO.GetComponent<FirstGameCustomerMarker>();

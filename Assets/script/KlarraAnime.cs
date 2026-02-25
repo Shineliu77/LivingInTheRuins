@@ -80,6 +80,14 @@ public class KlarraAnime : MonoBehaviour
         AfterHangUpPhone();
         animator.SetBool("idelTOmove", false);
     }
+    public void PickPhoneSfx()
+    {
+        AudioManager.Instance.PlaySfx(5);             //音效
+    }
+    public void HangPhoneSfx()
+    {
+        AudioManager.Instance.PlaySfx(5);             //音效
+    }
 }
 
 

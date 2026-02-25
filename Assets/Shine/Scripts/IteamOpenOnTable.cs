@@ -7,7 +7,7 @@ public class IteamOpenOnTable : MonoBehaviour
     public float SetScale;
     public bool touchingFixedItemOpen;  //碰撞外組件打開
     private GameObject currentFixedItemOpen;
-
+    public bool hasitem = false;//只能放一件
     // Start is called before the first frame update
     void Start()
     {
@@ -50,8 +50,10 @@ public class IteamOpenOnTable : MonoBehaviour
         if (touchingFixedItemOpen) return;  //避免重觸發
         if (currentFixedItemOpen != null)
         {
-            if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen"))
+            if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
             {
+                AudioManager.Instance.PlaySfx(5);                                              //音效
+                hasitem = true;
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
                 item.transform.parent = this.transform;
@@ -75,8 +77,10 @@ public class IteamOpenOnTable : MonoBehaviour
             //讓brokePCB可以拿出來給crab
             // if (Application.loadedLevelName == "FirstGame")
             // {
-            if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen"))
+            if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
             {
+                hasitem = true;
+                AudioManager.Instance.PlaySfx(5);                                              //音效
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
                 item.transform.parent = this.transform;
@@ -118,6 +122,7 @@ public class IteamOpenOnTable : MonoBehaviour
                                 if (col2d != null && !col2d.enabled)
                                     col2d.enabled = true;
                                 drag.enabled = true;
+                                brokeChild.localPosition = new Vector3(-5.7101f, -0.3002f, -0.1f);
                                 Debug.Log("brokePCB 拖曳啟用！");
                             }
                             else

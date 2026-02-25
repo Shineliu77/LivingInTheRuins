@@ -65,6 +65,13 @@ public class RabbitGM : MonoBehaviour
                                        // public System.Action OnWaitFinished;
     private bool waitEventSent = false;
     public Button[] RabbitButton;   //兔子按鈕
+    //確保動畫換回idel才可以修
+    private bool isIdel;
+    //確保動畫播完才可以修
+    private bool takeCircle;
+    private bool takeSquare;
+    private bool takeTriangle;
+    private bool MachineDurabilityEmpty = false; //耐久歸零
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -104,13 +111,19 @@ public class RabbitGM : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame")
         {
 
-            // if (FindObjectOfType<TeachGM>().RabbitButton.interactable == true)  //新手關如果沒鎖的話
-
             if (FindObjectOfType<TeachGM>().TeachGMLockRabbitButton == true)  //新手關如果沒鎖的話
             {
                 if (allSpawnedObjects.Count >= maxObjects)
                 {
                     LockRabbitButtons();
+                }
+                if (MachineDurabilityEmpty == true)
+                {
+                    LockRabbitButtons();
+                }
+                else if (MachineDurabilityEmpty == false)
+                {
+                    UnlockRabbitButtons();
                 }
                 else
                 {
@@ -121,14 +134,22 @@ public class RabbitGM : MonoBehaviour
         }
         else if (Application.loadedLevelName != "TeachGame")  //其他
         {
-            if (allSpawnedObjects.Count >= maxObjects)
+            // if (allSpawnedObjects.Count >= maxObjects)
+            // {
+            //   LockRabbitButtons();
+            // }
+            if (MachineDurabilityEmpty == true)
             {
                 LockRabbitButtons();
             }
-            else
+            else if (MachineDurabilityEmpty == false)
             {
                 UnlockRabbitButtons();
             }
+            //else
+            //{
+            // UnlockRabbitButtons();
+            // }
         }
         //   if (isStopwatch && ScriptStopwatchTimer > 0)
         //  {
@@ -214,6 +235,7 @@ public class RabbitGM : MonoBehaviour
                 {
 
                     MachineDurability_Script = SaveMachineDurability;
+                    DeductDurability();                                                              //ttt
 
                 }
                 else
@@ -274,8 +296,41 @@ public class RabbitGM : MonoBehaviour
         //   SpawnOK = true;
         // }
         // }
-
-
+        AnimatorStateInfo stateInfo6 = MachineAni.GetCurrentAnimatorStateInfo(0);       //鎖住按鈕       
+        //if ((stateInfo6.IsName("work circle") && stateInfo6.normalizedTime > 0.01f )||( stateInfo6.IsName("work square") && stateInfo6.normalizedTime > 0.01f )|| (stateInfo6.IsName("work triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.01f))
+        if ((stateInfo6.IsName("work circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("work square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("work triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait triangle") && stateInfo6.normalizedTime > 0.01f))
+        {
+            isIdel = false;
+            takeCircle = false;
+            takeSquare = false;
+            takeTriangle = false;
+            LockRabbitButtons();
+        }
+        if (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.99f)
+        {
+            takeCircle = true;
+        }
+        if (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f)
+        {
+            takeSquare = true;
+        }
+        if ((stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f))
+        {
+            takeTriangle = true;
+        }
+        AnimatorStateInfo stateInfo7 = MachineAni.GetCurrentAnimatorStateInfo(0);       //解鎖按鈕   
+        //if (allSpawnedObjects.Count <= maxObjects&&stateInfo7.IsName("idel") &&!MachineDurabilityEmpty)
+        if ((allSpawnedObjects.Count <= maxObjects) && stateInfo7.IsName("take away circle") || stateInfo7.IsName("take away square") || stateInfo7.IsName("take away triangle") && !MachineDurabilityEmpty)
+        {
+            isIdel = true;
+            UnlockRabbitButtons();
+        }
+        //if ((stateInfo7.IsName("idel") && MachineDurabilityEmpty == true) || (allSpawnedObjects.Count >= maxObjects))
+        if ((stateInfo7.IsName("take away circle") || stateInfo7.IsName("take away square") || stateInfo7.IsName("take away triangle") && MachineDurabilityEmpty == true) || (allSpawnedObjects.Count >= maxObjects))
+        {
+            isIdel = true;
+            LockRabbitButtons();
+        }
     }
     public enum WorkType
     {
@@ -310,7 +365,10 @@ public class RabbitGM : MonoBehaviour
 
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
-
+        isIdel = false;
+        takeCircle = false;
+        AudioManager.Instance.PlaySfx(1);             //音效
+        MachineAni.speed = 1;                         //動
         Reset();
         //如果觸發按鈕的話
         canSpawn = true;
@@ -320,6 +378,10 @@ public class RabbitGM : MonoBehaviour
     }
     public void RabbitSquaare()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
+        isIdel = false;
+        takeSquare = false;
+        AudioManager.Instance.PlaySfx(1);             //音效
+        MachineAni.speed = 1;                         //動
         Reset();
         currentWork = WorkType.Square;
         canSpawn = true;
@@ -328,6 +390,10 @@ public class RabbitGM : MonoBehaviour
     }
     public void RabbittTriangle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
+        isIdel = false;
+        takeTriangle = false;
+        AudioManager.Instance.PlaySfx(1);             //音效
+        MachineAni.speed = 1;                         //動
         Reset();
         currentWork = WorkType.Triangle;
         canSpawn = true;
@@ -368,9 +434,10 @@ public class RabbitGM : MonoBehaviour
         // if (hit.gameObject == FixMachineDurability)
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            if (isRun)
+            AudioManager.Instance.PlaySfx(2);             //音效
+            if (isRun && !isIdel && (takeCircle == false || takeSquare == false || takeTriangle == false))
             {
-
+                MachineAni.speed = 1;                         //動
                 MachineDurabilityFix = false; //停止修
                 isFixMachineShow = false;
                 FixMachineShow.SetActive(false);
@@ -381,13 +448,18 @@ public class RabbitGM : MonoBehaviour
                     repairCoroutine = null;
                 }
             }
-            else if (!isRun)
+            else if (!isRun && isIdel == true && (takeCircle == true || takeSquare == true || takeTriangle == true))
             {
+                MachineAni.speed = 0;                         //不動
                 MachineDurabilityFix = true;
                 isFixMachineShow = true;
                 FixMachineShow.SetActive(true); //機器維修會顯示在機器上的圖
                 //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture();  //換回去
                 repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+                isIdel = false;
+                takeCircle = false;
+                takeSquare = false;
+                takeTriangle = false;
             }
         }
     }
@@ -407,9 +479,11 @@ public class RabbitGM : MonoBehaviour
                 MachineDurability_Script = MachineDurability;
                 if (MachineDurability_Script >= MachineDurability)  //回滿關起來
                 {
+                    MachineDurabilityEmpty = false;
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
                     FixMachineShow.SetActive(false);
+                    MachineAni.speed = 1;                         //動
                     //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 }
 
@@ -447,6 +521,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawn = false;
 
             if (Application.loadedLevelName == "TeachGame")   //f確保不提前跑出
@@ -479,6 +554,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawn = false;
         }
 
@@ -487,6 +563,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
+            AudioManager.Instance.PlaySfx(3);             //音效
             canSpawn = false;
         }
 
@@ -506,11 +583,12 @@ public class RabbitGM : MonoBehaviour
     void ProduceMonster()
     {
         isRun = true;
-        if (Application.loadedLevelName == "TeachGame")
-        {
-            MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
-        }
-        else
+        //if (Application.loadedLevelName == "TeachGame")
+        // {
+        //  MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+        // }
+        //else
+        if (Application.loadedLevelName != "TeachGame")
         {
             //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
             isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      
@@ -554,28 +632,46 @@ public class RabbitGM : MonoBehaviour
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[0];
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[0];  //耐久值外框原色
+            MachineDurabilityEmpty = false;
+        }
+        if (SaveMachineDurability / MachineDurability < 0.5f)
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+            MachineDurabilityEmpty = false;
+        }
+        if (SaveMachineDurability / MachineDurability <= 0f)      //耐久值歸零不能使用                                              //無法回血 鎖住按鈕                              
+        {
+            Debug.Log("耐久值歸零");
+            MachineDurabilityEmpty = true;
+            Debug.Log("耐久值歸零2");
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+            MachineDurabilityEmpty = true;
+            LockRabbitButtons();
+        }
+        else if (SaveMachineDurability / MachineDurability > 0f)      //耐久值不為零                          
+        {
+            Debug.Log("耐久值不為零");
+            MachineDurabilityEmpty = false;
+            UnlockRabbitButtons();
         }
         else
         {
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
         }
-        if (MachineDurabilityBar.fillAmount == 0)
-        {
-
-        }
+        // if (MachineDurabilityBar.fillAmount == 0)
     }
 
 
     public void Takecircle()
     {
-
         MachineAni.SetTrigger("takecircle");
     }
 
     public void Takesquare()
     {
-
         MachineAni.SetTrigger("takeSquare");
     }
     public void Taketriangle()

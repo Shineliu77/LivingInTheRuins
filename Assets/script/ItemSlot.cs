@@ -6,7 +6,7 @@ public class ItemSlot : MonoBehaviour
 {
     private GameObject pcbInContact = null; // 紀錄目前碰撞到的 PCB
     private bool hasPCB = false; // 這個 slot 是否已經放入 PCB
-
+    //public Vector3 offset = new Vector3(-0.4138f, -0.0244f, 0f);
     public SetIteamOpenObj SetIteamOpenObj;
 
     void Start()
@@ -34,11 +34,20 @@ public class ItemSlot : MonoBehaviour
             if (drag != null && !drag.isDragging && !hasPCB)
             // if (drag != null && !drag.isDragging )
             {
-                pcbInContact.transform.position = transform.position;
+                if (Application.loadedLevelName == "TeachGame")
+                {
+                    Vector3 offset = new Vector3(-0.7138f, -0.0244f, 0f);
+                    pcbInContact.transform.position = transform.position + offset;
+                }
+                if (Application.loadedLevelName != "TeachGame")
+                {
+                    Vector3 offset = new Vector3(-0.7138f, -0.0244f, 0f);
+                    pcbInContact.transform.position = transform.position + offset;
+                }
                 var rb = pcbInContact.GetComponent<Rigidbody2D>();
                 if (rb != null) rb.velocity = Vector2.zero;
                 hasPCB = true; // PCB 放入
-
+                AudioManager.Instance.PlaySfx(5);                                              //音效
                 drag.enabled = false;
                 // if (SetIteamOpenObj != null)
                 //   {
@@ -55,13 +64,14 @@ public class ItemSlot : MonoBehaviour
                 // } 
                 // }
                 var parentObj = GetComponentInParent<SetIteamOpenObj>();
+                parentObj.ResetSize();
                 if (parentObj != null)
                 {
                     if (Application.loadedLevelName == "TeachGame")
                     {
                         FindObjectOfType<TeachGM>().OpenTeach9();
                     }
-                    parentObj.ResetSize();
+                    //parentObj.ResetSize();
                     Debug.Log("縮小 外組件打開");
                     // }
                 }

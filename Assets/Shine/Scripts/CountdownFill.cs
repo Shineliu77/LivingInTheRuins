@@ -38,15 +38,19 @@ public class CountdownFill : MonoBehaviour
 
             if (fillImage.fillAmount <= 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
-
-                NewCustomerAnime NewCustomerAnimeScript = FindObjectOfType<NewCustomerAnime>();
-                if (NewCustomerAnimeScript != null)
+                // AudioManager.Instance.PlaySfx(4);             //音效
+                NewCustomerAnime[] NewCustomerAnimeScript = FindObjectsOfType<NewCustomerAnime>();
+                foreach (NewCustomerAnime customer in NewCustomerAnimeScript)
                 {
-                    NewCustomerAnimeScript.CountdownFillEmpty();
-                    fillImage.sprite = fillImageChange;
-                    fillImageOutside.sprite = fillImageChangeeOutside;
+                    if (customer != null)
+                    //if (NewCustomerAnimeScript != null)
+                    {
+                        customer.CountdownFillEmpty();
+                        //NewCustomerAnimeScript.CountdownFillEmpty();
+                        fillImage.sprite = fillImageChange;
+                        fillImageOutside.sprite = fillImageChangeeOutside;
+                    }
                 }
-
             }
             if (fillImage.fillAmount <= 0f) //當耐心值歸零 摧毀耐心值物件
             {
@@ -58,27 +62,27 @@ public class CountdownFill : MonoBehaviour
         }
     }
 
-  //  private void OnTriggerEnter2D(Collider2D hit)
-   // {
-        // 確認碰撞的物件是fixeditemOpenFinished時的處理
-     //   if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName == "FirstGame")     //新手教學與關卡共通
-      //  {
-         //   if (hit.gameObject.name == "fixeditemOpenFinished1")
-         //   {
-          //      Destroy(ShouldDestroy);
-          //  }
-          //  if (hit.gameObject.name == "fixeditemOpenFinished2")
-         //   {
-          //      Destroy(ShouldDestroy);
-          //  }
-          //  if (hit.gameObject.name == "fixeditemOpenFinished3")
-          //  {
-          //      Destroy(ShouldDestroy);
-         //   }
-          //  if (hit.gameObject.name == "fixeditemOpenFinished4")
-          //  {
-          //      Destroy(ShouldDestroy);
-          //  }
-       // }
-   // }
+    //  private void OnTriggerEnter2D(Collider2D hit)
+    // {
+    // 確認碰撞的物件是fixeditemOpenFinished時的處理
+    //   if (Application.loadedLevelName == "TeachGame" || Application.loadedLevelName == "FirstGame")     //新手教學與關卡共通
+    //  {
+    //   if (hit.gameObject.name == "fixeditemOpenFinished1")
+    //   {
+    //      Destroy(ShouldDestroy);
+    //  }
+    //  if (hit.gameObject.name == "fixeditemOpenFinished2")
+    //   {
+    //      Destroy(ShouldDestroy);
+    //  }
+    //  if (hit.gameObject.name == "fixeditemOpenFinished3")
+    //  {
+    //      Destroy(ShouldDestroy);
+    //   }
+    //  if (hit.gameObject.name == "fixeditemOpenFinished4")
+    //  {
+    //      Destroy(ShouldDestroy);
+    //  }
+    // }
+    // }
 }

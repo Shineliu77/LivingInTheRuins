@@ -293,6 +293,7 @@ public class TeachGM : MonoBehaviour
     }
     public void ProductCustomer()
     {
+        AudioManager.Instance.PlaySfx(4);             //音效
         KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();   //當客人入場對話框出現  接電話
         if (klarraAnimeScript != null)
         {
@@ -503,6 +504,8 @@ public class TeachGM : MonoBehaviour
     {
         TeachEightTwo.SetActive(true);
         GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
+        GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-5.7101f, -0.3002f, -0.1f);
+        
     }
 
 
@@ -533,6 +536,7 @@ public class TeachGM : MonoBehaviour
         if (klarraAnimeScript != null)
         {
             klarraAnimeScript.HangUpPhone();
+
         }
         StartCoroutine(Teach10Closed());
     }
@@ -546,7 +550,7 @@ public class TeachGM : MonoBehaviour
     private IEnumerator CloseDoor()
     {
         Door.SetActive(true);
-
+        AudioManager.Instance.PlaySfx(4);                                              //音效
         // 門從目前位置往中間
         while (Vector3.Distance(Door.transform.position, MiddletargetPosition.position) > 0.01f)
         {
@@ -560,6 +564,7 @@ public class TeachGM : MonoBehaviour
         ScorePanel.SetActive(true);//開分數
         while (Vector3.Distance(Door.transform.position, FinaltargetPosition.position) > 0.01f)
         {
+            AudioManager.Instance.PlaySfx(3);                                              //音效
             Door.transform.position = Vector3.MoveTowards(Door.transform.position, FinaltargetPosition.position, FinaldoorSpeed * Time.deltaTime
         );
             yield return null;
@@ -573,6 +578,7 @@ public class TeachGM : MonoBehaviour
     }
     public void ClickGoOtherScence()//點擊才到下個場地
     {
+        AudioManager.Instance.PlaySfx(5);                                              //音效
         if (Door.transform.position == FinaltargetPosition.position)
         {
             GoOtherScene();

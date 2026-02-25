@@ -17,17 +17,21 @@ public class CustomerGM : MonoBehaviour
     private Collider2D isCollCustomer;//是否碰撞客人
                                       // private bool collProduceIteam;
                                       // private GameObject currentcollProduceIteam;
+    private bool isArrive = false;
+    private bool hasSpawnedItem = false; // 紀錄是否已經生成過
     #endregion
     // Start is called before the first frame update
     void Start()
     {
         if (Application.loadedLevelName == "TeachGame")
         {
+            // AudioManager.Instance.PlaySfx(4);             //音效
             targetPoint = GameObject.Find("顧客定位點").transform;
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
         }
         if (Application.loadedLevelName == "FirstGame")
         {
+            // AudioManager.Instance.PlaySfx(4);             //音效
             targetPoint = GameObject.Find(PosName).transform;
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
         }
@@ -72,11 +76,17 @@ public class CustomerGM : MonoBehaviour
         transform.localScale = Vector3.one * 5.169395f;
         if (GetComponent<CountdownFill>().timer <= 0f || Finished)
         {
+            if (!isArrive)
+            {
+                AudioManager.Instance.PlaySfx(2);             //音效          
+                isArrive = true;
+            }
             float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
             if (distance > stopDistance)
             {
                 // 向目標移動
+
                 Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
                 transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
             }
@@ -136,7 +146,20 @@ public class CustomerGM : MonoBehaviour
                 FindObjectOfType<TeachGM>().ProduceIteam();
         }
 
+        if (Application.loadedLevelName != "TeachGame")      //其他關
+        {
+            FirstGame fg = FindObjectOfType<FirstGame>();
+            if (hasSpawnedItem) return;
+            if (fg != null)
+            {
+                // 關鍵：傳入自己的 transform 以及存在 marker 裡的 seatIndex
+                var marker = GetComponent<FirstGameCustomerMarker>();
+                int myIndex = (marker != null) ? marker.SeatIndex : 0;
 
+                fg.SpawnIteamGO(this.transform, myIndex);
+                hasSpawnedItem = true;
+            }
+        }
         //第一關使用
         /* if (Application.loadedLevelName == "FirstGame")
         {
@@ -161,28 +184,34 @@ public class CustomerGM : MonoBehaviour
             {
                 if (hit.gameObject.name == "fixeditemOpenFinished1")
                 {
+                    AudioManager.Instance.PlaySfx(5);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<TeachGM>().OpenTeach5();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;   //重製外組件打開觸發
+                    FindObjectOfType<IteamOpenOnTable>().hasitem = false;
                     Destroy(hit.gameObject);
                     CountdownFill countdownScript = GetComponent<CountdownFill>();
                     if (countdownScript != null && countdownScript.ShouldDestroy != null)
                     {
                         // 叫 CountdownFill 的子物件去死
                         Destroy(countdownScript.ShouldDestroy);
+                        isArrive = false;
                     }
                 }
                 if (hit.gameObject.name == "fixeditemOpenFinished2")
                 {
+                    AudioManager.Instance.PlaySfx(5);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<TeachGM>().OpenTeach10();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                    FindObjectOfType<IteamOpenOnTable>().hasitem = false;
                     Destroy(hit.gameObject);
                     CountdownFill countdownScript = GetComponent<CountdownFill>();
                     if (countdownScript != null && countdownScript.ShouldDestroy != null)
                     {
                         // 叫 CountdownFill 的子物件去死
                         Destroy(countdownScript.ShouldDestroy);
+                        isArrive = false;
                     }
                     //Finished = true;
                     // Destroy(hit.gameObject);
@@ -195,14 +224,17 @@ public class CustomerGM : MonoBehaviour
             {
                 if (hit.name.Contains("fixeditemOpenFinished"))
                 {
+                    AudioManager.Instance.PlaySfx(5);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                    FindObjectOfType<IteamOpenOnTable>().hasitem = false;
                     Destroy(hit.gameObject);
                     CountdownFill countdownScript = GetComponent<CountdownFill>();
                     if (countdownScript != null && countdownScript.ShouldDestroy != null)
                     {
                         // 叫 CountdownFill 的子物件去死
                         Destroy(countdownScript.ShouldDestroy);
+                        isArrive = false;
                     }
                     Finished = true;
                     FindObjectOfType<FirstGame>().ClearIteamPrefab();
@@ -216,5 +248,10 @@ public class CustomerGM : MonoBehaviour
 
             }
         }
+    }
+
+    public void AngrySfx()
+    {
+        AudioManager.Instance.PlaySfx(7);
     }
 }

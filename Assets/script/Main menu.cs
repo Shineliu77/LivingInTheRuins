@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class Mainmenu : MonoBehaviour
 {
+    public Button[] ClickButton;
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync("StoryFirst");
-
+        AudioManager.Instance.PlaySfx(5);                                              //音效
 
     }
     public void HomeGame()
     {
         SceneManager.LoadSceneAsync("main menu");
+        AudioManager.Instance.PlaySfx(5);                                              //音效
 
     }
     //public void NextGame()
@@ -23,12 +27,18 @@ public class Mainmenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        AudioManager.Instance.PlaySfx(5);                                              //音效
     }
 
 
     public void LoadSceneByName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        AudioManager.Instance.PlaySfx(5);
     }
 
+    public void ClickButtonSfx()
+    {
+        AudioManager.Instance.PlaySfx(5);
+    }
 }

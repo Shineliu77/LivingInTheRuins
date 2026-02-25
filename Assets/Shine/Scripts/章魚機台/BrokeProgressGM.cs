@@ -32,7 +32,7 @@ public class BrokeProgressGM : MonoBehaviour
     bool MachineDurabilityFix = false;  //不可修
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     private bool touchingFixMachine;  //耐久維修物是否碰撞中
-
+    private bool isFixMachineDurability = true;  //耐久值不是0
     //外駔件
     private bool touchingFixedItem;
     private GameObject currentFixedItem;
@@ -45,7 +45,7 @@ public class BrokeProgressGM : MonoBehaviour
     public Transform ProducePos;
     public float DeductMachineDurability;//扣除機器耐久
     bool isRun;
-
+    private bool iswork = false;//一次只能使用一個
 
     void Start()
     {
@@ -96,15 +96,16 @@ public class BrokeProgressGM : MonoBehaviour
     //  滑鼠放開事件
     void OnItemReleased(DraggableReturn2D item)
     {
-        // 放開時碰到 fixeditem
-        if (touchingFixedItem && currentFixedItem != null)
+        // 放開時碰到 fixeditem  與  耐久值不是0
+        if (touchingFixedItem && currentFixedItem != null && isFixMachineDurability == true && iswork == false)
         {
+            MachineAni.speed = 1;                         //動
             Debug.Log("放開滑鼠：fixeditem");
-
+            AudioManager.Instance.PlaySfx(1);             //音效
             currentFixedItem.SetActive(false);
             MachineAni.SetTrigger("IdleToWalk");
             ProduceMonster();
-
+            iswork = true;
             touchingFixedItem = false;
             currentFixedItem = null;
             return;
@@ -113,22 +114,25 @@ public class BrokeProgressGM : MonoBehaviour
         // 放開時碰到修理元件
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            Debug.Log("放開滑鼠：FixMachine");
-
-            MachineDurabilityFix = true;
-            isFixMachineShow = true;
-            FixMachineShow.SetActive(true);//機器維修會顯示在機器上的圖
-            //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture(); //換回去
-            repairCoroutine = StartCoroutine(FixDurabilityOverTime());
-
-            if (Application.loadedLevelName == "TeachGame" &&
-                !FindObjectOfType<TeachGM>().teachTwo3) //新手教學關使用
+            AudioManager.Instance.PlaySfx(2);             //音效
+            if (MachineDurability_Script < MachineDurability)
             {
+                Debug.Log("放開滑鼠：FixMachine");
+
+                MachineAni.speed = 0;                         //不動
+                MachineDurabilityFix = true;
+                isFixMachineShow = true;
+                FixMachineShow.SetActive(true);//機器維修會顯示在機器上的圖
+                                               //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangePicture(); //換回去
+                repairCoroutine = StartCoroutine(FixDurabilityOverTime());
+
+                if (Application.loadedLevelName == "TeachGame" && !FindObjectOfType<TeachGM>().teachTwo3) //新手教學關使用
                 {
-                    FindObjectOfType<TeachGM>().OpenTeachTwo3();
+                    {
+                        FindObjectOfType<TeachGM>().OpenTeachTwo3();
+                    }
                 }
             }
-
         }
     }
 
@@ -142,14 +146,15 @@ public class BrokeProgressGM : MonoBehaviour
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     FindObjectOfType<TeachGM>().ProduceIteamOpen();
+                    AudioManager.Instance.PlaySfx(3);             //音效
                 }
 
                 //第一關使用
                 else if (Application.loadedLevelName == "FirstGame")
                 {
                     FindObjectOfType<FirstGame>().ProduceIteamOpen();
+                    AudioManager.Instance.PlaySfx(3);             //音效
                 }
-
 
                 Placement.enabled = true;
                 MachineUI.gameObject.SetActive(false);
@@ -167,18 +172,27 @@ public class BrokeProgressGM : MonoBehaviour
                 float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
 
                 SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
-
+                //    SaveRemainingValue = MachineDurability_Script;      好像要用個存的                                                               //ttt
                 MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
 
                 if (MachineUIBar.fillAmount > 0.5f)
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[0];
                     MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+                    isFixMachineDurability = true;
+                }
+                else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
+                {
+                    MachineUIBar.sprite = MachineUIBarSprites[1];
+                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                    isFixMachineDurability = false;
                 }
                 else
                 {
                     MachineUIBar.sprite = MachineUIBarSprites[1];
                     MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                    isFixMachineDurability = true;
+
                 }
                 MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
                 float fillAmount = 1f - (currentTimeInSeconds / animationLength);
@@ -194,6 +208,11 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUI.transform.GetChild(1).GetComponent<Image>().sprite = MachineUISprites[1];
                     MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
                 }
+            }
+            if (stateInfo.normalizedTime > 0.99f)
+            {
+
+                iswork = false;
 
             }
         }
@@ -231,6 +250,7 @@ public class BrokeProgressGM : MonoBehaviour
 
     private IEnumerator FixDurabilityOverTime()   // 每秒恢復10%耐久
     {
+        MachineDurability_Script = SaveRemainingValue;
         while (MachineDurabilityFix)
         {
             float repairAmount = MachineDurability * 0.005f;
@@ -244,6 +264,7 @@ public class BrokeProgressGM : MonoBehaviour
                 {
                     MachineDurabilityFix = false; //停止修
                     isFixMachineShow = false;
+                    MachineAni.speed = 1;         //動
                     FixMachineShow.SetActive(false);
                     //FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
                 }
@@ -275,12 +296,13 @@ public class BrokeProgressGM : MonoBehaviour
     void ProduceMonster()
     {
         isRun = true;
-        if (Application.loadedLevelName == "TeachGame")
-        {
-            MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
-            MonsterPrefab.GetComponent<MonsterGM>().InitTarget("opener0320");
-        }
-        else
+        //  if (Application.loadedLevelName == "TeachGame")
+        // {
+        // MonsterPrefab = Instantiate(Monster, ProducePos.position, Monster.transform.rotation) as GameObject;
+        //MonsterPrefab.GetComponent<MonsterGM>().InitTarget("opener0320");
+        // }
+        // else
+        if (Application.loadedLevelName != "TeachGame")
         {
             //Random.Range(0, 2) 回傳整數 0 或 1,等於 0 回傳 true，否則為 false。
             isProduceMonster = Random.Range(0, 2) == 0;                //暫時停用MonsterGM有問題                      

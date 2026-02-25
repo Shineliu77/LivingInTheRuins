@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-           // DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -60,6 +60,40 @@ public class AudioManager : MonoBehaviour
         {
             sfxSource.PlayOneShot(s.clip);
         }
+    }
+
+    public void PlayMusic(int index) //調用的音樂撥放
+    {
+        if (index == -1)  //無音樂
+        {
+            musicSource.Stop();
+            musicSource.clip = null;
+            return;
+        }
+        if (index < 0 || index >= musicSounds.Length)
+        {
+            Debug.Log("音樂長度不夠");
+            return;
+        }
+        AudioClip nextClip = musicSounds[index].clip;
+        if (musicSource.clip == nextClip && musicSource.isPlaying)
+            musicSource.Stop();
+        musicSource.clip = nextClip;
+        musicSource.Play();
+        //Sound MusicSound = musicSounds[index];
+        //musicSource.PlayOneShot(MusicSound.clip);
+
+
+
+    }
+    public void PlaySfx(int index)  //調用的音效撥放
+    {
+        if (index > 0 || index >= sfxSounds.Length)
+        {
+            Debug.Log("音效陣列長度不夠");
+        }
+        Sound sfxSound = sfxSounds[index];
+        sfxSource.PlayOneShot(sfxSound.clip);
     }
 
     public void ToggleClickedSound()
