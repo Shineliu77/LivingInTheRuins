@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetChange: {fileID: 5252771801232554846}
-  OtiangePic: {fileID: -214834616, guid: 155f7e55b30579b4387ecd51fe3d458d, type: 3}
+  OtiangePic: {fileID: -1838373640, guid: 116a2a72a6559534a8af735c05d55277, type: 3}
   ChangePic: {fileID: -1272158454, guid: 68c4a819fde5af3488931079c1f881d0, type: 3}
 --- !u!1 &5230932487871801806
 GameObject:
