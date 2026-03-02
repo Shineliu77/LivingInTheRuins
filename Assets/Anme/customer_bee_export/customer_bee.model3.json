@@ -1,0 +1,24 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "customer_bee.moc3",
+		"Textures": [
+			"customer_bee.4096/texture_00.png",
+			"customer_bee.4096/texture_01.png"
+		],
+		"Physics": "customer_bee.physics3.json",
+		"DisplayInfo": "customer_bee.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}
