@@ -123,6 +123,7 @@ public class TeachGM : MonoBehaviour
         // teachThree4 = false;
         TeachThree4.SetActive(false);
         FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
+        AudioManager.Instance.PlaySfx(4);             //音效 
     }
 
     void Update()
@@ -293,7 +294,7 @@ public class TeachGM : MonoBehaviour
     }
     public void ProductCustomer()
     {
-        AudioManager.Instance.PlaySfx(4);             //音效
+        //AudioManager.Instance.PlaySfx(4);             //音效
         KlarraAnime klarraAnimeScript = FindObjectOfType<KlarraAnime>();   //當客人入場對話框出現  接電話
         if (klarraAnimeScript != null)
         {

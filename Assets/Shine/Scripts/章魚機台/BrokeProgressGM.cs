@@ -45,8 +45,8 @@ public class BrokeProgressGM : MonoBehaviour
     public Transform ProducePos;
     public float DeductMachineDurability;//扣除機器耐久
     bool isRun;
-    private bool iswork = false;//一次只能使用一個
-
+    private bool iswork = false;//一次只能使用一個  工作不可修
+    private bool inTimeOnlyOne = false;//一次只能生成一個
     void Start()
     {
         MachineDurability_Script = MachineDurability;
@@ -115,7 +115,7 @@ public class BrokeProgressGM : MonoBehaviour
         if (touchingFixMachine && !MachineDurabilityFix)
         {
             AudioManager.Instance.PlaySfx(2);             //音效
-            if (MachineDurability_Script < MachineDurability)
+            if (MachineDurability_Script < MachineDurability && iswork == false)
             {
                 Debug.Log("放開滑鼠：FixMachine");
 
@@ -141,7 +141,8 @@ public class BrokeProgressGM : MonoBehaviour
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName("work"))
         {
-            if (stateInfo.normalizedTime >= 0.99f && GameObject.FindGameObjectsWithTag("fixeditemOpen").Length <= 0)
+            //if (stateInfo.normalizedTime >= 0.99f && GameObject.FindGameObjectsWithTag("fixeditemOpen").Length <= 0)
+            if (stateInfo.normalizedTime >= 0.99f && inTimeOnlyOne == false)
             {
                 if (Application.loadedLevelName == "TeachGame")
                 {
@@ -155,13 +156,14 @@ public class BrokeProgressGM : MonoBehaviour
                     FindObjectOfType<FirstGame>().ProduceIteamOpen();
                     AudioManager.Instance.PlaySfx(3);             //音效
                 }
-
+                inTimeOnlyOne = true;
                 Placement.enabled = true;
                 MachineUI.gameObject.SetActive(false);
                 MachineDurability_Script = SaveRemainingValue;
             }
             if (stateInfo.normalizedTime < 0.99f)
             {
+                inTimeOnlyOne = false;
                 MachineUI.gameObject.SetActive(true);
                 MachineDurabilityFix = false;    //不可維修
                 isFixMachineShow = false;

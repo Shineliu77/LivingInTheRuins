@@ -26,7 +26,11 @@ public class ItemSlot : MonoBehaviour
     }
     private void Update()
     {
-
+        if (pcbInContact == null)
+        {
+            pcbInContact = null; // 確保它是真的 Null
+            return;
+        }
         if (pcbInContact != null)
         {
             var drag = pcbInContact.GetComponent<DraggableReturn2D>();

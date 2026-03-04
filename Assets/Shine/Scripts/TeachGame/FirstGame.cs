@@ -20,7 +20,7 @@ public class FirstGame : MonoBehaviour
 
     #region 顧客生成
     [Header("顧客 Prefab")]
-    public GameObject Customer;
+    public GameObject[] Customer;
 
     [Header("顧客站位（請放 3 個 Transform）")]
     public Transform[] customerSpawnPoints; // 三個站位（請在 Inspector 指定）
@@ -50,6 +50,14 @@ public class FirstGame : MonoBehaviour
     private GameObject IteamGO;
     private GameObject customerGO;
     public Vector3[] originalPosition;
+    public GameObject ScorePanel;  //分數面板
+    public GameObject Door; //鐵門
+    public GameObject ClickClose; //點擊換場
+    public Transform MiddletargetPosition; //中間停頓點
+    public Transform FinaltargetPosition; //最終停頓點
+    public float MiddledoorSpeed; //中間速度
+    public float FinaldoorSpeed;//最後速度
+    public bool iscloseDoor = false;//關鐵門
     void Start()
     {
         MakeAPotionIteams[0].enabled = true;
@@ -59,6 +67,11 @@ public class FirstGame : MonoBehaviour
 
         // 初始化時間與座位占用狀態
         levelEndTime = Time.time + levelDurationSeconds;
+
+        if (levelDurationSeconds > 0)     //結束遊戲顯示分數
+        {
+            Invoke("LevelTimesUP", levelDurationSeconds);
+        }
 
         if (customerSpawnPoints == null || customerSpawnPoints.Length < 3)
         {
@@ -70,7 +83,15 @@ public class FirstGame : MonoBehaviour
         TryFillCustomerSlots();
         AudioManager.Instance.PlaySfx(4);             //音效
     }
-
+    private void LevelTimesUP() //關卡時間到
+    {
+        if (!iscloseDoor)
+        {
+            StartCoroutine(DOORClosed());
+            iscloseDoor = true;
+            Debug.Log("關門2");
+        }
+    }
     void Update()
     {
         float remain = RemainingLevelTime;
@@ -89,55 +110,72 @@ public class FirstGame : MonoBehaviour
         }
 
         // 安全開關（避免 Null 例外）
-        for (int i = 0; i < customerSpawnPoints.Length; i++)
-        {
-            if (IteamPrefab[i] != null)
-            {
-                var col = IteamPrefab[i].GetComponent<BoxCollider2D>();
-                if (col) col.enabled = true;
-
-                // touchingopener = true;
-            }
-        }
-        if (IteamOpenPrefab != null)
-        //if (IteamOpenPrefab != null || FindObjectOfType<IteamOpenOnTable>().hasitem == false)
-        {
-            var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
-
-            if (col) col.enabled = true;
-
-        }
-        //if (GameObject.FindWithTag("fixeditemOpen"))
+        // for (int i = 0; i < customerSpawnPoints.Length; i++)
         // {
-        //  var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
+        // if (IteamPrefab[i] != null)
+        // {
+        // var col = IteamPrefab[i].GetComponent<BoxCollider2D>();
         // if (col) col.enabled = true;
-        //}
 
-        // 時間到：停止再補客；等場上顧客清空後結束/換場
-        if (Time.time >= levelEndTime)
+        // touchingopener = true;
+        //}
+        //}
+        //  if (GameObject.FindWithTag("fixeditemOpen"))
+        //  {
+        // var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
+        //if (col) col.enabled = true;
+        //  }
+        GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+        foreach (GameObject item in allOpenItems)
         {
-            // 不再補新顧客，等待當前顧客處理完離場
-            if (activeCustomers.Count == 0)
+            var col = item.GetComponent<BoxCollider2D>();
+            if (col != null && !col.enabled)
             {
-                // 這裡你可依規劃：直接結束關卡、計分、或換場
-                GoLevel2();       // 你的原本流程（若有條件達成才換）
-                // 或者直接：GoOtherScene();
+                col.enabled = true;
+                // Debug.Log(item.name + " 的碰撞器已動態啟用");
             }
-            return;
+        }
+        GameObject[] allItems = GameObject.FindGameObjectsWithTag("fixeditem");
+        foreach (GameObject order in allItems)
+        {
+            var col = order.GetComponent<BoxCollider2D>();
+            if (col != null && !col.enabled)
+            {
+                col.enabled = true;
+            }
+        }
+        //Debug.Log("關門1");
+        // 時間到：停止再補客；等場上顧客清空後結束/換場
+        if (Time.time >= levelEndTime && iscloseDoor == false)         //好像會被NotifyCustomerFinished(GameObject customerGO)引響        
+        {
+            Debug.Log("關門1");
+            // 不再補新顧客，等待當前顧客處理完離場
+            //  if (activeCustomers.Count == 0)
+            // {
+            // 這裡你可依規劃：直接結束關卡、計分、或換場
+            //GoLevel2();       // 你的原本流程（若有條件達成才換）
+            // 或者直接：GoOtherScene();
+            StartCoroutine(DOORClosed());
+            iscloseDoor = true;
+            Debug.Log("關門2");
+            // }
+            //  return;
         }
 
         // 若尚未到時間、且現場顧客數低於上限，嘗試補位
         if (activeCustomers.Count < Mathf.Min(maxConcurrentCustomers, (customerSpawnPoints?.Length ?? 0)))
         {
             TryFillCustomerSlots();
+
         }
 
         if (CustomerNumber == 1)
         {
-            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
+            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)              //IteamOpenOnTable也有debug
             {
                 GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
                 if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished1";
+                Debug.Log($"{IteamOpenPrefab.name} ");
             }
         }
         if (CustomerNumber == 2)
@@ -146,6 +184,7 @@ public class FirstGame : MonoBehaviour
             {
                 GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
                 if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished2";
+                Debug.Log($"{IteamOpenPrefab.name} ");
             }
         }
         if (CustomerNumber == 3)
@@ -154,6 +193,7 @@ public class FirstGame : MonoBehaviour
             {
                 GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
                 if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished3";
+                Debug.Log($"{IteamOpenPrefab.name} ");
             }
         }
         if (CustomerNumber == 4)
@@ -162,6 +202,7 @@ public class FirstGame : MonoBehaviour
             {
                 GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
                 if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished4";
+                Debug.Log($"{IteamOpenPrefab.name} ");
             }
         }
     }
@@ -201,12 +242,16 @@ public class FirstGame : MonoBehaviour
 
     private void SpawnCustomerAt(int seatIndex)
     {
-        if (Customer == null || customerSpawnPoints == null || seatIndex < 0 || seatIndex >= customerSpawnPoints.Length) return;
 
+        if (Customer == null || customerSpawnPoints == null || seatIndex < 0 || seatIndex >= customerSpawnPoints.Length) return;
+        int RandomCustomerIndex = Random.Range(0, Customer.Length);
+        GameObject selectedCustomerPrefab = Customer[RandomCustomerIndex];
         Transform spawn = customerSpawnPoints[seatIndex];
-        GameObject customerGO = Instantiate(Customer, StartPos.position, StartPos.rotation);
-        customerGO.GetComponent<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
-        customerGO.GetComponent<CustomerGM>().ID = CustomerNumber;
+        GameObject customerGO = Instantiate(selectedCustomerPrefab, StartPos.position, StartPos.rotation);
+        customerGO.transform.localPosition = StartPos.position;
+        customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
+        //customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (seatIndex + 1);                //因為有客人需要校正座標變子物件   //改用座位遞補離開的座位
+        customerGO.GetComponentInChildren<CustomerGM>().ID = CustomerNumber;
         //GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
         //IteamGO.transform.parent = customerGO.transform;
         //IteamGO.transform.localPosition = Vector3.zero;
@@ -222,10 +267,11 @@ public class FirstGame : MonoBehaviour
         // customerGO.transform.rotation = spawn.rotation;
 
         // 讓顧客知道自己的座位（若顧客需要移動/歸位可用）
-        var marker = customerGO.GetComponent<FirstGameCustomerMarker>();
+        var marker = customerGO.GetComponentInChildren<FirstGameCustomerMarker>();
         if (marker == null) marker = customerGO.AddComponent<FirstGameCustomerMarker>();
         marker.SeatIndex = seatIndex;
         marker.Owner = this;
+        Debug.Log($"座位 {seatIndex} 已補人，目前控制編號設定為: {CustomerNumber}");
 
     }
     public void SpawnIteamGO(Transform parentCustomer, int seatIndex)
@@ -259,35 +305,39 @@ public class FirstGame : MonoBehaviour
     public void NotifyCustomerFinished(GameObject customerGO)
     {
         if (customerGO == null) return;
-        AudioManager.Instance.PlaySfx(4);             //音效
+        //AudioManager.Instance.PlaySfx(4);             //音效
 
         // 釋放座位
-        var marker = customerGO.GetComponent<FirstGameCustomerMarker>();
-        if (marker != null && marker.SeatIndex >= 0 && marker.SeatIndex < seatOccupied.Length)
+        var marker = customerGO.GetComponentInChildren<FirstGameCustomerMarker>();
+        // if (marker != null && marker.SeatIndex >= 0 && marker.SeatIndex < seatOccupied.Length)
+        if (marker != null && marker.SeatIndex >= 0)
         {
-            seatOccupied[marker.SeatIndex] = false;
-        }
+            activeCustomers.Remove(customerGO);
 
-        activeCustomers.Remove(customerGO);
+            seatOccupied[marker.SeatIndex] = false;
+            CustomerNumber = marker.SeatIndex;  //填補移除的客人編號
+        }
+        //    activeCustomers.Remove(customerGO);
+        Destroy(customerGO);
 
         // 顧客離場（若外部已 Destroy，這裡就不再重複）
-        if (customerGO != null) Destroy(customerGO);
+        //if (customerGO != null) Destroy(customerGO);
 
         // 如果尚未到時間，離場後立刻補位；若已到時間，不再補新客
         if (Time.time < levelEndTime)
         {
             TryFillCustomerSlots();
         }
-        else
-        {
-            // 若時間已到且清空，走收尾流程
-            if (activeCustomers.Count == 0)
-            {
-                GoLevel2();  // 或 GoOtherScene();
-            }
-        }
-    }
+        // else if (Time.time >=levelEndTime&& iscloseDoor == false)
+        // if (!iscloseDoor)
+        // {
+        // 若時間已到且清空，走收尾流程
+        //if (activeCustomers.Count == 0)
 
+        //  {
+        // GoLevel2();  // 或 GoOtherScene();
+        //}
+    }
     public void ProduceIteam(int ID)
     {
 
@@ -298,6 +348,7 @@ public class FirstGame : MonoBehaviour
     public void ClearIteamPrefab()
     {
         IteamPrefab = null;
+
     }
 
     public void ProduceIteamOpen()
@@ -314,7 +365,38 @@ public class FirstGame : MonoBehaviour
             GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
         }
     }
-
+    public void CountdownFillEmptyUse()  //客人耐心歸零 刪掉外組件 外組件打開 外組件打開放修理台                      //無效
+    {
+        // IteamPrefab.Remove(IteamGO);
+        //Destroy(IteamOpenPrefab);
+        //  GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        // foreach (GameObject obj in allObjects)
+        // {
+        //  if (obj.name.Contains("fixeditemOpenFinished"))             //要找到對應客人的物件編號
+        // {
+        // Destroy(obj);
+        // }
+        // }
+        // for (int i = IteamPrefab.Count - 1; i >= 0; i--)                     //還沒刪掉客人生成物
+        //  {
+        // if (IteamPrefab[i] != null && IteamPrefab[i].transform.parent)
+        //{
+        // IteamPrefab.RemoveAt(i);
+        // Destroy(IteamPrefab[i]);
+        // ClearIteamPrefab();
+        //}
+        //}
+        foreach (Transform child in transform)
+        {
+            // 檢查 Tag 或是檢查名字裡有沒有包含 "Iteam"
+            if (child.CompareTag("fixeditem") || child.name.Contains("Iteam"))
+            {
+                Destroy(child.gameObject);
+                Debug.Log($"{gameObject.name} 的計時結束，已刪除子物件：{child.name}");
+                break; // 找到就停止，避免誤刪
+            }
+        }
+    }
     public void OpenTeach10()
     {
         Time.timeScale = 0;
@@ -325,10 +407,54 @@ public class FirstGame : MonoBehaviour
         }
     }
 
-    private void GoLevel2()
+    // private void GoLevel2()
+    // {
+    //  ScoreGM scoreManager = FindObjectOfType<ScoreGM>();
+    //  if (scoreManager != null && scoreManager.TotalScore == 50)
+    // {
+    //   GoOtherScene();
+    //}
+    // }
+    private IEnumerator DOORClosed()  //關掉Teach9
     {
-        ScoreGM scoreManager = FindObjectOfType<ScoreGM>();
-        if (scoreManager != null && scoreManager.TotalScore == 50)
+        // yield return new WaitUntil(() => !Teach10.activeSelf);
+        Time.timeScale = 1;
+        yield return StartCoroutine(CloseDoor());
+    }
+
+    private IEnumerator CloseDoor()
+    {
+        Door.SetActive(true);
+        AudioManager.Instance.PlaySfx(4);                                              //音效
+        // 門從目前位置往中間
+        while (Vector3.Distance(Door.transform.position, MiddletargetPosition.position) > 0.01f)
+        {
+            Door.transform.position = Vector3.MoveTowards(Door.transform.position, MiddletargetPosition.position, MiddledoorSpeed * Time.deltaTime);
+            yield return null;
+        }
+        Door.transform.position = MiddletargetPosition.position;
+
+        yield return new WaitForSeconds(0.5f);  //停一下再移動
+
+        ScorePanel.SetActive(true);//開分數
+        while (Vector3.Distance(Door.transform.position, FinaltargetPosition.position) > 0.01f)
+        {
+            AudioManager.Instance.PlaySfx(3);                                              //音效
+            Door.transform.position = Vector3.MoveTowards(Door.transform.position, FinaltargetPosition.position, FinaldoorSpeed * Time.deltaTime
+        );
+            yield return null;
+        }
+
+        // 保證最後位置精準
+        Door.transform.position = FinaltargetPosition.position;
+
+        ClickClose.SetActive(true);   //點擊使用
+
+    }
+    public void ClickGoOtherScence()//點擊才到下個場地
+    {
+        AudioManager.Instance.PlaySfx(5);                                              //音效
+        if (Door.transform.position == FinaltargetPosition.position)
         {
             GoOtherScene();
         }
@@ -336,16 +462,13 @@ public class FirstGame : MonoBehaviour
 
     private void GoOtherScene()
     {
-        if (SceneManager.GetActiveScene().name == "FirstGame" && PlayerPrefs.GetInt("TutorialUnlocked", 1) == 1)
-        {
-            int currentUnlocked = PlayerPrefs.GetInt("UnLockLevelIndex", 1);
-            PlayerPrefs.SetInt("UnLockLevelIndex", currentUnlocked + 1); // 解鎖下一關
-            PlayerPrefs.SetInt("TutorialUnlocked", 2);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("lobby");
-        }
+        // if (SceneManager.GetActiveScene().name == "FirstGame" && PlayerPrefs.GetInt("TutorialUnlocked", 1) == 1)
+        //{
+        //  int currentUnlocked = PlayerPrefs.GetInt("UnLockLevelIndex", 1);
+        // PlayerPrefs.SetInt("UnLockLevelIndex", currentUnlocked + 1); // 解鎖下一關
+        // PlayerPrefs.SetInt("TutorialUnlocked", 2);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("lobby");
+        //}
     }
 }
-
-
-

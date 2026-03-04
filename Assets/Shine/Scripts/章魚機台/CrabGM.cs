@@ -45,7 +45,7 @@ public class CrabGM : MonoBehaviour
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     private bool touchingFixMachine; //耐久維修物是否碰撞中
-    private bool iswork = false;//一次只能使用一個
+    private bool iswork = false;//一次只能使用一個  工作不可修
     //電路板
     private bool touchingbrokePCB;
     private GameObject currentbrokePCB;
@@ -131,7 +131,7 @@ public class CrabGM : MonoBehaviour
         if (touchingFixMachine && !MachineDurabilityFix)
         {
             AudioManager.Instance.PlaySfx(2);             //音效
-            if (MachineDurability_Script < MachineDurability)
+            if (MachineDurability_Script < MachineDurability && iswork == false)
             {
                 MachineAni.speed = 0;                         //不動
                                                               //Destroy(item.gameObject); //這兩都ok

@@ -39,24 +39,28 @@ public class CountdownFill : MonoBehaviour
             if (fillImage.fillAmount <= 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
                 // AudioManager.Instance.PlaySfx(4);             //音效
-                NewCustomerAnime[] NewCustomerAnimeScript = FindObjectsOfType<NewCustomerAnime>();
-                foreach (NewCustomerAnime customer in NewCustomerAnimeScript)
+                //NewCustomerAnime[] NewCustomerAnimeScript = FindObjectsOfType<NewCustomerAnime>();
+                NewCustomerAnime NewCustomerAnimeScript = GetComponent<NewCustomerAnime>();
+                // foreach (NewCustomerAnime customer in NewCustomerAnimeScript)
+                // {
+                if (NewCustomerAnimeScript != null)
+                //if (NewCustomerAnimeScript != null)
                 {
-                    if (customer != null)
-                    //if (NewCustomerAnimeScript != null)
-                    {
-                        customer.CountdownFillEmpty();
-                        //NewCustomerAnimeScript.CountdownFillEmpty();
-                        fillImage.sprite = fillImageChange;
-                        fillImageOutside.sprite = fillImageChangeeOutside;
-                    }
+                    NewCustomerAnimeScript.CountdownFillEmpty();
+                    //NewCustomerAnimeScript.CountdownFillEmpty();
+                    fillImage.sprite = fillImageChange;
+                    fillImageOutside.sprite = fillImageChangeeOutside;
                 }
+                // }
             }
             if (fillImage.fillAmount <= 0f) //當耐心值歸零 摧毀耐心值物件
             {
 
                 Destroy(ShouldDestroy);
-
+                FindObjectOfType<FirstGame>().CountdownFillEmptyUse();
+                //有物件在桌上必須回到原設定
+                //FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發      必須先鎖定物件
+                //FindObjectOfType<IteamOpenOnTable>().hasitem = false;
             }
 
         }

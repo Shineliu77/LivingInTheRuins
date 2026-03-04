@@ -78,7 +78,7 @@ public class CustomerGM : MonoBehaviour
         {
             if (!isArrive)
             {
-                AudioManager.Instance.PlaySfx(2);             //音效          
+                //AudioManager.Instance.PlaySfx(2);             //音效          
                 isArrive = true;
             }
             float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
@@ -98,16 +98,20 @@ public class CustomerGM : MonoBehaviour
                     {
                         FindObjectOfType<TeachGM>().ProductCustomer();
                     }
+                    Destroy(gameObject);
                 }
-                Destroy(gameObject);
+                //Destroy(gameObject);
                 if (Application.loadedLevelName == "FirstGame")
                 {
-                    if (FindObjectOfType<FirstGame>().CustomerNumber < 4)
+                    //if (FindObjectOfType<FirstGame>().CustomerNumber < 4)
+                    if (FindObjectOfType<FirstGame>() != null)
                     {
                         FindObjectOfType<FirstGame>()?.NotifyCustomerFinished(gameObject);
+                        FindObjectOfType<FirstGame>().NotifyCustomerFinished(transform.root.gameObject);
+
                     }
                 }
-                Destroy(gameObject);
+                // Destroy(gameObject);
 
 
             }
@@ -117,7 +121,6 @@ public class CustomerGM : MonoBehaviour
 
             // 計算與目標的距離
             float distance = Vector2.Distance(transform.position, targetPoint.position);
-
             if (distance > stopDistance)
             {
                 // 向目標移動
@@ -126,11 +129,11 @@ public class CustomerGM : MonoBehaviour
             }
             else
             {
-
-                OnArrived();
-
-                hasArrived = true;
-
+                if (!hasArrived)
+                {
+                    hasArrived = true;
+                    OnArrived();
+                }
             }
 
         }
@@ -219,8 +222,8 @@ public class CustomerGM : MonoBehaviour
             }
 
 
-            //第一關使用  
-            if (Application.loadedLevelName != "TeachGame")  //只能刪掉耐心值 對話無
+            //其他關使用  
+            if (Application.loadedLevelName != "TeachGame")
             {
                 if (hit.name.Contains("fixeditemOpenFinished"))
                 {
@@ -228,6 +231,7 @@ public class CustomerGM : MonoBehaviour
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
                     FindObjectOfType<IteamOpenOnTable>().hasitem = false;
+
                     Destroy(hit.gameObject);
                     CountdownFill countdownScript = GetComponent<CountdownFill>();
                     if (countdownScript != null && countdownScript.ShouldDestroy != null)
