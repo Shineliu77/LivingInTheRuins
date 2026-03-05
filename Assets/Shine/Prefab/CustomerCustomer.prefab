@@ -1390,6 +1390,7 @@ MonoBehaviour:
   fillImageChangeeOutside: {fileID: -455060567, guid: d4d8854021bb40649b5a0e24f519d6a6, type: 3}
   ShouldDestroy: {fileID: 1074501118460819934}
   timer: 100
+  isAngry: 0
 --- !u!114 &7446929167149101437
 MonoBehaviour:
   m_ObjectHideFlags: 0
