@@ -187,7 +187,7 @@ public class CustomerGM : MonoBehaviour
             {
                 if (hit.gameObject.name == "fixeditemOpenFinished1")
                 {
-                    AudioManager.Instance.PlaySfx(5);             //音效
+                    AudioManager.Instance.PlaySfx(12);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<TeachGM>().OpenTeach5();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;   //重製外組件打開觸發
@@ -203,7 +203,7 @@ public class CustomerGM : MonoBehaviour
                 }
                 if (hit.gameObject.name == "fixeditemOpenFinished2")
                 {
-                    AudioManager.Instance.PlaySfx(5);             //音效
+                    AudioManager.Instance.PlaySfx(12);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<TeachGM>().OpenTeach10();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
@@ -227,7 +227,7 @@ public class CustomerGM : MonoBehaviour
             {
                 if (hit.name.Contains("fixeditemOpenFinished"))
                 {
-                    AudioManager.Instance.PlaySfx(5);             //音效
+                    AudioManager.Instance.PlaySfx(12);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
                     FindObjectOfType<IteamOpenOnTable>().hasitem = false;

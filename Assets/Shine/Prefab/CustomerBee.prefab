@@ -3369,7 +3369,7 @@ GameObject:
   - component: {fileID: 8370532543437835963}
   m_Layer: 0
   m_Name: CustomerBee
-  m_TagString: Untagged
+  m_TagString: CustomerBee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

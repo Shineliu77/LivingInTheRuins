@@ -68,6 +68,7 @@ public class MakeAPotion : MonoBehaviour
     private bool tisBlue;
     private bool tisGreen;
     private bool MachineDurabilityEmpty = false; //耐久歸零
+    private bool isWorkSfx = false;
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -116,7 +117,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 0;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveRR");
                     ProduceMonster();
@@ -126,7 +127,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 1;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                   // AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveYY");
                     ProduceMonster();
@@ -136,7 +137,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 2;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveBB");
                     ProduceMonster();
@@ -146,7 +147,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 3;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveGG");
                     ProduceMonster();
@@ -162,7 +163,7 @@ public class MakeAPotion : MonoBehaviour
                     Reset();
                     //SpawnObject(0);
                     canSpawnPotions = true;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                   // AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveRR");
                     ProduceMonster();
@@ -172,7 +173,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     canSpawnPotions = true;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveYY");
                     ProduceMonster();
@@ -183,7 +184,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     canSpawnPotions = true;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.SetTrigger("idelTOmoveBB");
                     ProduceMonster();
                     tisBlue = false;
@@ -192,7 +193,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     canSpawnPotions = true;
-                    AudioManager.Instance.PlaySfx(1);             //音效
+                    //AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveGG");
                     ProduceMonster();
@@ -202,7 +203,7 @@ public class MakeAPotion : MonoBehaviour
         }
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            AudioManager.Instance.PlaySfx(2);             //音效
+            AudioManager.Instance.PlaySfx(21);             //音效
             //if (isRun && MachineDurability_Script < MachineDurability&& (isRed == false || isYellow == false || tisBlue == false || tisGreen == false))
             if (isRun && MachineDurability_Script < MachineDurability)
             {
@@ -253,7 +254,7 @@ public class MakeAPotion : MonoBehaviour
         }
 
         if (isStopwatch && ScriptStopwatchTimer > 0)
-        {
+        {   
             MachineAni.speed = 1;                         //動
             Stopwatch.gameObject.SetActive(true);
             ScriptStopwatchTimer -= Time.deltaTime;
@@ -303,7 +304,11 @@ public class MakeAPotion : MonoBehaviour
             AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
             {
-
+                if (isWorkSfx == false)
+                {
+                    AudioManager.Instance.PlaySfx(3);             //音效
+                    isWorkSfx = true;
+                }
 
                 if (stateInfo.normalizedTime >= 0.85f)
                 {
@@ -334,6 +339,7 @@ public class MakeAPotion : MonoBehaviour
                 if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(0);
+                    isWorkSfx = false;
                     //canSpawnPotions = false;
                     // Stopwatch.gameObject.SetActive(false);
                     // MachineAni.SetBool("idelTOmoveR",true);
@@ -342,16 +348,19 @@ public class MakeAPotion : MonoBehaviour
                 if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(1);
+                    isWorkSfx =false;
                     //canSpawnPotions = false;
                 }
                 if (stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(2);
+                    isWorkSfx = false;
                     //canSpawnPotions = false;
                 }
                 if (stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.85f)
                 {
                     SpawnObject(3);
+                    isWorkSfx = false;
                     //canSpawnPotions = false;
                 }
                 if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.01f || stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.01f)
@@ -553,7 +562,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(2);             //音效
             canSpawnPotions = false;
         }
 
@@ -562,7 +571,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(2);             //音效
             canSpawnPotions = false;
         }
 
@@ -571,7 +580,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(2);             //音效
             canSpawnPotions = false;
         }
 
@@ -580,7 +589,7 @@ public class MakeAPotion : MonoBehaviour
             CurrentPotions = Instantiate(PotionsPrefabs[prefabIndex], PotionsPop.position, PotionsPop.rotation) as GameObject;
             allSpawnedPotions.Add(CurrentPotions); Debug.Log($" 生成物件：{PotionsPrefabs[prefabIndex].name} (目前總數：{allSpawnedPotions.Count})");
             DestroyPrefabButton.Add(CurrentPotions);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(2);             //音效
             canSpawnPotions = false;
         }
 

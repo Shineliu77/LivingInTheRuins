@@ -49,7 +49,7 @@ public class CrabGM : MonoBehaviour
     //電路板
     private bool touchingbrokePCB;
     private GameObject currentbrokePCB;
-
+    private bool isworkSfx=false;
     //動畫
     float getInLength;
     float workLength;
@@ -115,7 +115,7 @@ public class CrabGM : MonoBehaviour
         //放開時碰到電路板
         if (touchingbrokePCB && currentbrokePCB != null && iswork == false)
         {
-            AudioManager.Instance.PlaySfx(1);             //音效
+            //AudioManager.Instance.PlaySfx(1);             //音效
             MachineAni.speed = 1;                         //動
             //Destroy(item.gameObject); //這兩都ok
             canSpawnPCB = true;
@@ -130,7 +130,7 @@ public class CrabGM : MonoBehaviour
         // 放開時碰到修理元件
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            AudioManager.Instance.PlaySfx(2);             //音效
+            AudioManager.Instance.PlaySfx(21);             //音效
             if (MachineDurability_Script < MachineDurability && iswork == false)
             {
                 MachineAni.speed = 0;                         //不動
@@ -150,7 +150,7 @@ public class CrabGM : MonoBehaviour
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName("get in") || stateInfo.IsName("work"))
         {
-
+            
             if (stateInfo.normalizedTime >= 0.99f)
             {
                 // if (Application.loadedLevelName == "TeachGame")
@@ -166,6 +166,12 @@ public class CrabGM : MonoBehaviour
             {
                 if (stateInfo.normalizedTime < 0.99f)
                 {
+                    if(isworkSfx == false)
+                    {
+                        AudioManager.Instance.PlaySfx(5);
+                        isworkSfx = true;
+                    }
+                    
                     MachineAni.speed = 1;
                     //if(stateInfo.IsName("work")){ MachineUI.gameObject.SetActive(true); }
                     MachineUI.gameObject.SetActive(true);
@@ -231,7 +237,8 @@ public class CrabGM : MonoBehaviour
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("pull out") && stateInfo2.normalizedTime > 0.6f)
             {
-                AudioManager.Instance.PlaySfx(3);                                                        //音效
+                isworkSfx = false;
+                AudioManager.Instance.PlaySfx(4);                                                        //音效
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;
                 if (Application.loadedLevelName == "TeachGame")

@@ -115,7 +115,7 @@ public class SlotOnTable : MonoBehaviour
             // 重要的是：點擊取出的那一刻，物件應該立刻跟隨滑鼠，否則它會留在原位
             drag.OnMouseDown();
         }
-        AudioManager.Instance.PlaySfx(5);             //音效
+        AudioManager.Instance.PlaySfx(22);              //音效
         hasItem = false;
         hasItemRealPut = false;
         itemInContact = null;
@@ -135,7 +135,7 @@ public class SlotOnTable : MonoBehaviour
             {
                 PlaceItemInSlot(item.gameObject, LiquidslotPoint);
                 hasItem = true;
-                AudioManager.Instance.PlaySfx(5);             //音效
+                AudioManager.Instance.PlaySfx(22);              //音效
             }
 
             // 僅放入元件
@@ -143,7 +143,7 @@ public class SlotOnTable : MonoBehaviour
             {
                 PlaceItemInSlot(item.gameObject, SpriteslotPoint);
                 hasItem = true;
-                AudioManager.Instance.PlaySfx(5);             //音效
+                AudioManager.Instance.PlaySfx(22);              //音效
             }
         }
     }

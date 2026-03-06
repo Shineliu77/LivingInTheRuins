@@ -67,7 +67,7 @@ public class LobbySelectUse : MonoBehaviour
             }
             if (!isCLick)
             {
-                AudioManager.Instance.PlaySfx(5);
+                AudioManager.Instance.PlaySfx(26);
                 isCLick = true;
             }
         }

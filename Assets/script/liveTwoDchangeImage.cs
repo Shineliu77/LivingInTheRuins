@@ -47,7 +47,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
 
                 if (changeSprites.Length > 0)
                 {
-                    AudioManager.Instance.PlaySfx(5);                                                 //音效
+                    AudioManager.Instance.PlaySfx(22);                                                 //音效
                     spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[0]
                     Debug.Log("圖片已更換為 changeSprites[0]");
                     RabbitGM.RemoveSpawnedObject(item.gameObject);   //刪除物件與恢復場景數
@@ -94,7 +94,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         if (changeSprites.Length > 0)
                         {
-                            AudioManager.Instance.PlaySfx(5);                                                //音效
+                            AudioManager.Instance.PlaySfx(22);                                                 //音效
                             spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[1]
                             transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                             if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -128,7 +128,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         if (changeSprites.Length > 1)
                         {
-                            AudioManager.Instance.PlaySfx(5);                                              //音效
+                            AudioManager.Instance.PlaySfx(22);                                                //音效
                             spriteRenderer.sprite = changeSprites[1]; // 變更為 changeSprites[1]
                             transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                             if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -161,7 +161,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                     {
                         if (changeSprites.Length > 2)
                         {
-                            AudioManager.Instance.PlaySfx(5);                                              //音效
+                            AudioManager.Instance.PlaySfx(22);                                             //音效
                             spriteRenderer.sprite = changeSprites[2]; // 變更為 changeSprites[2]
                             transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();
                             if (transform.parent.GetComponent<DraggableReturn2D>())
@@ -193,7 +193,7 @@ public class LiveTwoDChangeImage : MonoBehaviour
                         {
                             if (changeSprites.Length > 1)
                             {
-                                AudioManager.Instance.PlaySfx(5);                                              //音效
+                                AudioManager.Instance.PlaySfx(22);                                             //音效
                                 spriteRenderer.sprite = changeSprites[0]; // 變更為 changeSprites[1]
                                                                           //transform.parent.GetComponent<SetIteamOpenObj>().ResetSize();    但應該不是你讓東西變-1 但應該不是
                                 if (transform.parent.GetComponent<DraggableReturn2D>())

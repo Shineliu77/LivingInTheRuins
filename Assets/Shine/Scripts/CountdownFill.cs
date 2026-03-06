@@ -15,7 +15,7 @@ public class CountdownFill : MonoBehaviour
     public GameObject ShouldDestroy; //當耐心值歸零 刪掉整個耐心值物
     public float timer;
     private Collider2D isShouldDestroycollCoustomer; //是否碰到客人
-    public bool isAngry;
+    public bool isAngry=false;
     void Start()
     {
         timer = countdownTime;
@@ -43,10 +43,23 @@ public class CountdownFill : MonoBehaviour
             }
             if (fillImage.fillAmount <= 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
-                if (isAngry == false)
+                if (isAngry == false&& GameObject.FindWithTag("Customer"))
                 {
+                    
                     isAngry = true;
-                    AudioManager.Instance.PlaySfx(7);
+                    AudioManager.Instance.PlaySfx(13);
+                }
+                if (isAngry == false && GameObject.FindWithTag("CustomerJe"))
+                {
+                    
+                    isAngry = true;
+                    AudioManager.Instance.PlaySfx(14);
+                }
+                if (isAngry == false && GameObject.FindWithTag("CustomerBee"))
+                {
+                    
+                    isAngry = true;
+                    AudioManager.Instance.PlaySfx(15);
                 }
                 // AudioManager.Instance.PlaySfx(4);             //音效
                 //NewCustomerAnime[] NewCustomerAnimeScript = FindObjectsOfType<NewCustomerAnime>();
@@ -65,7 +78,6 @@ public class CountdownFill : MonoBehaviour
             }
             if (fillImage.fillAmount <= 0f) //當耐心值歸零 摧毀耐心值物件
             {
-
                 Destroy(ShouldDestroy);
                 FindObjectOfType<FirstGame>().CountdownFillEmptyUse();
                 //有物件在桌上必須回到原設定

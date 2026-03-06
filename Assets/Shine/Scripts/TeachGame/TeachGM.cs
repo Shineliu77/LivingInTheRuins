@@ -123,7 +123,7 @@ public class TeachGM : MonoBehaviour
         // teachThree4 = false;
         TeachThree4.SetActive(false);
         FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
-        AudioManager.Instance.PlaySfx(4);             //音效 
+        AudioManager.Instance.PlaySfx(9);             //音效 
     }
 
     void Update()
@@ -551,7 +551,7 @@ public class TeachGM : MonoBehaviour
     private IEnumerator CloseDoor()
     {
         Door.SetActive(true);
-        AudioManager.Instance.PlaySfx(4);                                              //音效
+        AudioManager.Instance.PlaySfx(11);                                              //音效
         // 門從目前位置往中間
         while (Vector3.Distance(Door.transform.position, MiddletargetPosition.position) > 0.01f)
         {
@@ -565,7 +565,7 @@ public class TeachGM : MonoBehaviour
         ScorePanel.SetActive(true);//開分數
         while (Vector3.Distance(Door.transform.position, FinaltargetPosition.position) > 0.01f)
         {
-            AudioManager.Instance.PlaySfx(3);                                              //音效
+            AudioManager.Instance.PlaySfx(10);                                              //音效
             Door.transform.position = Vector3.MoveTowards(Door.transform.position, FinaltargetPosition.position, FinaldoorSpeed * Time.deltaTime
         );
             yield return null;
@@ -579,7 +579,7 @@ public class TeachGM : MonoBehaviour
     }
     public void ClickGoOtherScence()//點擊才到下個場地
     {
-        AudioManager.Instance.PlaySfx(5);                                              //音效
+        AudioManager.Instance.PlaySfx(25);                                              //音效
         if (Door.transform.position == FinaltargetPosition.position)
         {
             GoOtherScene();

@@ -2440,7 +2440,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1533104679
 Canvas:
   m_ObjectHideFlags: 0
@@ -2450,8 +2450,8 @@ Canvas:
   m_GameObject: {fileID: 1533104676}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 2
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2473,7 +2473,7 @@ RectTransform:
   m_GameObject: {fileID: 1533104676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1265257338}
@@ -2485,9 +2485,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.93}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1533104681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3714,17 +3714,57 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5ae83e186e749ec4a930b57a96adeee3, type: 3}
   sfxSounds:
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: 0ca22746c29915e4f8c9ee87190d71fd, type: 3}
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: c8bba340d4eb6bf4595839efb86b881d, type: 3}
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: 83443474ce10cf74a96c356ce9ad8105, type: 3}
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: 55f6ff17c5f15fb40a3e0d5a1601289b, type: 3}
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: f98c4bf90f91c124f8e0e22c28cf0cfc, type: 3}
   - name: 
-    clip: {fileID: 8300000, guid: 237680a92caf85646ab8e90a0b05fbbc, type: 3}
+    clip: {fileID: 8300000, guid: 57183d17d43a5534e844a8ddcaa2d514, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: b74db71d565d68b408f80e4e482351be, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: dd51f85bb0d04df48b5f2c0694828938, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 9027d5da672b67b4aa540169b61f4c3e, type: 3}
+  - name: 
+    clip: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 614243c5994fec240a5cf980954370b3, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: bdaac14c62a066f40991f8e4205b21ef, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: af95230a97dda8a45afb1a43b7a8b31e, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 514f35645df1b1b46a9e33b0ad517400, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: bd41ea910566afe4f91904940dafb80f, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 794a0ca1ccb41ef479e7434f0c0ede2f, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: af73dfd1110739a499d4b5e4cf080bda, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 0ed9062295c72954f810dfcbe63e185c, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 4f30d289e65bc5042a9764461170e913, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 4f30d289e65bc5042a9764461170e913, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 1880bf8e812baf54a8fffbdbe9ebe354, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 5874d3eb60884484b94a96d2c6d72877, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: e9b521240dea96e468d32bc9cfdb630a, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 34cafe37637d2c94b814883db4aaa436, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 5c52e309f25291c4981c5aaab33bc36f, type: 3}
+  - name: 
+    clip: {fileID: 8300000, guid: 5019335fcb82557448e30e6378cddec2, type: 3}
   musicSource: {fileID: 678134095966896739}
   sfxSource: {fileID: 1196096908139470393}
   ClickedSound: {fileID: 8300000, guid: accd548d6ad62b646b1d429701821556, type: 3}

@@ -52,7 +52,7 @@ public class IteamOpenOnTable : MonoBehaviour
         {
             if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
             {
-                AudioManager.Instance.PlaySfx(5);                                              //音效
+                AudioManager.Instance.PlaySfx(22);                                             //音效
                 hasitem = true;
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
@@ -80,7 +80,7 @@ public class IteamOpenOnTable : MonoBehaviour
             if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
             {
                 hasitem = true;
-                AudioManager.Instance.PlaySfx(5);                                              //音效
+                AudioManager.Instance.PlaySfx(22);                                                         //音效
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
                 item.transform.parent = this.transform;

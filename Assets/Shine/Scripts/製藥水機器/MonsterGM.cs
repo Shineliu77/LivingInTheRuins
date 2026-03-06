@@ -23,7 +23,9 @@ public class MonsterGM : MonoBehaviour
     public float interval;    // 每次扣血間隔（秒）
     Coroutine loop;
     AnimatorStateInfo stateInfo;
-    public bool stopFailsfx = false;
+    //public bool stopFailsfx = false;
+    private bool hitFail = false;//失敗攻擊
+    private bool hitSuccess = false;//攻擊
     #endregion
     void OnEnable()
     {
@@ -80,25 +82,25 @@ public class MonsterGM : MonoBehaviour
         currentMachineName = machineName;
         if (machineName == "blender")
         {
-            AudioManager.Instance.PlaySfx(4);             //音效
+            AudioManager.Instance.PlaySfx(16);             //音效
             targetPoint = GameObject.Find("怪物定位點").transform;
             ExitTargetPoint = GameObject.Find("怪物離開定位點").transform;
         }
         else if (machineName == "rabbit")
         {
-            AudioManager.Instance.PlaySfx(4);             //音效
+            AudioManager.Instance.PlaySfx(16);             //音效
             targetPoint = GameObject.Find("怪物定位點R").transform;
             ExitTargetPoint = GameObject.Find("怪物離開定位點R").transform;
         }
         else if (machineName == "opener0320")
         {
-            AudioManager.Instance.PlaySfx(4);             //音效
+            AudioManager.Instance.PlaySfx(16);             //音效
             targetPoint = GameObject.Find("怪物定位點O").transform;
             ExitTargetPoint = GameObject.Find("怪物離開定位點O").transform;
         }
         else if (machineName == "crab")
         {
-            AudioManager.Instance.PlaySfx(4);             //音效
+            AudioManager.Instance.PlaySfx(16);             //音效
             targetPoint = GameObject.Find("怪物定位點C").transform;
             ExitTargetPoint = GameObject.Find("怪物離開定位點C").transform;
         }
@@ -123,7 +125,6 @@ public class MonsterGM : MonoBehaviour
             else
             {
                 hasArrived = true;
-
                 OnArrived();
             }
         }
@@ -138,7 +139,7 @@ public class MonsterGM : MonoBehaviour
                 // 向目標移動
                 Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
                 transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
-                stopFailsfx = false;
+                //stopFailsfx = false;
             }
             else
             {
@@ -151,13 +152,19 @@ public class MonsterGM : MonoBehaviour
         else
         {
             MonsterAni.SetTrigger("Fail");
+            if (hitFail == false)
+            {
+                AudioManager.Instance.PlaySfx(18);
+                hitFail = true;
+            }
             if (stateInfo.normalizedTime >= 0.01f && stateInfo.IsName("leave"))
             {
-                if (!stopFailsfx)
-                {
+               
+                //if (!stopFailsfx)
+                //{
                     //AudioManager.Instance.PlaySfx(7);
-                    stopFailsfx = true;
-                }
+                    //stopFailsfx = true;
+               // }
                 float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
                 if (distance > stopDistance)
@@ -165,17 +172,24 @@ public class MonsterGM : MonoBehaviour
 
                     Vector2 newPosition = Vector2.MoveTowards(transform.position, ExitTargetPoint.position, moveSpeed * Time.deltaTime);
                     transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
-                    stopFailsfx = false;
+                    //stopFailsfx = false;
                 }
                 else
                 {
+                    hitFail = false;
                     Destroy(gameObject);
-                    stopFailsfx = false;
+                    //stopFailsfx = false;
                 }
             }
 
             else
             {
+                MonsterAni.SetTrigger("success");
+                if (hitSuccess == false)
+                {
+                    AudioManager.Instance.PlaySfx(19);
+                    hitSuccess = true;
+                }
                 if (stateInfo.normalizedTime >= 0.01f && stateInfo.IsName("success"))
                 {
                     //AudioManager.Instance.PlaySfx(8);             //音效
@@ -190,6 +204,7 @@ public class MonsterGM : MonoBehaviour
                     }
                     else
                     {
+                        hitSuccess = false;
                         Destroy(gameObject);
                         // stopFailsfx = false;
                     }
@@ -202,11 +217,11 @@ public class MonsterGM : MonoBehaviour
 
     public void FailHitSfx()
     {
-        AudioManager.Instance.PlaySfx(6);             //音效
+        AudioManager.Instance.PlaySfx(19);             //音效
     }
     public void SuccessHitSfx()
     {
-        AudioManager.Instance.PlaySfx(6);             //音效
+        AudioManager.Instance.PlaySfx(18);             //音效
     }
     public void LeaveSfx()
     {
@@ -237,7 +252,7 @@ public class MonsterGM : MonoBehaviour
     {
         if (!stateInfo.IsName("leave") && !stateInfo.IsName("success"))
         {
-            AudioManager.Instance.PlaySfx(5);             //音效
+            //AudioManager.Instance.PlaySfx(5);             //音效
             ScriptBlood -= DeductBlood;
         }
     }

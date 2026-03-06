@@ -27,18 +27,22 @@ public class Mainmenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        AudioManager.Instance.PlaySfx(5);                                              //音效
+        AudioManager.Instance.PlaySfx(25);                                              //音效
     }
 
 
     public void LoadSceneByName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        AudioManager.Instance.PlaySfx(5);
+        AudioManager.Instance.PlaySfx(25);
     }
 
     public void ClickButtonSfx()
     {
-        AudioManager.Instance.PlaySfx(5);
+        AudioManager.Instance.PlaySfx(24);
+    }
+    public void EscClickButtonSfx()
+    {
+        AudioManager.Instance.PlaySfx(25);
     }
 }

@@ -51,7 +51,7 @@ public class ItemSlot : MonoBehaviour
                 var rb = pcbInContact.GetComponent<Rigidbody2D>();
                 if (rb != null) rb.velocity = Vector2.zero;
                 hasPCB = true; // PCB 放入
-                AudioManager.Instance.PlaySfx(5);                                              //音效
+                AudioManager.Instance.PlaySfx(22);                                              //音效
                 drag.enabled = false;
                 // if (SetIteamOpenObj != null)
                 //   {

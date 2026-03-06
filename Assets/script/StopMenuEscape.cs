@@ -15,7 +15,7 @@ public class StopMenuEscape : MonoBehaviour
             isMenuOpen = !isMenuOpen;  // 每次按下ESC就開關選單
             stopMenuObject.SetActive(isMenuOpen);
             stopAdjust.SetActive(isAdjustOpen);
-            AudioManager.Instance.PlaySfx(5);
+            AudioManager.Instance.PlaySfx(24);
             if (isMenuOpen == false && isAdjustOpen == false)  //關起時間繼續
             {
                 Time.timeScale = 1;
@@ -38,7 +38,7 @@ public class StopMenuEscape : MonoBehaviour
 
             if (isAdjustOpen == false && Input.GetKeyDown(KeyCode.Escape))
             {
-                AudioManager.Instance.PlaySfx(5);                                              //音效
+                AudioManager.Instance.PlaySfx(24);                                              //音效
                 isMenuOpen = !isMenuOpen;
             }
         }

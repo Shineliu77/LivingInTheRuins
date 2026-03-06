@@ -81,7 +81,7 @@ public class FirstGame : MonoBehaviour
 
         // 開場先把可用位置補滿到上限
         TryFillCustomerSlots();
-        AudioManager.Instance.PlaySfx(4);             //音效
+        AudioManager.Instance.PlaySfx(9);             //音效
     }
     private void LevelTimesUP() //關卡時間到
     {

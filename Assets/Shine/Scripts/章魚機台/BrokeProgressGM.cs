@@ -47,6 +47,7 @@ public class BrokeProgressGM : MonoBehaviour
     bool isRun;
     private bool iswork = false;//一次只能使用一個  工作不可修
     private bool inTimeOnlyOne = false;//一次只能生成一個
+    private bool isworkSfx=false;
     void Start()
     {
         MachineDurability_Script = MachineDurability;
@@ -101,7 +102,7 @@ public class BrokeProgressGM : MonoBehaviour
         {
             MachineAni.speed = 1;                         //動
             Debug.Log("放開滑鼠：fixeditem");
-            AudioManager.Instance.PlaySfx(1);             //音效
+           // AudioManager.Instance.PlaySfx(1);             //音效
             currentFixedItem.SetActive(false);
             MachineAni.SetTrigger("IdleToWalk");
             ProduceMonster();
@@ -114,7 +115,7 @@ public class BrokeProgressGM : MonoBehaviour
         // 放開時碰到修理元件
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            AudioManager.Instance.PlaySfx(2);             //音效
+            AudioManager.Instance.PlaySfx(21);             //音效
             if (MachineDurability_Script < MachineDurability && iswork == false)
             {
                 Debug.Log("放開滑鼠：FixMachine");
@@ -147,14 +148,14 @@ public class BrokeProgressGM : MonoBehaviour
                 if (Application.loadedLevelName == "TeachGame")
                 {
                     FindObjectOfType<TeachGM>().ProduceIteamOpen();
-                    AudioManager.Instance.PlaySfx(3);             //音效
+                    AudioManager.Instance.PlaySfx(0);             //音效
                 }
 
                 //第一關使用
                 else if (Application.loadedLevelName == "FirstGame")
                 {
                     FindObjectOfType<FirstGame>().ProduceIteamOpen();
-                    AudioManager.Instance.PlaySfx(3);             //音效
+                    AudioManager.Instance.PlaySfx(0);             //音效
                 }
                 inTimeOnlyOne = true;
                 Placement.enabled = true;
@@ -163,6 +164,12 @@ public class BrokeProgressGM : MonoBehaviour
             }
             if (stateInfo.normalizedTime < 0.99f)
             {
+                if(isworkSfx == false)
+                {
+                    AudioManager.Instance.PlaySfx(1);
+                    isworkSfx = true;
+                }
+                
                 inTimeOnlyOne = false;
                 MachineUI.gameObject.SetActive(true);
                 MachineDurabilityFix = false;    //不可維修
@@ -213,7 +220,7 @@ public class BrokeProgressGM : MonoBehaviour
             }
             if (stateInfo.normalizedTime > 0.99f)
             {
-
+                isworkSfx = false;
                 iswork = false;
 
             }

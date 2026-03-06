@@ -63,7 +63,7 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void DestroyPrev()
     {
-        AudioManager.Instance.PlaySfx(5);             //音效
+        AudioManager.Instance.PlaySfx(23);               //音效
         if (ClickTime <= 0)
         {
             Debug.Log("按鈕次數已經用完");

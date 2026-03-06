@@ -23,7 +23,7 @@ public class DraggableReturn2D : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = transform.position - new Vector3(mouseWorldPos.x, mouseWorldPos.y, transform.position.z);
             isDragging = true;
-            AudioManager.Instance.PlaySfx(0);
+            //AudioManager.Instance.PlaySfx(0);
             // if (Application.loadedLevelName == "FirstGame")
             {
                 Debug.Log("PCB ¶}©l©ì¦²1");

@@ -72,6 +72,7 @@ public class RabbitGM : MonoBehaviour
     private bool takeSquare;
     private bool takeTriangle;
     private bool MachineDurabilityEmpty = false; //耐久歸零
+    private bool isworkSfx = false;
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
@@ -189,7 +190,12 @@ public class RabbitGM : MonoBehaviour
                 {  //倒數計時
                     float normalizedTime = Mathf.Min(stateInfo.normalizedTime, 1f);
                     Stopwatch.gameObject.SetActive(true);
-
+                    if(isworkSfx == false)
+                    {
+                        AudioManager.Instance.PlaySfx(7);             //音效
+                        isworkSfx = true;
+                    }
+                    
 
                     if (Application.loadedLevelName == "TeachGame") //如果再新手交關
                     {
@@ -217,6 +223,7 @@ public class RabbitGM : MonoBehaviour
                     }
                     if (normalizedTime >= 0.98f)
                     {
+                        isworkSfx = false;
                         Stopwatch.gameObject.SetActive(false);
                         isRun = false;
                         MachineDurabilityFix = true; // 動畫結束後允許修復
@@ -367,7 +374,7 @@ public class RabbitGM : MonoBehaviour
     {
         isIdel = false;
         takeCircle = false;
-        AudioManager.Instance.PlaySfx(1);             //音效
+        AudioManager.Instance.PlaySfx(8);             //音效
         MachineAni.speed = 1;                         //動
         Reset();
         //如果觸發按鈕的話
@@ -380,7 +387,7 @@ public class RabbitGM : MonoBehaviour
     {
         isIdel = false;
         takeSquare = false;
-        AudioManager.Instance.PlaySfx(1);             //音效
+        AudioManager.Instance.PlaySfx(8);             //音效
         MachineAni.speed = 1;                         //動
         Reset();
         currentWork = WorkType.Square;
@@ -392,7 +399,7 @@ public class RabbitGM : MonoBehaviour
     {
         isIdel = false;
         takeTriangle = false;
-        AudioManager.Instance.PlaySfx(1);             //音效
+        AudioManager.Instance.PlaySfx(8);             //音效
         MachineAni.speed = 1;                         //動
         Reset();
         currentWork = WorkType.Triangle;
@@ -434,7 +441,7 @@ public class RabbitGM : MonoBehaviour
         // if (hit.gameObject == FixMachineDurability)
         if (touchingFixMachine && !MachineDurabilityFix)
         {
-            AudioManager.Instance.PlaySfx(2);             //音效
+            AudioManager.Instance.PlaySfx(21);             //音效
             if (isRun && !isIdel && (takeCircle == false || takeSquare == false || takeTriangle == false))
             {
                 MachineAni.speed = 1;                         //動
@@ -521,7 +528,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(6);             //音效
             canSpawn = false;
 
             if (Application.loadedLevelName == "TeachGame")   //f確保不提前跑出
@@ -554,7 +561,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(6);             //音效
             canSpawn = false;
         }
 
@@ -563,7 +570,7 @@ public class RabbitGM : MonoBehaviour
             CurrentObject = Instantiate(ObjectPrefabs[prefabIndex], ObjectPop.position, ObjectPop.rotation) as GameObject;
             allSpawnedObjects.Add(CurrentObject); Debug.Log($" 生成物件：{ObjectPrefabs[prefabIndex].name} (目前總數：{allSpawnedObjects.Count})");
             DestroyPrefabButton.Add(CurrentObject);
-            AudioManager.Instance.PlaySfx(3);             //音效
+            AudioManager.Instance.PlaySfx(6);             //音效
             canSpawn = false;
         }
 
