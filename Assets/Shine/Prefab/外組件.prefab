@@ -210,12 +210,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: -214834616, guid: 155f7e55b30579b4387ecd51fe3d458d, type: 3}
+  m_Sprite: {fileID: 530541407, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.15, y: 1.6}
+  m_Size: {x: 12.679999, y: 17.644123}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -257,8 +257,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 12.603102, y: 16.670002}
-    newSize: {x: 1.15, y: 1.6}
+    oldSize: {x: 12.679999, y: 17.644123}
+    newSize: {x: 12.679999, y: 17.644123}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
   isDragging: 0
 --- !u!114 &-2108966093913342150
 MonoBehaviour:
@@ -319,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetChange: {fileID: 5252771801232554846}
-  OtiangePic: {fileID: -1838373640, guid: 116a2a72a6559534a8af735c05d55277, type: 3}
+  OtiangePic: {fileID: 530541407, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
   ChangePic: {fileID: -1272158454, guid: 68c4a819fde5af3488931079c1f881d0, type: 3}
 --- !u!1 &5230932487871801806
 GameObject:

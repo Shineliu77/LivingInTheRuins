@@ -15,7 +15,7 @@ public class CountdownFill : MonoBehaviour
     public GameObject ShouldDestroy; //當耐心值歸零 刪掉整個耐心值物
     public float timer;
     private Collider2D isShouldDestroycollCoustomer; //是否碰到客人
-    public bool isAngry=false;
+    public bool isAngry = false;
     void Start()
     {
         timer = countdownTime;
@@ -43,21 +43,21 @@ public class CountdownFill : MonoBehaviour
             }
             if (fillImage.fillAmount <= 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
-                if (isAngry == false&& GameObject.FindWithTag("Customer"))
+                if (isAngry == false && GameObject.FindWithTag("Customer"))
                 {
-                    
+
                     isAngry = true;
                     AudioManager.Instance.PlaySfx(13);
                 }
                 if (isAngry == false && GameObject.FindWithTag("CustomerJe"))
                 {
-                    
+
                     isAngry = true;
                     AudioManager.Instance.PlaySfx(14);
                 }
                 if (isAngry == false && GameObject.FindWithTag("CustomerBee"))
                 {
-                    
+
                     isAngry = true;
                     AudioManager.Instance.PlaySfx(15);
                 }
@@ -79,7 +79,14 @@ public class CountdownFill : MonoBehaviour
             if (fillImage.fillAmount <= 0f) //當耐心值歸零 摧毀耐心值物件
             {
                 Destroy(ShouldDestroy);
-                FindObjectOfType<FirstGame>().CountdownFillEmptyUse();
+                FirstGameCustomerMarker myMarker = GetComponentInParent<FirstGameCustomerMarker>();
+                int mySeatID = (myMarker != null) ? myMarker.SeatIndex : -1;
+
+                // 2. 調用 FirstGame 的強制清理
+                if (mySeatID != -1)
+                {
+                    FindObjectOfType<FirstGame>().CountdownFillEmptyUse(mySeatID);
+                }
                 //有物件在桌上必須回到原設定
                 //FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發      必須先鎖定物件
                 //FindObjectOfType<IteamOpenOnTable>().hasitem = false;

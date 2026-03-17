@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 200
-  m_Sprite: {fileID: -1401247159, guid: 116a2a72a6559534a8af735c05d55277, type: 3}
+  m_Sprite: {fileID: 1771591423, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 23.61, y: 16.60388}
+    oldSize: {x: 23.06, y: 15.693666}
     newSize: {x: 23.61, y: 16.60388}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
   isDragging: 0
 --- !u!114 &-4794119307231285332
 MonoBehaviour:
@@ -212,6 +213,7 @@ MonoBehaviour:
   currentProcessorIndex: -1
   currentReagentsIndex: -1
   OpenCount: 0
+  Rename: 0
   IDs: 
 --- !u!114 &-2638602415890854520
 MonoBehaviour:
@@ -239,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetChange: {fileID: 4673435071298451836}
-  OtiangePic: {fileID: -1401247159, guid: 116a2a72a6559534a8af735c05d55277, type: 3}
+  OtiangePic: {fileID: 1771591423, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
   ChangePic: {fileID: -1418784697, guid: 68c4a819fde5af3488931079c1f881d0, type: 3}
 --- !u!1001 &4835168987850365857
 PrefabInstance:
@@ -279,11 +281,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.44
+      value: 3.01
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.148
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.z
@@ -420,11 +422,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3393947223932842207, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.7101
+      value: -6.1
       objectReference: {fileID: 0}
     - target: {fileID: 3393947223932842207, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3002
+      value: -0.26
       objectReference: {fileID: 0}
     - target: {fileID: 3393947223932842207, guid: 0749c9260df20fe4cb0e4ed9171638b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -556,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4ec0ab05a05bc45b70a80bb514de45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
   isDragging: 0
 --- !u!114 &834783908409855928
 MonoBehaviour:
@@ -602,11 +605,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.01
+      value: 6.61
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.28
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.z

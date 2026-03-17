@@ -46,7 +46,6 @@ public class FirstGame : MonoBehaviour
     // 製藥元件(試管)
     public Collider2D[] MakeAPotionIteams;
     #endregion
-
     private GameObject IteamGO;
     private GameObject customerGO;
     public Vector3[] originalPosition;
@@ -81,7 +80,7 @@ public class FirstGame : MonoBehaviour
 
         // 開場先把可用位置補滿到上限
         TryFillCustomerSlots();
-        AudioManager.Instance.PlaySfx(9);             //音效
+        // AudioManager.Instance.PlaySfx(9);             //音效
     }
     private void LevelTimesUP() //關卡時間到
     {
@@ -169,44 +168,85 @@ public class FirstGame : MonoBehaviour
 
         }
 
-        if (CustomerNumber == 1)
+        //if (CustomerNumber == 1)
+        //  {
+        //  if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)              //IteamOpenOnTable也有debug
+        //  {
+        //    GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
+        //   if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished1";
+        //  Debug.Log($"{IteamOpenPrefab.name} ");
+        //  }
+        //}
+        // if (CustomerNumber == 2)
+        //  {
+        //   if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
+        //   {
+        //  GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
+        //  if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished2";
+        //  Debug.Log($"{IteamOpenPrefab.name} ");
+        //  }
+        // }
+        // if (CustomerNumber == 3)
+        // {
+        //  if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
+        //  {
+        //  GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
+        //  if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished3";
+        //   Debug.Log($"{IteamOpenPrefab.name} ");
+        //  }
+        // }
+        // if (CustomerNumber == 4)
+        // {
+        // if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
+        //  {
+        //   GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
+        //   if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished4";
+        //   Debug.Log($"{IteamOpenPrefab.name} ");
+        // }
+        //}
+
+        //GameObject[] openItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+
+        //  foreach (GameObject item in openItems)
+        //  {
+        //  var drag = item.GetComponent<DraggableReturn2D>();
+        //物件是否被玩家放下
+        //  if (drag != null && !drag.enabled)
+        //  {
+        //      // 抓取 ID
+        //  var setScript = item.GetComponent<SetIteamOpenObj>();
+        //  if (setScript != null)
+        // {
+        //根據座位 ID 改名 (ID 是 0,1,2，所以名稱會是 Finished1, 2, 3)
+        //    item.name = "fixeditemOpenFinished" + (setScript.ID + 1);
+
+        // 重要：改完名後把 Tag 換掉，防止這一幀重複跑進來處理同一個物件
+        //  item.tag = "Untagged";
+
+        //  Debug.Log($"物件已就位，根據座位 ID {setScript.ID} 改名為: {item.name}");
+        // }
+        // item.transform.parent = null;
+        // }
+        // }
+    }
+    public void ConfirmItemForCustomer(GameObject item)
+    {
+        var setScript = item.GetComponent<SetIteamOpenObj>();
+
+        // 【關鍵】檢查是否已經修好
+        if (setScript != null && setScript.Rename == true)
         {
-            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)              //IteamOpenOnTable也有debug
-            {
-                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
-                if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished1";
-                Debug.Log($"{IteamOpenPrefab.name} ");
-            }
+            item.transform.SetParent(null);
+            item.name = "fixeditemOpenFinished" + (setScript.ID + 1);
+            item.tag = "Untagged";
+            Debug.Log("零件已修好，准許交件。");
         }
-        if (CustomerNumber == 2)
+        else
         {
-            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
-            {
-                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
-                if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished2";
-                Debug.Log($"{IteamOpenPrefab.name} ");
-            }
-        }
-        if (CustomerNumber == 3)
-        {
-            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
-            {
-                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
-                if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished3";
-                Debug.Log($"{IteamOpenPrefab.name} ");
-            }
-        }
-        if (CustomerNumber == 4)
-        {
-            if (GameObject.FindWithTag("fixeditemOpen") && !GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled)
-            {
-                GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = false;
-                if (IteamOpenPrefab) IteamOpenPrefab.name = "fixeditemOpenFinished4";
-                Debug.Log($"{IteamOpenPrefab.name} ");
-            }
+            Debug.Log("零件還是壞的，客人拒絕收件！");
+            // 不做改名動作，這樣 CustomerGM 的名字比對就會失敗
         }
     }
-
     /// <summary>
     /// 依序把空位補到 maxConcurrentCustomers（僅在時間內）
     /// </summary>
@@ -249,15 +289,15 @@ public class FirstGame : MonoBehaviour
         Transform spawn = customerSpawnPoints[seatIndex];
         GameObject customerGO = Instantiate(selectedCustomerPrefab, StartPos.position, StartPos.rotation);
         customerGO.transform.localPosition = StartPos.position;
-        customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
-        //customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (seatIndex + 1);                //因為有客人需要校正座標變子物件   //改用座位遞補離開的座位
+        // customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (CustomerNumber + 1);
+        customerGO.GetComponentInChildren<CustomerGM>().PosName = "顧客定位點" + (seatIndex + 1);                //因為有客人需要校正座標變子物件   //改用座位遞補離開的座位
         customerGO.GetComponentInChildren<CustomerGM>().ID = CustomerNumber;
         //GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[CustomerNumber].position, Iteam.transform.rotation) as GameObject;
         //IteamGO.transform.parent = customerGO.transform;
         //IteamGO.transform.localPosition = Vector3.zero;
 
 
-
+        AudioManager.Instance.PlaySfx(9);             //音效
         //IteamPrefab.Add(IteamGO);
         seatOccupied[seatIndex] = true;
         activeCustomers.Add(customerGO);
@@ -280,6 +320,10 @@ public class FirstGame : MonoBehaviour
 
         // 使用傳進來的 seatIndex 確保位置正確
         GameObject IteamGO = Instantiate(Iteam, customerSpawnPoints[seatIndex].position, Iteam.transform.rotation);
+
+        var set = IteamGO.GetComponent<SetIteamOpenObj>();
+        if (set == null) set = IteamGO.AddComponent<SetIteamOpenObj>();
+        set.ID = seatIndex; // 綁定座位
 
         // 將父物件設為傳進來的那個顧客
         IteamGO.transform.SetParent(parentCustomer);
@@ -305,20 +349,23 @@ public class FirstGame : MonoBehaviour
     public void NotifyCustomerFinished(GameObject customerGO)
     {
         if (customerGO == null) return;
-        //AudioManager.Instance.PlaySfx(4);             //音效
-
+        //AudioManager.Instance.PlaySfx(9);             //音效
+        GameObject rootCustomer = customerGO.transform.root.gameObject;
         // 釋放座位
         var marker = customerGO.GetComponentInChildren<FirstGameCustomerMarker>();
         // if (marker != null && marker.SeatIndex >= 0 && marker.SeatIndex < seatOccupied.Length)
         if (marker != null && marker.SeatIndex >= 0)
         {
-            activeCustomers.Remove(customerGO);
+            if (activeCustomers.Contains(customerGO))
+            {
+                activeCustomers.Remove(customerGO);
 
-            seatOccupied[marker.SeatIndex] = false;
-            CustomerNumber = marker.SeatIndex;  //填補移除的客人編號
+                seatOccupied[marker.SeatIndex] = false;
+                // CustomerNumber = marker.SeatIndex;  //填補移除的客人編號
+            }
         }
         //    activeCustomers.Remove(customerGO);
-        Destroy(customerGO);
+        //   Destroy(customerGO);
 
         // 顧客離場（若外部已 Destroy，這裡就不再重複）
         //if (customerGO != null) Destroy(customerGO);
@@ -341,7 +388,15 @@ public class FirstGame : MonoBehaviour
     public void ProduceIteam(int ID)
     {
 
-        IteamPrefab.Add(Instantiate(Iteam, customerSpawnPoints[ID].position, Iteam.transform.rotation) as GameObject);
+        // IteamPrefab.Add(Instantiate(Iteam, customerSpawnPoints[ID].position, Iteam.transform.rotation) as GameObject);
+        GameObject newIteam = Instantiate(Iteam, customerSpawnPoints[ID].position, Iteam.transform.rotation);
+
+        // 關鍵：給予身分證，這樣 CountdownFillEmptyUse 才認得它
+        var set = newIteam.GetComponent<SetIteamOpenObj>();
+        if (set == null) set = newIteam.AddComponent<SetIteamOpenObj>();
+        set.ID = ID;
+
+        IteamPrefab.Add(newIteam);
 
     }
 
@@ -351,7 +406,7 @@ public class FirstGame : MonoBehaviour
 
     }
 
-    public void ProduceIteamOpen()
+    public void ProduceIteamOpen(int seatID)
     {
         if (IteamOpen != null && IteamOpenProduce != null)
         {
@@ -359,43 +414,74 @@ public class FirstGame : MonoBehaviour
             var set = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
             if (set != null)
             {
-                set.ID = 0;
+                set.ID = seatID;
                 set.ProcessorID = 0;
             }
             GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
         }
     }
-    public void CountdownFillEmptyUse()  //客人耐心歸零 刪掉外組件 外組件打開 外組件打開放修理台                      //無效
+
+    public void CountdownFillEmptyUse(int seatID)
     {
-        // IteamPrefab.Remove(IteamGO);
-        //Destroy(IteamOpenPrefab);
-        //  GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-        // foreach (GameObject obj in allObjects)
-        // {
-        //  if (obj.name.Contains("fixeditemOpenFinished"))             //要找到對應客人的物件編號
-        // {
-        // Destroy(obj);
-        // }
-        // }
-        // for (int i = IteamPrefab.Count - 1; i >= 0; i--)                     //還沒刪掉客人生成物
-        //  {
-        // if (IteamPrefab[i] != null && IteamPrefab[i].transform.parent)
-        //{
-        // IteamPrefab.RemoveAt(i);
-        // Destroy(IteamPrefab[i]);
-        // ClearIteamPrefab();
-        //}
-        //}
-        foreach (Transform child in transform)
+        // 1. 刪除所有 Tag 為 "fixeditemOpen" 且 ID 匹配的物件 (機器吐出的零件)
+        GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+        foreach (GameObject obj in allOpenItems)
         {
-            // 檢查 Tag 或是檢查名字裡有沒有包含 "Iteam"
-            if (child.CompareTag("fixeditem") || child.name.Contains("Iteam"))
+            var set = obj.GetComponent<SetIteamOpenObj>();
+            if (set != null && set.ID == seatID)
             {
-                Destroy(child.gameObject);
-                Debug.Log($"{gameObject.name} 的計時結束，已刪除子物件：{child.name}");
-                break; // 找到就停止，避免誤刪
+                Destroy(obj);
             }
         }
+
+        // 2. 刪除所有已經修好 (變更過名稱) 但還沒交件的物件
+        // 這裡我們掃描所有包含 "fixeditemOpenFinished" 名稱的物件
+        GameObject[] allFinishedItems = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in allFinishedItems)
+        {
+            if (obj.name.Contains("fixeditemOpenFinished") && obj.name.EndsWith((seatID + 1).ToString()))
+            {
+                Destroy(obj);
+            }
+        }
+
+        // 3. 清理掛在客人身上的原始組件 (IteamPrefab)
+        //  for (int i = IteamPrefab.Count - 1; i >= 0; i--)
+        // {
+        //    if (IteamPrefab[i] != null)
+        //  {
+        //  var marker = IteamPrefab[i].GetComponentInParent<FirstGameCustomerMarker>();
+        //  if (marker != null && marker.SeatIndex == seatID)
+        // {
+        //    Destroy(IteamPrefab[i]);
+        //    IteamPrefab.RemoveAt(i);
+        //}
+        //  }
+        //}
+        SetIteamOpenObj[] allRemainingItems = GameObject.FindObjectsOfType<SetIteamOpenObj>();
+        foreach (SetIteamOpenObj itemScript in allRemainingItems)
+        {
+            if (itemScript.ID == seatID)
+            {
+                GameObject objToDestroy = itemScript.gameObject;
+
+                // 如果它是某人的子物件，解除父子關係再刪除，確保清理乾淨
+                if (objToDestroy.transform.parent != null)
+                {
+                    objToDestroy.transform.SetParent(null);
+                }
+
+                // 同步清理 List，避免殘留 Missing Reference
+                if (IteamPrefab != null && IteamPrefab.Contains(objToDestroy))
+                {
+                    IteamPrefab.Remove(objToDestroy);
+                }
+
+                Destroy(objToDestroy);
+                Debug.Log($"已成功刪除座位 {seatID} 客人身上的子物件零件。");
+            }
+        }
+        Debug.Log($"座位 {seatID} 的客人耐心歸零，相關物件已全數清理。");
     }
     public void OpenTeach10()
     {

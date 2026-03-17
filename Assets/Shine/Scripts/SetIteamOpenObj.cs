@@ -16,6 +16,7 @@ public class SetIteamOpenObj : MonoBehaviour
     public int currentProcessorIndex = -1;
     public int currentReagentsIndex = -1;
     public int OpenCount;
+    public bool Rename = false; //修好外組件打開重命名
     public List<int> IDs = new List<int>();
     // Start is called before the first frame update
     void Start()
@@ -149,6 +150,7 @@ public class SetIteamOpenObj : MonoBehaviour
             if (OpenCount == 0)
             {
                 transform.localScale = OriginalSize;
+                Rename = true;
 
             }
         }

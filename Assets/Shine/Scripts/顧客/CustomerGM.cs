@@ -108,7 +108,7 @@ public class CustomerGM : MonoBehaviour
                     {
                         FindObjectOfType<FirstGame>()?.NotifyCustomerFinished(gameObject);
                         FindObjectOfType<FirstGame>().NotifyCustomerFinished(transform.root.gameObject);
-
+                        Destroy(transform.root.gameObject);
                     }
                 }
                 // Destroy(gameObject);
@@ -225,8 +225,40 @@ public class CustomerGM : MonoBehaviour
             //其他關使用  
             if (Application.loadedLevelName != "TeachGame")
             {
-                if (hit.name.Contains("fixeditemOpenFinished"))
+                // if (hit.name.Contains("fixeditemOpenFinished"))
+                //  {
+                //   AudioManager.Instance.PlaySfx(12);             //音效
+                //  FindObjectOfType<ScoreGM>().AddScore();
+                //  FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                // FindObjectOfType<IteamOpenOnTable>().hasitem = false;
+
+                // Destroy(hit.gameObject);
+                // CountdownFill countdownScript = GetComponent<CountdownFill>();
+                // if (countdownScript != null && countdownScript.ShouldDestroy != null)
+                // {
+                // 刪除CountdownFill 
+                //    Destroy(countdownScript.ShouldDestroy);
+                //   isArrive = false;
+                // }
+                //  Finished = true;
+                // FindObjectOfType<FirstGame>().ClearIteamPrefab();
+                // if(hasArrived == true)
+                // { 
+                //FindObjectOfType<FirstGame>().ProduceIteam(); 
+                // }
+                FindObjectOfType<FirstGame>().ConfirmItemForCustomer(hit.gameObject);
+                FirstGameCustomerMarker myMarker = GetComponentInParent<FirstGameCustomerMarker>();
+                int mySeatID = (myMarker != null) ? myMarker.SeatIndex : -1;
+
+                // 拿到的物件身上的編號
+                var setScript = hit.GetComponent<SetIteamOpenObj>();
+                int itemID = (setScript != null) ? setScript.ID : -2;
+
+                // 檢查名字，並且檢查 ID 是否匹配
+                if (hit.name.Contains("fixeditemOpenFinished") && itemID == mySeatID)
                 {
+                    Debug.Log($"座位 {mySeatID} 收到正確的物件！");
+
                     AudioManager.Instance.PlaySfx(12);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
                     FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
@@ -236,19 +268,22 @@ public class CustomerGM : MonoBehaviour
                     CountdownFill countdownScript = GetComponent<CountdownFill>();
                     if (countdownScript != null && countdownScript.ShouldDestroy != null)
                     {
-                        // 叫 CountdownFill 的子物件去死
+                        // 刪除CountdownFill 
                         Destroy(countdownScript.ShouldDestroy);
                         isArrive = false;
                     }
-                    Finished = true;
+
                     FindObjectOfType<FirstGame>().ClearIteamPrefab();
-                    // if(hasArrived == true)
-                    // { 
-                    //FindObjectOfType<FirstGame>().ProduceIteam(); 
-                    // }
 
-
+                    Finished = true; // 觸發客人離開
                 }
+                else if (hit.name.Contains("fixeditemOpenFinished"))
+                {
+                    Debug.Log($"物件 ID ({itemID}) 與座位 ID ({mySeatID}) 不符，不可歸還！");
+                    // 這裡可以選擇讓物件彈回原位
+                }
+
+                // }
 
             }
         }
