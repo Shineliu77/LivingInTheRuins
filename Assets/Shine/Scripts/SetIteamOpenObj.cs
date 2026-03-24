@@ -18,11 +18,18 @@ public class SetIteamOpenObj : MonoBehaviour
     public int OpenCount;
     public bool Rename = false; //修好外組件打開重命名
     public List<int> IDs = new List<int>();
+
+    private SetIteamOpenObj itemInfo;  //取得物件編號
+    private FirstGame gameManager;  //取得第一關程式
+    private SpriteRenderer myRenderer;//圖片
+    private TeachGM TeachgameManager;  //取得新手關 程式
+    public bool isTeachFixok;
     // Start is called before the first frame update
     void Start()
     {
         if (Application.loadedLevelName == "TeachGame")
         {
+            TeachgameManager = FindObjectOfType<TeachGM>();
             CloseIteamObj();
             //IteamObj[ID].SetActive(true);
             // switch (ID)
@@ -66,6 +73,9 @@ public class SetIteamOpenObj : MonoBehaviour
         //第一關使用
         else if (Application.loadedLevelName == "FirstGame")  //隨機開出1～3個 修理元件
         {
+            itemInfo = GetComponent<SetIteamOpenObj>();
+            gameManager = FindObjectOfType<FirstGame>();
+            myRenderer = GetComponent<SpriteRenderer>();
             foreach (GameObject obj in IteamObj)
             {
                 obj.SetActive(false);
@@ -142,14 +152,17 @@ public class SetIteamOpenObj : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame")
         {
             transform.localScale = OriginalSize;
+            isTeachFixok = true;
+            TeachgameManager.IteamProduceFixokgChangePicRenderer(myRenderer);
         }
 
-        if (Application.loadedLevelName == "FirstGame")
+        if (Application.loadedLevelName != "TeachGame")
         {
             OpenCount--;
             if (OpenCount == 0)
             {
                 transform.localScale = OriginalSize;
+                gameManager.IteamOpenFixSpritesFixOKgSprite(itemInfo.ID, myRenderer);　　　//修好換圖ｇ　　
                 Rename = true;
 
             }

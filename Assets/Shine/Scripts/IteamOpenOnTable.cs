@@ -7,21 +7,77 @@ public class IteamOpenOnTable : MonoBehaviour
     public float SetScale;
     public bool touchingFixedItemOpen;  //碰撞外組件打開
     private GameObject currentFixedItemOpen;
-    public bool hasitem = false;//只能放一件
+    public bool hasitem;//只能放一件
+    private TeachGM TeachgameManager;  //取得新手關程式 
+    private FirstGame gameManager;  //取得新手關程式
+    private SetIteamOpenObj itemInfo;  //取得物件編號
+    private SpriteRenderer myRenderer;//圖片
+    //public bool hasitem = false;//只能放一件
     // Start is called before the first frame update
     void Start()
     {
-
+        myRenderer = GetComponent<SpriteRenderer>();
+        itemInfo = GetComponent<SetIteamOpenObj>();
+        TeachgameManager = FindObjectOfType<TeachGM>();
+        gameManager = FindObjectOfType<FirstGame>();
     }
     void Update()
     {
+        //  GameObject currentItem = GameObject.FindWithTag("fixeditemOpen"); // 或是你對應的標籤
+        //  if (currentItem == null)
+        // {
+        //   hasitem = false;
+        //   touchingFixedItemOpen = false;
+        //}
         // 如果桌子上已經沒有任外組件打開 重設
-        GameObject currentItem = GameObject.FindWithTag("fixeditemOpen"); // 或是你對應的標籤
-        if (currentItem == null)
+        if (Application.loadedLevelName == "TeachGame") return;
+        GameObject[] allFixedItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+        SetIteamOpenObj currentPart = GetComponentInChildren<SetIteamOpenObj>();
+        if (Application.loadedLevelName != "TeachGame" && allFixedItems == null)
         {
             hasitem = false;
             touchingFixedItemOpen = false;
+            // if(!touchingFixedItemOpen)       //如果修理台有外組件打開紀指拖曳
+            // {
+
+            // GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+            // GameObject.FindWithTag("fixeditemOpen").GetComponent<Collider2D>().enabled = true;
+            //}
+            foreach (GameObject item in allFixedItems)
+            {
+                // 只要是在桌子外面的，通通恢復解鎖
+                if (item.transform.parent != this.transform)
+                {
+                    SetItemInteraction(item, true);
+                }
+            }
         }
+        //鎖住其他不適在修理台的
+        if (currentPart != null && currentPart.OpenCount > 0)
+        {
+            foreach (GameObject item in allFixedItems)
+            {
+                if (item.transform.root == this.transform.root) continue;
+
+                // 另外，為了保險，如果物件的名字叫 brokePCB 也不要鎖
+                // if (item.name.Contains("brokePCB")) continue;
+                if (item.transform.parent != this.transform)
+                {
+
+                    SetItemInteraction(item, false);
+
+                }
+            }
+        }
+    }
+
+    // 簡化代碼，避免重複寫 GetComponent
+    void SetItemInteraction(GameObject obj, bool isEnable)
+    {
+        var drag = obj.GetComponent<DraggableReturn2D>();
+        var coll = obj.GetComponent<Collider2D>();
+        if (drag != null) drag.enabled = isEnable;
+        if (coll != null) coll.enabled = isEnable;
     }
     void OnEnable()   //檢查滑鼠放開事件
     {
@@ -43,6 +99,15 @@ public class IteamOpenOnTable : MonoBehaviour
         {
             //touchingFixedItemOpen = true;
             currentFixedItemOpen = coll.gameObject;
+            // if (TeachgameManager != null)                    //避免顯示拖曳
+            // {
+            //   TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
+            //  }
+
+            // if (gameManager != null&& itemInfo.OpenCount == 0)                    //避免顯示拖曳
+            // {
+            //    gameManager.IteamOpenFixSpritesFixOKgSprite(itemInfo.ID, myRenderer);　　　//修好換圖ｇ　
+            // }
         }
     }
     private void OnCollisionExit2D(Collision2D coll)  //結束碰撞
@@ -51,18 +116,28 @@ public class IteamOpenOnTable : MonoBehaviour
         {
             // touchingFixedItemOpen = false;
             currentFixedItemOpen = null;
+            if (TeachgameManager != null)                    //避免顯示拖曳
+            {
+                TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
+            }
+            if (TeachgameManager != null)                    //避免顯示拖曳
+            {
+                TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
+            }
         }
     }
 
     void OnItemReleased(DraggableReturn2D item)
     {
+        if (item.gameObject != currentFixedItemOpen) return;
         if (touchingFixedItemOpen) return;  //避免重觸發
         if (currentFixedItemOpen != null)
         {
-            if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
+            if (Application.loadedLevelName == "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && !hasitem)
             {
-                AudioManager.Instance.PlaySfx(24);                                             //音效
+                AudioManager.Instance.PlaySfx(22);                                             //音效
                 hasitem = true;
+                TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
                 item.transform.parent = this.transform;
@@ -86,10 +161,10 @@ public class IteamOpenOnTable : MonoBehaviour
             //讓brokePCB可以拿出來給crab
             // if (Application.loadedLevelName == "FirstGame")
             // {
-            if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && hasitem == false)
+            if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && !hasitem)
             {
                 hasitem = true;
-                AudioManager.Instance.PlaySfx(24);                                                         //音效
+                AudioManager.Instance.PlaySfx(22);                                                         //音效
                 item.GetComponent<DraggableReturn2D>().originalPosition = this.transform.position;
                 item.GetComponent<Collider2D>().enabled = false;
                 item.GetComponent<DraggableReturn2D>().enabled = false;
@@ -132,7 +207,7 @@ public class IteamOpenOnTable : MonoBehaviour
                                 if (col2d != null && !col2d.enabled)
                                     col2d.enabled = true;
                                 drag.enabled = true;
-                                brokeChild.localPosition = new Vector3(-6.0101f, -0.3002f, -0.1f);
+                                brokeChild.localPosition = new Vector3(-3.7101f, -0.3002f, -0.1f);
                                 Debug.Log("brokePCB 拖曳啟用！");
                             }
                             else

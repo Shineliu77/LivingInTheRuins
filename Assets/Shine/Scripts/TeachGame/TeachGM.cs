@@ -20,6 +20,9 @@ public class TeachGM : MonoBehaviour
     GameObject IteamPrefab;
     [Header("組件生成位置")]
     public Transform IteamProduce;
+    public SpriteRenderer IteamProduceOriginPic;  //原
+    public Sprite IteamProduceChangeOriginPic;  //換回原
+    public Sprite IteamProduceChangePic;  //要換的
     #endregion
     #region 第一段說明
     public GameObject Teach1;
@@ -28,6 +31,12 @@ public class TeachGM : MonoBehaviour
     [Header("打開的組件")]
     public GameObject IteamOpen;
     GameObject IteamOpenPrefab;
+    public SpriteRenderer IteamOpenOriginPic;//原
+    public Sprite IteamOpenChangeOriginPic; //換回原
+    public Sprite IteamOpenChangePic;//要換的
+    public Sprite IteamProduceFixokgChangePic;  //修好的
+    public Sprite IteamProduceFixokwChangePic;  //修好的滑鼠經過
+
     bool isNewIteam = false;
     [Header("組件生成位置")]
     public Transform IteamOpenProduce;
@@ -113,10 +122,44 @@ public class TeachGM : MonoBehaviour
     public Transform FinaltargetPosition; //最終停頓點
     public float MiddledoorSpeed; //中間速度
     public float FinaldoorSpeed;//最後速度
-                                // Start is called before the first frame update
+
+
+    private TeachGM TeachgameManager;  //取得新手關程式
+    private SpriteRenderer myRenderer;//圖片
+    public void IteamProduceOriginPicRenderer(SpriteRenderer target)  //外組件換原圖
+    {
+        if (target != null)
+            target.sprite = IteamProduceChangeOriginPic;
+    }
+    public void IteamProduceChangePicRenderer(SpriteRenderer target)  //外組件換圖
+    {
+        if (target != null)
+            target.sprite = IteamProduceChangePic; ;
+    }
+    public void IteamOpenOriginPicRenderer(SpriteRenderer target)  //外組打開換原圖
+    {
+        if (target != null)
+            target.sprite = IteamOpenChangeOriginPic;
+    }
+    public void IteamOpenChangePicRenderer(SpriteRenderer target) //外組件打開換圖
+    {
+        if (target != null)
+            target.sprite = IteamOpenChangePic; ;
+    }
+    public void IteamProduceFixokgChangePicRenderer(SpriteRenderer target)  //外組打開修好換圖
+    {
+        if (target != null)
+            target.sprite = IteamProduceFixokgChangePic;
+    }
+    public void IteamProduceFixokwChangePicRenderer(SpriteRenderer target) //外組打開修好滑鼠經過
+    {
+        if (target != null)
+            target.sprite = IteamProduceFixokwChangePic; ;
+    }
     void Start()
     {
-
+        //IteamProduceOriginPic.sprite = IteamProduceChangeOriginPic;
+        // IteamOpenOriginPic.sprite = IteamOpenChangeOriginPic;
         RabbitButton.interactable = false;
         FindObjectOfType<RabbitGM>().RabbitButton[0].interactable = false;
         ProductCustomer();
@@ -124,6 +167,10 @@ public class TeachGM : MonoBehaviour
         TeachThree4.SetActive(false);
         FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
         //AudioManager.Instance.PlaySfx(9);             //音效 
+
+        myRenderer = GetComponent<SpriteRenderer>();
+
+        TeachgameManager = FindObjectOfType<TeachGM>();
     }
 
     void Update()
@@ -424,7 +471,7 @@ public class TeachGM : MonoBehaviour
     }
     public void OpenTeach4()
     {
-
+        //TeachgameManager.IteamProduceFixokgChangePicRenderer(myRenderer);   還是換圖無效
         if (!isTeach4)
         {
             Teach4.SetActive(true);
@@ -505,8 +552,8 @@ public class TeachGM : MonoBehaviour
     {
         TeachEightTwo.SetActive(true);
         GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
-        GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-6.0101f, -0.3002f, -0.1f);
-        
+        GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-3.583005f, -0.3002f, -0.1f);
+
     }
 
 
@@ -521,6 +568,7 @@ public class TeachGM : MonoBehaviour
         if (teachEightThree == true)
         {
             GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = true;
+
         }
     }
     public void OpenTeach9()

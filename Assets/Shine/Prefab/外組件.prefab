@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 3492966443212368905}
   - component: {fileID: 6361667587423278059}
   - component: {fileID: 7740897447156281463}
-  - component: {fileID: -2108966093913342150}
   m_Layer: 0
   m_Name: "\u5916\u7D44\u4EF6"
   m_TagString: fixeditem
@@ -162,8 +161,8 @@ Transform:
   m_GameObject: {fileID: 1701423482168420879}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.25, y: 4.59, z: 0.004452293}
-  m_LocalScale: {x: 0.06911611, y: 0.06911611, z: 0.06911611}
+  m_LocalPosition: {x: -4.9902, y: 4.9223, z: 0.004452293}
+  m_LocalScale: {x: 0.13934731, y: 0.13934731, z: 0.13934731}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2633686253629313118}
@@ -210,7 +209,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 530541407, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
+  m_Sprite: {fileID: -1189957270, guid: ee65414b761ba7a408c822f879e9c495, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -253,18 +252,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.19514227, y: 0.114097595}
+  m_Offset: {x: -0.1288724, y: -0.018440485}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 12.679999, y: 17.644123}
+    oldSize: {x: 7.4, y: 9.4622755}
     newSize: {x: 12.679999, y: 17.644123}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.074077, y: 15.738733}
+  m_Size: {x: 8.025634, y: 10.172014}
   m_EdgeRadius: 0
 --- !u!50 &6361667587423278059
 Rigidbody2D:
@@ -307,21 +306,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalPosition: {x: 0, y: 0, z: 0}
   isDragging: 0
---- !u!114 &-2108966093913342150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1701423482168420879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 570d9c5ebc9949b46bb24ab0b0be909d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetChange: {fileID: 5252771801232554846}
-  OtiangePic: {fileID: 530541407, guid: 907a989afb4cfa5409a986e20ded0c55, type: 3}
-  ChangePic: {fileID: -1272158454, guid: 68c4a819fde5af3488931079c1f881d0, type: 3}
 --- !u!1 &5230932487871801806
 GameObject:
   m_ObjectHideFlags: 0

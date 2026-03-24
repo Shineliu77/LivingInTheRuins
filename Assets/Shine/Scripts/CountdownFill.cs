@@ -16,6 +16,9 @@ public class CountdownFill : MonoBehaviour
     public float timer;
     private Collider2D isShouldDestroycollCoustomer; //是否碰到客人
     public bool isAngry = false;
+    public bool isCustomerAngry = false;
+    public bool isCustomerJeAngry = false;
+    public bool isCustomerBeeAngry = false;
     void Start()
     {
         timer = countdownTime;
@@ -40,25 +43,25 @@ public class CountdownFill : MonoBehaviour
             if (fillImage.fillAmount > 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
                 isAngry = false;
+
             }
             if (fillImage.fillAmount <= 0.5f) // 當耐心值低於50%顧客生氣 耐心值換圖
             {
-                if (isAngry == false && GameObject.FindWithTag("Customer"))
+                isAngry = true;
+                //if (isAngry == false && GameObject.FindWithTag("Customer"))
+                if (!isCustomerAngry && this.CompareTag("Customer"))
                 {
-
-                    isAngry = true;
+                    isCustomerAngry = true;
                     AudioManager.Instance.PlaySfx(13);
                 }
-                if (isAngry == false && GameObject.FindWithTag("CustomerJe"))
+                if (!isCustomerJeAngry && this.CompareTag("CustomerJe"))
                 {
-
-                    isAngry = true;
+                    isCustomerJeAngry = true;
                     AudioManager.Instance.PlaySfx(14);
                 }
-                if (isAngry == false && GameObject.FindWithTag("CustomerBee"))
+                if (!isCustomerBeeAngry && this.CompareTag("CustomerBee"))
                 {
-
-                    isAngry = true;
+                    isCustomerBeeAngry = true;
                     AudioManager.Instance.PlaySfx(15);
                 }
                 // AudioManager.Instance.PlaySfx(4);             //音效

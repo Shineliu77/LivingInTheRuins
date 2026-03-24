@@ -40,12 +40,12 @@ public class ItemSlot : MonoBehaviour
             {
                 if (Application.loadedLevelName == "TeachGame")
                 {
-                    Vector3 offset = new Vector3(-0.7838f, -0.0244f, 0f);
+                    Vector3 offset = new Vector3(-0.838f, -0.0244f, 0f);
                     pcbInContact.transform.position = transform.position + offset;
                 }
                 if (Application.loadedLevelName != "TeachGame")
                 {
-                    Vector3 offset = new Vector3(-0.7838f, -0.0244f, 0f);
+                    Vector3 offset = new Vector3(-0.838f, -0.0244f, 0f);
                     pcbInContact.transform.position = transform.position + offset;
                 }
                 var rb = pcbInContact.GetComponent<Rigidbody2D>();
