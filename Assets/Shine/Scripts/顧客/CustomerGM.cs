@@ -19,6 +19,8 @@ public class CustomerGM : MonoBehaviour
                                       // private GameObject currentcollProduceIteam;
     private bool isArrive = false;
     private bool hasSpawnedItem = false; // 紀錄是否已經生成過
+    private FirstGame gameManager;  //取得第一關程式
+    private SpriteRenderer myRenderer;//圖片
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,8 @@ public class CustomerGM : MonoBehaviour
             ExitTargetPoint = GameObject.Find("顧客離開定位點").transform;
         }
         isCollCustomer = gameObject.GetComponent<Collider2D>();
+        gameManager = FindObjectOfType<FirstGame>();
+        myRenderer = GetComponent<SpriteRenderer>();
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -281,6 +285,15 @@ public class CustomerGM : MonoBehaviour
                 {
                     Debug.Log($"物件 ID ({itemID}) 與座位 ID ({mySeatID}) 不符，不可歸還！");
                     // 這裡可以選擇讓物件彈回原位
+                    var hitRenderer = hit.GetComponent<SpriteRenderer>();
+                    if (hitRenderer != null && setScript != null)
+                    {
+
+
+
+                        hit.transform.position += new Vector3(0, 0, -0.01f);
+                        FindObjectOfType<FirstGame>().IteamOpenFixSpritesFixOKgSprite(setScript.ID, hitRenderer);
+                    }
                 }
 
                 // }

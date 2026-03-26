@@ -128,7 +128,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14.05, y: 9.422266}
+    oldSize: {x: 14.18, y: 9.552298}
     newSize: {x: 23.61, y: 16.60388}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -266,11 +266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.686
+      value: 1.71
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.018
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 8585792470968817019, guid: 27f23f247717b774ca8172d8d1c6da95, type: 3}
       propertyPath: m_LocalPosition.z
@@ -578,23 +578,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4164517
+      value: 0.41936684
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4164517
+      value: 0.41936684
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4164517
+      value: 0.41936684
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7
+      value: 3.79
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 2125460788277355936, guid: f858995d1cf40394daa968e2b6f4cbab, type: 3}
       propertyPath: m_LocalPosition.z

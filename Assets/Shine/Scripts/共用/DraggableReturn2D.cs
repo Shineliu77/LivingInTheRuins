@@ -132,7 +132,7 @@ public class DraggableReturn2D : MonoBehaviour
         {
             gameManager.IteamOpenChaneSprite(itemInfo.ID, myRenderer);
         }
-        if (itemInfo.OpenCount == 0 && this.CompareTag("fixeditemOpen") && this.enabled && gameManager != null && itemInfo != null)
+        if (itemInfo.OpenCount == 0 && this.CompareTag("fixeditemOpen") && this.enabled && gameManager != null && itemInfo != null || this.name.Contains("fixeditemOpenFinished"))
         {
             gameManager.IteamOpenFixSpritesFixOKwSprite(itemInfo.ID, myRenderer);
         }
@@ -165,7 +165,7 @@ public class DraggableReturn2D : MonoBehaviour
             gameManager.IteamOpenOriginSprite(itemInfo.ID, myRenderer);
 
         }
-        if (itemInfo.OpenCount == 0 && this.CompareTag("fixeditemOpen") && gameManager != null && itemInfo != null)
+        if (itemInfo.OpenCount == 0 && this.CompareTag("fixeditemOpen") && gameManager != null && itemInfo != null || this.name.Contains("fixeditemOpenFinished"))
         {
             gameManager.IteamOpenFixSpritesFixOKgSprite(itemInfo.ID, myRenderer);
             Debug.Log("´«¹Ï2");

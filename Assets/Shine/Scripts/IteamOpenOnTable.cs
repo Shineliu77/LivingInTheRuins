@@ -8,18 +8,16 @@ public class IteamOpenOnTable : MonoBehaviour
     public bool touchingFixedItemOpen;  //碰撞外組件打開
     private GameObject currentFixedItemOpen;
     public bool hasitem;//只能放一件
-    private TeachGM TeachgameManager;  //取得新手關程式 
-    private FirstGame gameManager;  //取得新手關程式
-    private SetIteamOpenObj itemInfo;  //取得物件編號
+    private TeachGM TeachgameManager;  //取得新手關程式
     private SpriteRenderer myRenderer;//圖片
     //public bool hasitem = false;//只能放一件
     // Start is called before the first frame update
     void Start()
     {
         myRenderer = GetComponent<SpriteRenderer>();
-        itemInfo = GetComponent<SetIteamOpenObj>();
+
         TeachgameManager = FindObjectOfType<TeachGM>();
-        gameManager = FindObjectOfType<FirstGame>();
+
     }
     void Update()
     {
@@ -33,7 +31,7 @@ public class IteamOpenOnTable : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame") return;
         GameObject[] allFixedItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
         SetIteamOpenObj currentPart = GetComponentInChildren<SetIteamOpenObj>();
-        if (Application.loadedLevelName != "TeachGame" && allFixedItems == null)
+        if (Application.loadedLevelName != "TeachGame" && allFixedItems == null || FindObjectOfType<SetIteamOpenObj>().OpenCount == 0)
         {
             hasitem = false;
             touchingFixedItemOpen = false;
@@ -99,15 +97,10 @@ public class IteamOpenOnTable : MonoBehaviour
         {
             //touchingFixedItemOpen = true;
             currentFixedItemOpen = coll.gameObject;
-            // if (TeachgameManager != null)                    //避免顯示拖曳
-            // {
-            //   TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
-            //  }
-
-            // if (gameManager != null&& itemInfo.OpenCount == 0)                    //避免顯示拖曳
-            // {
-            //    gameManager.IteamOpenFixSpritesFixOKgSprite(itemInfo.ID, myRenderer);　　　//修好換圖ｇ　
-            // }
+            if (TeachgameManager != null)                    //避免顯示拖曳
+            {
+                TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
+            }
         }
     }
     private void OnCollisionExit2D(Collision2D coll)  //結束碰撞
@@ -120,10 +113,7 @@ public class IteamOpenOnTable : MonoBehaviour
             {
                 TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
             }
-            if (TeachgameManager != null)                    //避免顯示拖曳
-            {
-                TeachgameManager.IteamOpenOriginPicRenderer(myRenderer);　　　//修好換圖ｇ　
-            }
+
         }
     }
 
@@ -161,6 +151,7 @@ public class IteamOpenOnTable : MonoBehaviour
             //讓brokePCB可以拿出來給crab
             // if (Application.loadedLevelName == "FirstGame")
             // {
+            //  if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && !hasitem && FindObjectOfType<SetIteamOpenObj>().OpenCount != 0)
             if (Application.loadedLevelName != "TeachGame" && item.gameObject.CompareTag("fixeditemOpen") && !hasitem)
             {
                 hasitem = true;
