@@ -968,6 +968,10 @@ MonoBehaviour:
   ShouldDestroy: {fileID: 310610305282353134}
   timer: 100
   isAngry: 0
+  isCustomerAngry: 0
+  isCustomerJeAngry: 0
+  isCustomerBeeAngry: 0
+  isSetBack: 0
 --- !u!114 &5930714247751944790
 MonoBehaviour:
   m_ObjectHideFlags: 0

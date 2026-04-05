@@ -265,8 +265,8 @@ public class CustomerGM : MonoBehaviour
 
                     AudioManager.Instance.PlaySfx(12);             //音效
                     FindObjectOfType<ScoreGM>().AddScore();
-                    FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
-                    FindObjectOfType<IteamOpenOnTable>().hasitem = false;
+                   // FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發
+                 //   FindObjectOfType<IteamOpenOnTable>().hasitem = false;
 
                     Destroy(hit.gameObject);
                     CountdownFill countdownScript = GetComponent<CountdownFill>();

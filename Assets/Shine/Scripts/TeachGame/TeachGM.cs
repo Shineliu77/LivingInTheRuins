@@ -552,7 +552,10 @@ public class TeachGM : MonoBehaviour
     {
         TeachEightTwo.SetActive(true);
         GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
-        GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-3.583005f, -0.3002f, -0.1f);
+        Vector3 pcbLocal = GameObject.FindWithTag("brokePCB").transform.localPosition;
+        pcbLocal.z = -1f;
+        GameObject.FindWithTag("brokePCB").transform.localPosition = pcbLocal;
+        // GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-3.583005f, -0.3002f, -0.1f);
 
     }
 

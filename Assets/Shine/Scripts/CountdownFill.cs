@@ -19,6 +19,7 @@ public class CountdownFill : MonoBehaviour
     public bool isCustomerAngry = false;
     public bool isCustomerJeAngry = false;
     public bool isCustomerBeeAngry = false;
+    public bool isSetBack = false;
     void Start()
     {
         timer = countdownTime;
@@ -89,6 +90,7 @@ public class CountdownFill : MonoBehaviour
                 if (mySeatID != -1)
                 {
                     FindObjectOfType<FirstGame>().CountdownFillEmptyUse(mySeatID);
+                    isSetBack = true;
                 }
                 //有物件在桌上必須回到原設定
                 //FindObjectOfType<IteamOpenOnTable>().touchingFixedItemOpen = false;  //重製外組件打開觸發      必須先鎖定物件

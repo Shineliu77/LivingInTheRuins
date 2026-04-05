@@ -10,13 +10,13 @@ public class Mainmenu : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync("StoryFirst");
-        AudioManager.Instance.PlaySfx(5);                                              //音效
+        AudioManager.Instance.PlaySfx(25);                                              //音效
 
     }
     public void HomeGame()
     {
         SceneManager.LoadSceneAsync("main menu");
-        AudioManager.Instance.PlaySfx(5);                                              //音效
+        AudioManager.Instance.PlaySfx(25);                                              //音效
 
     }
     //public void NextGame()
@@ -39,7 +39,7 @@ public class Mainmenu : MonoBehaviour
 
     public void ClickButtonSfx()
     {
-        AudioManager.Instance.PlaySfx(24);
+        AudioManager.Instance.PlaySfx(25);
     }
     public void EscClickButtonSfx()
     {

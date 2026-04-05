@@ -3369,7 +3369,7 @@ GameObject:
   - component: {fileID: 8370532543437835963}
   m_Layer: 0
   m_Name: CustomerBee
-  m_TagString: CustomerBee
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4460,7 +4460,7 @@ GameObject:
   - component: {fileID: 5573233670914523102}
   m_Layer: 0
   m_Name: customer_bee
-  m_TagString: Untagged
+  m_TagString: CustomerBee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5322,6 +5322,10 @@ MonoBehaviour:
   ShouldDestroy: {fileID: 625697600377530091}
   timer: 100
   isAngry: 0
+  isCustomerAngry: 0
+  isCustomerJeAngry: 0
+  isCustomerBeeAngry: 0
+  isSetBack: 0
 --- !u!114 &3581705634819313259
 MonoBehaviour:
   m_ObjectHideFlags: 0
