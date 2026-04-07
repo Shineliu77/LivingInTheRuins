@@ -126,10 +126,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u672A\u4FEE\u5916\u7D44\u4EF6\u6253\u958B1"
       rect:
         serializedVersion: 2
-        x: 73
-        y: 2358
-        width: 1409
-        height: 955
+        x: 35
+        y: 2334
+        width: 1441
+        height: 1011
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u672A\u4FEE\u5916\u7D44\u4EF6\u6253\u958B2"
       rect:
         serializedVersion: 2
-        x: 78
-        y: 1289
-        width: 1408
-        height: 957
+        x: 32
+        y: 1237
+        width: 1448
+        height: 1032
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u672A\u4FEE\u5916\u7D44\u4EF6\u6253\u958B3"
       rect:
         serializedVersion: 2
-        x: 76
-        y: 216
-        width: 1410
-        height: 957
+        x: 31
+        y: 180
+        width: 1455
+        height: 1034
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +189,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u4FEE\u597D\u5916\u7D44\u4EF6\u6253\u958B1"
       rect:
         serializedVersion: 2
-        x: 2423
-        y: 2338
-        width: 1405
-        height: 959
+        x: 2383
+        y: 2316
+        width: 1464
+        height: 1009
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u4FEE\u597D\u5916\u7D44\u4EF6\u6253\u958B2"
       rect:
         serializedVersion: 2
-        x: 2419
-        y: 1274
-        width: 1413
-        height: 959
+        x: 2384
+        y: 1233
+        width: 1458
+        height: 1026
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,10 +231,10 @@ TextureImporter:
       name: "\u958B\u6BBC\u767D_\u4FEE\u597D\u5916\u7D44\u4EF6\u6253\u958B3"
       rect:
         serializedVersion: 2
-        x: 2415
-        y: 204
-        width: 1413
-        height: 960
+        x: 2385
+        y: 179
+        width: 1429
+        height: 1009
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
