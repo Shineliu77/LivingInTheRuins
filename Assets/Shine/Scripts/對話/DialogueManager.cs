@@ -62,7 +62,7 @@ public class DialogueManager : MonoBehaviour
             string bgmFile = ""; // O 欄
             string sfxFile = ""; // P 欄
 
-            if (ExcelFileName == "Dialog.xlsx")   //教學使用
+            if (ExcelFileName == "Dialog.xlsx" || ExcelFileName == "Shop.xlsx")   //教學使用
             {
                 // var row = table.Rows[i];
                 //string speaker = row[1].ToString().Trim(); // B欄：角色
@@ -102,7 +102,7 @@ public class DialogueManager : MonoBehaviour
                 sfxFile = sfxFile
             };
             //路徑
-            string imagePath = Path.Combine(Application.streamingAssetsPath, "Img", "Louise",imageFile);
+            string imagePath = Path.Combine(Application.streamingAssetsPath, "Img", "Louise", imageFile);
             string imagePath2 = Path.Combine(Application.streamingAssetsPath, "Img", imageFile2);
             string imagePath3 = Path.Combine(Application.streamingAssetsPath, "Img", imageFile3);
             string audioPath = Path.Combine(Application.streamingAssetsPath, "Sound", audioFile);

@@ -38,7 +38,7 @@ public class DialogueUI : MonoBehaviour
 
     void Start()
     {
-        if (Application.loadedLevelName != "TeachGame")
+        if (Application.loadedLevelName != "TeachGame" && Application.loadedLevelName != "Shop")
         {
             CGImageUse.gameObject.SetActive(false);
             BGImageUse.gameObject.SetActive(false);
