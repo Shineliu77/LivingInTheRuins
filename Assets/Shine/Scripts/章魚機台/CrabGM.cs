@@ -38,6 +38,7 @@ public class CrabGM : MonoBehaviour
     public float DeductMachineDurability;//扣除機器耐久
     bool isRun;
 
+    private int buyCount;  //計算商店現在買幾次
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
     bool MachineDurabilityFix = false;  //不可修
@@ -68,6 +69,9 @@ public class CrabGM : MonoBehaviour
             .animationClips.First(c => c.name == "work").length;
 
         totalLength = getInLength + workLength;
+        //讀取商店現在買幾次
+        int ShopID = 3;
+        buyCount = PlayerPrefs.GetInt("BuyCount_" + ShopID.ToString(), 0);
 
     }
     void OnEnable()    //檢查滑鼠放開事件
@@ -148,6 +152,7 @@ public class CrabGM : MonoBehaviour
     void Update()
     {
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+        var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
         if (stateInfo.IsName("get in") || stateInfo.IsName("work"))
         {
             
@@ -196,7 +201,15 @@ public class CrabGM : MonoBehaviour
                             (workLength * Mathf.Clamp01(stateInfo.normalizedTime));
                     }
 
-
+                    if (Application.loadedLevelName != "TeachGame")                                     //會讓機器動不了
+                    {
+                        if (clipInfo.Length > 0)
+                        {
+                            float originalLength = getInLength + workLength;
+                            float targetDuration = Mathf.Max(originalLength - (buyCount * 2.0f));  //每買一次就快2秒
+                            MachineAni.speed = originalLength / targetDuration;
+                        }
+                    }
                     SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
 
                     MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
@@ -258,6 +271,7 @@ public class CrabGM : MonoBehaviour
         if (stateInfo.IsName("take out") && stateInfo3.normalizedTime > 0.99f)
         {
             iswork = false;
+            MachineAni.speed = 1;
         }
     }
 

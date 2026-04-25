@@ -61,7 +61,7 @@ public class MakeAPotion : MonoBehaviour
     public GameObject[] MakeLiquidItem;
     private GameObject CurrentChoseLiquidItem;
     private bool Teach = false;  //教學面板開過
-
+    private bool SfxUse=false;
     //確保動畫播完才可以修
     private bool isRed;
     private bool isYellow;
@@ -69,11 +69,15 @@ public class MakeAPotion : MonoBehaviour
     private bool tisGreen;
     private bool MachineDurabilityEmpty = false; //耐久歸零
     private bool isWorkSfx = false;
+
+    private int buyCount;  //計算商店現在買幾次
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
         MachineDurability_Script = MachineDurability;
-
+        //讀取商店現在買幾次
+        int ShopID = 1;
+        buyCount = PlayerPrefs.GetInt("BuyCount_" + ShopID.ToString(), 0);
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -127,7 +131,7 @@ public class MakeAPotion : MonoBehaviour
                 {
                     Reset();
                     SelectPotionID = 1;
-                   // AudioManager.Instance.PlaySfx(1);             //音效
+                    // AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveYY");
                     ProduceMonster();
@@ -163,7 +167,7 @@ public class MakeAPotion : MonoBehaviour
                     Reset();
                     //SpawnObject(0);
                     canSpawnPotions = true;
-                   // AudioManager.Instance.PlaySfx(1);             //音效
+                    // AudioManager.Instance.PlaySfx(1);             //音效
                     MachineAni.speed = 1;                         //動
                     MachineAni.SetTrigger("idelTOmoveRR");
                     ProduceMonster();
@@ -185,6 +189,7 @@ public class MakeAPotion : MonoBehaviour
                     Reset();
                     canSpawnPotions = true;
                     //AudioManager.Instance.PlaySfx(1);             //音效
+                    MachineAni.speed = 1;
                     MachineAni.SetTrigger("idelTOmoveBB");
                     ProduceMonster();
                     tisBlue = false;
@@ -252,82 +257,105 @@ public class MakeAPotion : MonoBehaviour
                 UnlockMakeLiquidItem();
             }
         }
-
-        if (isStopwatch && ScriptStopwatchTimer > 0)
-        {   
-            MachineAni.speed = 1;                         //動
-            Stopwatch.gameObject.SetActive(true);
-            ScriptStopwatchTimer -= Time.deltaTime;
-            Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
-            float fillAmount = ScriptStopwatchTimer / StopwatchTimer;
-            float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
-            needle.localEulerAngles = new Vector3(0, 0, -zRotation);
-            if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
-            {
-                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
-                StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
-
-            }
-            else
-            {
-                Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
-                StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
-            }
-            if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0)
-            {
-                if (Application.loadedLevelName == "TeachGame")
-                {
-                    Potions[SelectPotionID].SetActive(true);
-
-
-                    Stopwatch.gameObject.SetActive(false);
-                }
-                Stopwatch.gameObject.SetActive(false);
-                isRun = false;
-                if (Teach) return; //不重開
-                if (Application.loadedLevelName == "TeachGame")
-                {
-                    FindObjectOfType<TeachGM>().OpenTeach8();
-                    Teach = true;
-                }
-            }
-        }
-        // if (isRun)
+        AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+        var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
+        if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
         {
-            if (isRun)
+            if (isStopwatch && ScriptStopwatchTimer > 0)                                   //時鐘沒有加速
             {
-                MachineDurabilityFix = false;   //不可維修
-                isFixMachineShow = false;
-                // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
-                FixMachineShow.SetActive(false);
-            }
-            AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
-            {
-                if (isWorkSfx == false)
+                //  MachineAni.speed = 1;                         //動
+                float normalizedTime = Mathf.Min(stateInfo.normalizedTime, 1f);
+                Stopwatch.gameObject.SetActive(true);
+                // ScriptStopwatchTimer -= Time.deltaTime;
+                // Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+                // float fillAmount = ScriptStopwatchTimer / StopwatchTimer;
+                Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - normalizedTime;
+                //float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
+                float zRotation = (1f - normalizedTime) * maxRotation;
+                needle.localEulerAngles = new Vector3(0, 0, -zRotation);
+                //if (ScriptStopwatchTimer / StopwatchTimer > 0.5f)
+                if (normalizedTime < 0.5f)
                 {
-                    AudioManager.Instance.PlaySfx(3);             //音效
-                    isWorkSfx = true;
-                }
-
-                if (stateInfo.normalizedTime >= 0.85f)
-                {
-
-                    MachineDurability_Script = SaveMachineDurability;
-                    DeductDurability();
-                    //  isRun = false;
-
+                    Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[0];
+                    StopwatchOutside.sprite = StopwatchUIOutsideSprites[0];
 
                 }
                 else
                 {
-                    float animationLength = stateInfo.length; // 動畫總秒數
-                    float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
-                    float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
+                    Stopwatch.transform.GetChild(1).GetComponent<Image>().sprite = StopwatchUISprites[1];
+                    StopwatchOutside.sprite = StopwatchUIOutsideSprites[1];
+                }
+                //if (Stopwatch.transform.GetChild(1).GetComponent<Image>().fillAmount == 0)
+                if (normalizedTime >= 0.99f)
+                {
+                    if (Application.loadedLevelName == "TeachGame")
+                    {
+                        Potions[SelectPotionID].SetActive(true);
+                        if(SfxUse == false)
+                        {
+                            AudioManager.Instance.PlaySfx(2);             //音效
+                            SfxUse = true;
+                        }
+                        
+                        Stopwatch.gameObject.SetActive(false);
+                    }
+                    Stopwatch.gameObject.SetActive(false);
+                    isRun = false;
+                    if (Teach) return; //不重開
+                    if (Application.loadedLevelName == "TeachGame")
+                    {
+                        FindObjectOfType<TeachGM>().OpenTeach8();
+                        Teach = true;
+                    }
+                }
+            }
+            // if (isRun)
+            {
+                if (isRun)
+                {
+                    MachineDurabilityFix = false;   //不可維修
+                    isFixMachineShow = false;
+                    // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
+                    FixMachineShow.SetActive(false);
+                }
+                // AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+                // var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
+                //  if (stateInfo.IsName("blue work") || stateInfo.IsName("red work") || stateInfo.IsName("green work") || stateInfo.IsName("yellow work"))
+                {
+                    if (Application.loadedLevelName != "TeachGame")
+                    {
+                        if (clipInfo.Length > 0)
+                        {
+                            float originalLength = clipInfo[0].clip.length;// 取得動畫的秒數
+                            float targetDuration = Mathf.Max(originalLength - (buyCount * 2.0f)); //每買一次就快2秒
+                            MachineAni.speed = originalLength / targetDuration;
+                        }
+                    }
+                    if (isWorkSfx == false)
+                    {
+                        AudioManager.Instance.PlaySfx(3);             //音效
+                        isWorkSfx = true;
+                    }
 
-                    SaveMachineDurability = MachineDurability_Script - currentTimeInSeconds;
-                    DeductDurability();
+                    if (stateInfo.normalizedTime >= 0.99f)
+                    {
 
+                        MachineDurability_Script = SaveMachineDurability;
+                        DeductDurability();
+                        //  isRun = false;
+
+
+                    }
+                    else
+                    {
+                        float animationLength = stateInfo.length; // 動畫總秒數
+                        float normalizedTime = stateInfo.normalizedTime; // 播放進度（1.0代表播放完1次）
+                        float currentTimeInSeconds = animationLength * Mathf.Min(normalizedTime, 1f);
+
+                        SaveMachineDurability = MachineDurability_Script - currentTimeInSeconds;
+                        DeductDurability();
+
+                    }
                 }
             }
         }
@@ -336,7 +364,7 @@ public class MakeAPotion : MonoBehaviour
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (canSpawnPotions == true)
             {
-                if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.85f)
+                if (stateInfo2.IsName("red work") && stateInfo2.normalizedTime > 0.99f)
                 {
                     SpawnObject(0);
                     isWorkSfx = false;
@@ -345,19 +373,19 @@ public class MakeAPotion : MonoBehaviour
                     // MachineAni.SetBool("idelTOmoveR",true);
 
                 }
-                if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.85f)
+                if (stateInfo2.IsName("yellow work") && stateInfo2.normalizedTime > 0.99f)
                 {
                     SpawnObject(1);
-                    isWorkSfx =false;
+                    isWorkSfx = false;
                     //canSpawnPotions = false;
                 }
-                if (stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.85f)
+                if (stateInfo2.IsName("blue work") && stateInfo2.normalizedTime > 0.99f)
                 {
                     SpawnObject(2);
                     isWorkSfx = false;
                     //canSpawnPotions = false;
                 }
-                if (stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.85f)
+                if (stateInfo2.IsName("green work") && stateInfo2.normalizedTime > 0.99f)
                 {
                     SpawnObject(3);
                     isWorkSfx = false;
@@ -375,21 +403,25 @@ public class MakeAPotion : MonoBehaviour
             AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (stateInfo3.IsName("red work") && stateInfo2.normalizedTime > 0.99f)
             {
+                MachineAni.speed = 1;
                 isRed = true;
                 UnlockMakeLiquidItem();
             }
             if (stateInfo3.IsName("yellow work") && stateInfo2.normalizedTime > 0.99f)
             {
+                MachineAni.speed = 1;
                 isYellow = true;
                 UnlockMakeLiquidItem();
             }
             if (stateInfo3.IsName("blue work") && stateInfo2.normalizedTime > 0.99f)
             {
+                MachineAni.speed = 1;
                 tisBlue = true;
                 UnlockMakeLiquidItem();
             }
             if (stateInfo3.IsName("green work") && stateInfo2.normalizedTime > 0.99f)
             {
+                MachineAni.speed = 1;
                 tisGreen = true;
                 UnlockMakeLiquidItem();
             }

@@ -73,11 +73,15 @@ public class RabbitGM : MonoBehaviour
     private bool takeTriangle;
     private bool MachineDurabilityEmpty = false; //耐久歸零
     private bool isworkSfx = false;
+
+    private int buyCount;  //計算商店現在買幾次
     void Start()
     {
         ScriptStopwatchTimer = StopwatchTimer;
         MachineDurability_Script = MachineDurability;
-
+        //讀取商店現在買幾次
+        int ShopID = 2;
+        buyCount = PlayerPrefs.GetInt("BuyCount_" + ShopID.ToString(), 0);
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -185,17 +189,28 @@ public class RabbitGM : MonoBehaviour
         if (isRun)
         {
             AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+            var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
+
             if (stateInfo.IsName("work circle") || stateInfo.IsName("work square") || stateInfo.IsName("work triangle"))
             {
+                if (Application.loadedLevelName != "TeachGame")
+                {
+                    if (clipInfo.Length > 0)
+                    {
+                        float originalLength = clipInfo[0].clip.length;// 取得動畫的秒數
+                        float targetDuration = Mathf.Max(originalLength - (buyCount * 2.0f));  //每買一次就快2秒
+                        MachineAni.speed = originalLength / targetDuration;
+                    }
+                }
                 {  //倒數計時
                     float normalizedTime = Mathf.Min(stateInfo.normalizedTime, 1f);
                     Stopwatch.gameObject.SetActive(true);
-                    if(isworkSfx == false)
+                    if (isworkSfx == false)
                     {
                         AudioManager.Instance.PlaySfx(7);             //音效
                         isworkSfx = true;
                     }
-                    
+
 
                     if (Application.loadedLevelName == "TeachGame") //如果再新手交關
                     {
@@ -269,6 +284,9 @@ public class RabbitGM : MonoBehaviour
                 canSpawn = false;
                 //  Stopwatch.gameObject.SetActive(false);
                 //SpawnOK = true;
+
+                //恢復速度
+                MachineAni.speed = 1;
             }
 
             AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成方
@@ -279,6 +297,8 @@ public class RabbitGM : MonoBehaviour
                 canSpawn = false;
                 // Stopwatch.gameObject.SetActive(false);
                 //SpawnOK = true;
+                //恢復速度
+                MachineAni.speed = 1;
             }
 
             AnimatorStateInfo stateInfo4 = MachineAni.GetCurrentAnimatorStateInfo(0);  //生成角
@@ -288,6 +308,8 @@ public class RabbitGM : MonoBehaviour
                 Debug.Log("開始work triangle");
                 SpawnObject(2);
                 canSpawn = false;
+                //恢復速度
+                MachineAni.speed = 1;
                 //  Stopwatch.gameObject.SetActive(false);
                 // SpawnOK = true;
             }

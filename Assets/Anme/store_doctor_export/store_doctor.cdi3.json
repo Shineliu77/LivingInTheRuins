@@ -1,0 +1,129 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "眼光 開閉"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup",
+			"Name": "上衣中寶石光 開閉"
+		},
+		{
+			"Id": "ParamEyeLSmile2",
+			"GroupId": "ParamGroup",
+			"Name": "上衣右寶石光 開閉"
+		},
+		{
+			"Id": "ParamEyeLSmile3",
+			"GroupId": "ParamGroup",
+			"Name": "上衣左寶石光 開閉"
+		},
+		{
+			"Id": "ParamEyeLSmile4",
+			"GroupId": "ParamGroup",
+			"Name": "右帶子寶石光 開閉"
+		},
+		{
+			"Id": "ParamEyeLSmile5",
+			"GroupId": "ParamGroup",
+			"Name": "左帶子寶石光 開閉"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup2",
+			"Name": "包包 物理X"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup2",
+			"Name": "包包 物理Y"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup2",
+			"Name": "藥水袋 Z"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup2",
+			"Name": "藥水袋 變形"
+		},
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup2",
+			"Name": "帽子 物理"
+		},
+		{
+			"Id": "ParamAngleY2",
+			"GroupId": "ParamGroup2",
+			"Name": "右帶子 物理1"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup2",
+			"Name": "右帶子 物理2"
+		},
+		{
+			"Id": "ParamAngleY3",
+			"GroupId": "ParamGroup2",
+			"Name": "右帶子 物理3"
+		},
+		{
+			"Id": "ParamAngleY4",
+			"GroupId": "ParamGroup2",
+			"Name": "左帶子 物理1"
+		},
+		{
+			"Id": "ParamAngleY5",
+			"GroupId": "ParamGroup2",
+			"Name": "左帶子 物理2"
+		},
+		{
+			"Id": "ParamAngleY6",
+			"GroupId": "ParamGroup2",
+			"Name": "左帶子 物理3"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup3",
+			"Name": "左手 Z"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup3",
+			"Name": "右手 Z"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "發光"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "物理"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "手"
+		}
+	],
+	"Parts": [],
+	"CombinedParameters": [
+		[
+			"Param3",
+			"Param4"
+		]
+	]
+}

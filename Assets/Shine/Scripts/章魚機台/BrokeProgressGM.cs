@@ -49,11 +49,15 @@ public class BrokeProgressGM : MonoBehaviour
     private bool inTimeOnlyOne = false;//一次只能生成一個
     private bool isworkSfx = false;
     private int savedSeatID = -1; // 用來存儲抓到currentFixedItem的 ID
+
+    private int buyCount;  //計算商店現在買幾次
     void Start()
     {
         MachineDurability_Script = MachineDurability;
         SaveRemainingValue = MachineUIBar.fillAmount;
-
+        //讀取商店現在買幾次
+        int FindShopID = 0;  //是第幾個商品
+        buyCount = PlayerPrefs.GetInt("BuyCount_" + FindShopID.ToString(), 0);
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -150,8 +154,25 @@ public class BrokeProgressGM : MonoBehaviour
     void Update()
     {
         AnimatorStateInfo stateInfo = MachineAni.GetCurrentAnimatorStateInfo(0);
+        var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
         if (stateInfo.IsName("work"))
         {
+            if (Application.loadedLevelName != "TeachGame")
+            {
+
+                if (clipInfo.Length > 0)
+                {
+
+                    float originalLength = clipInfo[0].clip.length;  // 取得動畫的秒數
+
+                    //每買一次就快2秒
+                    //int FindShopID = 0;
+                    //int buyCount = PlayerPrefs.GetInt("BuyCount_" + FindShopID.ToString(), 0);
+                    float targetDuration = Mathf.Max(originalLength - (buyCount * 2.0f));
+                    MachineAni.speed = originalLength / targetDuration;
+                }
+            }
+
             //if (stateInfo.normalizedTime >= 0.99f && GameObject.FindGameObjectsWithTag("fixeditemOpen").Length <= 0)
             if (stateInfo.normalizedTime >= 0.99f && inTimeOnlyOne == false)
             {
@@ -161,9 +182,10 @@ public class BrokeProgressGM : MonoBehaviour
                     AudioManager.Instance.PlaySfx(0);             //音效
                 }
 
-                //第一關使用
-                else if (Application.loadedLevelName == "FirstGame")
+                //第一關使用  //看商店買幾次
+                else if (Application.loadedLevelName != "TeachGame")
                 {
+
                     // 使用剛剛存好的 savedSeatID
                     int idToUse = (savedSeatID != -1) ? savedSeatID : 0;
 
@@ -235,10 +257,11 @@ public class BrokeProgressGM : MonoBehaviour
                     MachineUIOutside.sprite = MachineUISpritesOutside[1]; //圓形計時器外框變色
                 }
             }
-            if (stateInfo.normalizedTime > 0.99f)
+            if (stateInfo.normalizedTime > 0.99f)    //恢復速度
             {
                 isworkSfx = false;
                 iswork = false;
+                MachineAni.speed = 1;
 
             }
         }
