@@ -196,16 +196,16 @@ public class FirstGame : MonoBehaviour
         // var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
         //if (col) col.enabled = true;
         //  }
-        GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
-        foreach (GameObject item in allOpenItems)
-        {
-            var col = item.GetComponent<BoxCollider2D>();
-            if (col != null && !col.enabled)
-            {
-                col.enabled = true;
-                // Debug.Log(item.name + " 的碰撞器已動態啟用");
-            }
-        }
+      //  GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+       // foreach (GameObject item in allOpenItems)
+       // {
+            //var col = item.GetComponent<BoxCollider2D>();
+            //  if (col != null && !col.enabled)
+            // {
+            //     col.enabled = true;
+            // Debug.Log(item.name + " 的碰撞器已動態啟用");
+            //}
+        //}
         GameObject[] allItems = GameObject.FindGameObjectsWithTag("fixeditem");
         foreach (GameObject order in allItems)
         {

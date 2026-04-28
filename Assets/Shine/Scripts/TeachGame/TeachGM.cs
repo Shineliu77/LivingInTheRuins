@@ -126,6 +126,7 @@ public class TeachGM : MonoBehaviour
 
     private TeachGM TeachgameManager;  //取得新手關程式
     private SpriteRenderer myRenderer;//圖片
+    public bool isClearLevel;
     public void IteamProduceOriginPicRenderer(SpriteRenderer target)  //外組件換原圖
     {
         if (target != null)
@@ -644,6 +645,9 @@ public class TeachGM : MonoBehaviour
                                                                              //不重複解鎖關卡
             PlayerPrefs.SetInt("UnLockLevelIndex", currentUnlocked + 1);
             PlayerPrefs.SetInt("TutorialUnlocked", 1);
+
+            isClearLevel = true;
+            PlayerPrefs.SetInt("ClearLevel", 1);
             PlayerPrefs.Save();
         }
 

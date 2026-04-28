@@ -7,9 +7,19 @@ using UnityEngine.SceneManagement;
 public class Mainmenu : MonoBehaviour
 {
     public Button[] ClickButton;
+    private bool isClearLevel;
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("StoryFirst");
+        int ISClearLevel = PlayerPrefs.GetInt("ClearLevel", 0);
+        isClearLevel = (ISClearLevel == 1);
+        if (isClearLevel == true)
+        {
+            SceneManager.LoadSceneAsync("lobby");
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("StoryFirst");
+        }
         AudioManager.Instance.PlaySfx(25);                                              //­µ®Ä
 
     }
@@ -44,5 +54,10 @@ public class Mainmenu : MonoBehaviour
     public void EscClickButtonSfx()
     {
         AudioManager.Instance.PlaySfx(25);
+    }
+    public void DeletData()
+    {
+        PlayerPrefs.DeleteAll();
+        // SceneManager.LoadSceneAsync("main menu");
     }
 }

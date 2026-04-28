@@ -101,6 +101,7 @@ public class SetIteamOpenObj : MonoBehaviour
                 target.SetActive(true);
 
 
+
                 SpriteRenderer sr = target.GetComponent<SpriteRenderer>();
                 if (sr == null) continue;
 
@@ -111,6 +112,7 @@ public class SetIteamOpenObj : MonoBehaviour
                         // sr.sprite = ProcessorImage[Random.Range(0, ProcessorImage.Length)];
                         currentProcessorIndex = Random.Range(0, ProcessorImage.Length);
                         sr.sprite = ProcessorImage[currentProcessorIndex];
+                        target.GetComponent<Collider2D>().enabled = false;
                         // currentReagentsIndex = -1;
                         break;
 
@@ -124,6 +126,7 @@ public class SetIteamOpenObj : MonoBehaviour
                         //sr.sprite = ReagentsImage[Random.Range(0, ReagentsImage.Length)];
                         currentReagentsIndex = Random.Range(0, ReagentsImage.Length);
                         sr.sprite = ReagentsImage[currentReagentsIndex];
+                        target.GetComponent<Collider2D>().enabled = false;
                         break;
 
                 }

@@ -16,6 +16,8 @@ public class ShopUse : MonoBehaviour
         public string ProductID;  //商品id
         public TextMeshProUGUI itemNameUI;  // 商品名
         public string itemName;
+        public Image OriginPic;
+        public Sprite[] ChangePic;
         public int[] itemPrice;                // 商品價錢
         public TextMeshProUGUI buyButtonUI;  // 價格
         public Button buyButton;
@@ -45,6 +47,7 @@ public class ShopUse : MonoBehaviour
         {
             int price = p.itemPrice[p.buyCount];
             p.buyCount = PlayerPrefs.GetInt("BuyCount_" + p.ProductID, 0);
+            ChangePicUdate(p);
             if (p.buyCount >= p.itemPrice.Length)
             {
                 if (p.buyButton != null)
@@ -88,6 +91,15 @@ public class ShopUse : MonoBehaviour
         }
     }
 
+    public void ChangePicUdate(Product p)
+    {
+        if (p.OriginPic != null && p.ChangePic.Length > 0)
+        {
+            int PicChange = Mathf.Clamp(p.buyCount, 0, p.ChangePic.Length - 1);
+            p.OriginPic.sprite = p.ChangePic[PicChange];
+        }
+
+    }
 
     public void UpdatePageButtons()
     {
@@ -136,11 +148,11 @@ public class ShopUse : MonoBehaviour
         }
 
     }
-    public void OnClickProduct(int index)               //一道下面那邊  這邊無亂如何都只會開啟 SureToBuyPane並顯示  "是否確認購買 這個           hasEnoughMoney也移到下面
+    public void OnClickProduct(int index)
     {
         selectedProductIndex = index; // 記錄玩家點了陣列中的第幾個商品
         Product p = allProducts[index]; // 取得該商品的完整資料包
-
+        AudioManager.Instance.PlaySfx(22);                                  //音效
         //  取得當前價格 (從對應的價格陣列抓取)
         int currentPrice = 0;
         bool hasEnoughMoney = saveLoadSystem.savedScore >= currentPrice;
@@ -190,9 +202,20 @@ public class ShopUse : MonoBehaviour
         //SurebuyButton.gameObject.SetActive(hasEnoughMoney);
         //NoMoneyButton.gameObject.SetActive(!hasEnoughMoney);
     }
+    public void LockButton()
+    {
+        // if (GameObject.FindWithTag("LockButton"))
+        // {
+        if (dialogue != null)
+        {
+            dialogue.currentLine = 11;
+            dialogue.ShowNextLine();
+        }
+        //  }
+    }
     public void SurebuyButtonUse()         //確認鈕錢夠
     {
-
+        AudioManager.Instance.PlaySfx(22);                                     //音效
         Product p = allProducts[selectedProductIndex];
         int price = p.itemPrice[p.buyCount];
 
@@ -201,7 +224,7 @@ public class ShopUse : MonoBehaviour
 
             saveLoadSystem.savedScore -= price;
             p.buyCount++;
-
+            ChangePicUdate(p);
             PlayerPrefs.SetInt("SavedScore", saveLoadSystem.savedScore);
             PlayerPrefs.SetInt("BuyCount_" + p.ProductID, p.buyCount);
             PlayerPrefs.Save();

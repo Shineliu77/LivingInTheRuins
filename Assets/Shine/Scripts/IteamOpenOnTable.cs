@@ -33,8 +33,38 @@ public class IteamOpenOnTable : MonoBehaviour
         GameObject[] allFixedItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
         SetIteamOpenObj currentPart = GetComponentInChildren<SetIteamOpenObj>();
 
+        //確保沒有修好的外組件打開
+        bool isAnyFinishedExist = false;
+        if (currentPart == null)
+        {
+            GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.name.Contains("fixeditemOpenFinished"))
+                {
+                    isAnyFinishedExist = true;
+                    if (Vector2.Distance(transform.position, obj.transform.position) < 2.0f)   //給錯誤客人彈回來使用
+                    {
+                        obj.transform.SetParent(this.transform);
+                        currentPart = obj.GetComponent<SetIteamOpenObj>();
+
+                        hasitem = true;
+                        touchingFixedItemOpen = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (currentPart.name.Contains("fixeditemOpenFinished"))
+            {
+                isAnyFinishedExist = true;
+            }
+        }
         // if (Application.loadedLevelName != "TeachGame" && allFixedItems == null || FindObjectOfType<SetIteamOpenObj>().OpenCount == 0)
-        if (Application.loadedLevelName != "TeachGame" && currentPart == null)
+        if (Application.loadedLevelName != "TeachGame" && currentPart == null & !isAnyFinishedExist)
         {
             hasitem = false;
             touchingFixedItemOpen = false;
@@ -56,20 +86,20 @@ public class IteamOpenOnTable : MonoBehaviour
             // }
             // }
         }
-        if (currentPart == null && hasitem == false)
-        {
-            foreach (GameObject item in allFixedItems)
-            {
-                // if (item.transform.root != this.transform.root)
-                //  {
-                // 只要是在桌子外面的，通通恢復解鎖
-                if (item.transform.parent != this.transform)
-                {
-                    SetItemInteraction(item, true);
-                }
-                // }
-            }
-        }
+        //  if (currentPart == null && hasitem == false)
+        //  {
+        //    foreach (GameObject item in allFixedItems)
+        //   {
+        // if (item.transform.root != this.transform.root)
+        //  {
+        // 只要是在桌子外面的，通通恢復解鎖
+        //   if (item.transform.parent != this.transform)
+        // {
+        //     SetItemInteraction(item, true);
+        // }
+        // }
+        // }
+        //}
         if (currentPart == null && hasitem == false)
         {
             foreach (GameObject item in allFixedItems)
@@ -106,6 +136,12 @@ public class IteamOpenOnTable : MonoBehaviour
         }
         if (currentPart != null && hasitem)
         {
+            foreach (GameObject item in allFixedItems)
+            {
+                if (item.transform.parent == this.transform)
+                    item.GetComponent<Collider2D>().enabled = true;
+            }
+
             // 檢查這個殼底下的電路板
             foreach (Transform child in currentPart.transform)
             {
@@ -129,6 +165,14 @@ public class IteamOpenOnTable : MonoBehaviour
                                                                  //child.localPosition = new Vector3(-3.7101f, -0.3002f, -0.1f);
                                                                  //      Debug.Log("Update 自動偵測並啟用了電路板");
                     }
+                }
+                if (child.name.Contains("壞掉圓")) // 建議用 Contains 比較保險
+                {
+                    child.GetComponent<Collider2D>().enabled = true;
+                }
+                if (child.name.Contains("殘藍")) // 建議用 Contains 比較保險
+                {
+                    child.GetComponent<Collider2D>().enabled = true;
                 }
             }
         }
