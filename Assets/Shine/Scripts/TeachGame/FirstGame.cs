@@ -196,15 +196,15 @@ public class FirstGame : MonoBehaviour
         // var col = IteamOpenPrefab.GetComponent<BoxCollider2D>();
         //if (col) col.enabled = true;
         //  }
-      //  GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
-       // foreach (GameObject item in allOpenItems)
-       // {
-            //var col = item.GetComponent<BoxCollider2D>();
-            //  if (col != null && !col.enabled)
-            // {
-            //     col.enabled = true;
-            // Debug.Log(item.name + " 的碰撞器已動態啟用");
-            //}
+        //  GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+        // foreach (GameObject item in allOpenItems)
+        // {
+        //var col = item.GetComponent<BoxCollider2D>();
+        //  if (col != null && !col.enabled)
+        // {
+        //     col.enabled = true;
+        // Debug.Log(item.name + " 的碰撞器已動態啟用");
+        //}
         //}
         GameObject[] allItems = GameObject.FindGameObjectsWithTag("fixeditem");
         foreach (GameObject order in allItems)
@@ -490,12 +490,13 @@ public class FirstGame : MonoBehaviour
         {
             IteamOpenPrefab = Instantiate(IteamOpen, IteamOpenProduce.position, IteamOpenProduce.rotation);
             var set = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
-            if (set != null)
+            if (set != null && seatID != -1)
             {
                 set.ID = seatID;
                 set.ProcessorID = 0;
                 IteamOpenOriginSprite(seatID, IteamOpenPrefab.GetComponent<SpriteRenderer>());//座位編號、對應編號的圖
             }
+
             GameObject.FindGameObjectWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = false;
         }
     }
@@ -557,6 +558,68 @@ public class FirstGame : MonoBehaviour
 
                 Destroy(objToDestroy);
                 Debug.Log($"已成功刪除座位 {seatID} 客人身上的子物件零件。");
+            }
+        }
+        BrokeProgressGM[] allBroke = FindObjectsOfType<BrokeProgressGM>();
+        foreach (var b in allBroke)
+        {
+            Debug.Log($"檢查機器: {b.name}, 機器存的ID: {b.BrokeProgresssavedSeatID}, 傳入的目標ID: {seatID}");
+            Debug.Log($"[重置檢查] 機器名稱: {b.name} | 機器存的 ID: {b.BrokeProgresssavedSeatID} | 走掉的客人 ID: {seatID}");
+            if (b.BrokeProgresssavedSeatID == seatID)
+            {
+                Debug.Log($"抓到機器 {seatID}");
+                b.MachineUI.gameObject.SetActive(false);
+                b.iswork = false;
+                b.MachineAni.ResetTrigger("IdleToWalk");
+                // b.MachineAni.Play("idle", 0, 0f); // 強制該台機器回 Idle
+                b.MachineAni.Play("idel", 0, 0f); // 強制該台機器回 Idle
+
+                //  b.MachineAni.CrossFade("idel", 0.1f, 0);
+                // b.MachineAni.Update(0);
+
+                b.BrokeProgresssavedSeatID = -1;
+                Debug.Log($"已重置機器 {b.BrokeProgresssavedSeatID} 的 Broke 動畫");
+            }
+        }
+        CrabGM[] allPCB = FindObjectsOfType<CrabGM>();
+        foreach (var b in allPCB)
+        {
+            Debug.Log($"檢查機器: {b.name},螃蟹機器存的ID: {b.BrokeProgresssavedSeatID}, 傳入的目標ID: {seatID}");
+            Debug.Log($"[重置檢查] 機器名稱: {b.name} | 機器存的 ID: {b.BrokeProgresssavedSeatID} | 走掉的客人 ID: {seatID}");
+            AnimatorStateInfo stateInfo = b.MachineAni.GetCurrentAnimatorStateInfo(0);
+            if (b.BrokeProgresssavedSeatID == seatID)
+            {
+                if (!stateInfo.IsName("idel") && !b.MachineDurabilityFix == true)
+                {
+                    Debug.Log($"抓到機器 {seatID}");
+                    b.MachineUI.gameObject.SetActive(false);
+                    b.iswork = false;
+                    b.MachineAni.ResetTrigger("IdleToWalk");
+                    // b.MachineAni.Play("idle", 0, 0f); // 強制該台機器回 Idle
+                    b.MachineAni.Play("idel", 0, 0f); // 強制該台機器回 Idle
+                    Debug.Log($"重置機器 {b.BrokeProgresssavedSeatID} {FindObjectOfType<IteamOpenOnTable>().HasActiveCircuitBoardNum}的 crab 動畫");
+                }
+                //  b.MachineAni.CrossFade("idel", 0.1f, 0);
+                // b.MachineAni.Update(0);
+
+
+                GameObject[] pcbObjects = GameObject.FindGameObjectsWithTag("PCB");
+                foreach (GameObject obj in pcbObjects)
+                {
+                    if (obj.name == "PCB_ID_" + b.BrokeProgresssavedSeatID && b.BrokeProgresssavedSeatID == seatID)
+                    {
+                        Destroy(obj);
+                        Debug.Log($"刪掉對應{b.BrokeProgresssavedSeatID}的電路板{seatID}");
+                    }
+                }
+                Debug.Log($"座位 {seatID} 的客人耐心歸零，相關物件已全數清理。");
+
+
+                //b.BrokeProgresssavedSeatID = -1;
+                FindObjectOfType<IteamOpenOnTable>().HasActiveCircuitBoardNum = -1;
+                b.BrokeProgresssavedSeatID = -1;
+                //b.PCBID = -1;  
+                Debug.Log($"已重置機器 {b.BrokeProgresssavedSeatID} {FindObjectOfType<IteamOpenOnTable>().HasActiveCircuitBoardNum}的 crab 動畫");
             }
         }
         Debug.Log($"座位 {seatID} 的客人耐心歸零，相關物件已全數清理。");

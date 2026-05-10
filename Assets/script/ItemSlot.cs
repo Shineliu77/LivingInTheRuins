@@ -83,7 +83,7 @@ public class ItemSlot : MonoBehaviour
                 {
                     Debug.LogWarning("§ä¤£¨ì¤÷¼h SetIteamOpenObj¡I");
                 }
-                if (parentObj.OpenCount == 0)
+                if (parentObj.OpenCount == 0 && Application.loadedLevelName != "TeachGame")
                 {
                     var parentDrag = GetComponentInParent<DraggableReturn2D>();
                     if (parentDrag != null)

@@ -61,7 +61,7 @@ public class MakeAPotion : MonoBehaviour
     public GameObject[] MakeLiquidItem;
     private GameObject CurrentChoseLiquidItem;
     private bool Teach = false;  //教學面板開過
-    private bool SfxUse=false;
+    private bool SfxUse = false;
     //確保動畫播完才可以修
     private bool isRed;
     private bool isYellow;
@@ -291,12 +291,12 @@ public class MakeAPotion : MonoBehaviour
                     if (Application.loadedLevelName == "TeachGame")
                     {
                         Potions[SelectPotionID].SetActive(true);
-                        if(SfxUse == false)
+                        if (SfxUse == false)
                         {
                             AudioManager.Instance.PlaySfx(2);             //音效
                             SfxUse = true;
                         }
-                        
+
                         Stopwatch.gameObject.SetActive(false);
                     }
                     Stopwatch.gameObject.SetActive(false);
@@ -359,7 +359,7 @@ public class MakeAPotion : MonoBehaviour
                 }
             }
         }
-        if (Application.loadedLevelName == "FirstGame")   //第一關生成使用 配合動畫生成
+        if (Application.loadedLevelName != "TeachGame")   //第一關生成使用 配合動畫生成
         {
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
             if (canSpawnPotions == true)
@@ -688,6 +688,12 @@ public class MakeAPotion : MonoBehaviour
             UnlockMakeLiquidItem();
             MachineDurabilityEmpty = false;
         }
+        else if (SaveMachineDurability / MachineDurability < 0.5f)
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+            MachineDurabilityEmpty = false;
+        }
         else if (SaveMachineDurability / MachineDurability <= 0f)      //耐久值歸零不能使用                                   
         {
             Debug.Log("耐久值歸零");
@@ -702,11 +708,7 @@ public class MakeAPotion : MonoBehaviour
             MachineDurabilityEmpty = false;
             UnlockMakeLiquidItem();
         }
-        else
-        {
-            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
-            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
-        }
+
         //  if (MachineDurabilityBar.fillAmount <= 0)
         //   {
         // MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];

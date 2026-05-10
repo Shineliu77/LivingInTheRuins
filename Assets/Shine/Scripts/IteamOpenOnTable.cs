@@ -11,6 +11,7 @@ public class IteamOpenOnTable : MonoBehaviour
     private TeachGM TeachgameManager;  //取得新手關程式
     private SpriteRenderer myRenderer;//圖片
 
+    public int HasActiveCircuitBoardNum;   //j外組件打開id
     //public bool hasitem = false;//只能放一件
     // Start is called before the first frame update
     void Start()
@@ -140,6 +141,26 @@ public class IteamOpenOnTable : MonoBehaviour
             {
                 if (item.transform.parent == this.transform)
                     item.GetComponent<Collider2D>().enabled = true;
+                float distance = 2.0f;
+                float dist = Vector3.Distance(transform.position, item.transform.position);
+                if (dist <= distance)   //如果在距離內的話
+                {
+                    //GameObject[] allFixedItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+                    //  GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+
+                    // if (Vector3.Distance(transform.position, obj.transform.position) < 2.0f)
+                    //{
+                    var set = currentPart.GetComponent<SetIteamOpenObj>();
+
+                    if (set != null && set.ID != -1)
+                    {
+                        HasActiveCircuitBoardNum = set.ID;
+
+                        Debug.Log($"獲取編號來生成使用: {HasActiveCircuitBoardNum}");
+                        // break;
+                    }
+                    //}
+                }
             }
 
             // 檢查這個殼底下的電路板
@@ -148,6 +169,20 @@ public class IteamOpenOnTable : MonoBehaviour
                 if (child.CompareTag("brokePCB"))
                 {
                     var drag = child.GetComponent<DraggableReturn2D>();
+
+                    //  BrokeProgressGM[] allBroke = FindObjectsOfType<BrokeProgressGM>();
+                    //  foreach (var b in allBroke)
+                    // {
+                    // 取得該機器的編號
+                    //  int currentID = b.BrokeProgresssavedSeatID;
+
+                    // 只有在 ID 有效(不是 -1)的時候才記錄
+                    //  if (currentID != -1)
+                    //  {
+                    // HasActiveCircuitBoardNum = b.BrokeProgresssavedSeatID;             //currentID;
+                    // Debug.Log($"找到運作中的機器，編號: {HasActiveCircuitBoardNum}");
+                    //}
+                    // }
 
                     // 【關鍵判斷】如果電路板還沒被啟用，才執行開啟邏輯
                     // 這樣就不會每幀都去重設座標，導致抓不起來

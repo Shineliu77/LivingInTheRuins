@@ -245,6 +245,7 @@ public class MonsterGM : MonoBehaviour
         if (Application.loadedLevelName == "TeachGame" && !FindObjectOfType<TeachGM>().isTeach7)
         {
             FindObjectOfType<TeachGM>().OpenTeach7();
+            FindObjectOfType<MakeAPotion>().MachineAni.speed = 0;
         }
 
     }

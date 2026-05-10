@@ -103,6 +103,7 @@ public class TeachGM : MonoBehaviour
     public GameObject Teach8;  //第一段
     public GameObject TeachEight;
     public GameObject TeachEightTwo;
+    private bool isTeachEightTwo;
     public GameObject TeachEightThree;
     private bool teach8 = false;//第二段
     private bool teachEight = false;
@@ -110,6 +111,7 @@ public class TeachGM : MonoBehaviour
     #endregion
     #region 第9段說明
     public GameObject Teach9;
+    private bool teach9 = false;
     #endregion
     #region 第10段說明
     public GameObject Teach10;
@@ -330,6 +332,7 @@ public class TeachGM : MonoBehaviour
         if (!Teach7.active && isTeach7 && CustomerNumber == 2)
         {
             Time.timeScale = 1;
+            FindObjectOfType<MakeAPotion>().MachineAni.speed = 1;
         }
 
 
@@ -338,7 +341,33 @@ public class TeachGM : MonoBehaviour
             TeachEight.SetActive(true);
             teachEight = true;
         }
+        if (Teach8.activeSelf)  //打開第八個教學面板的第二段
+        {
 
+            GameObject.FindWithTag("blueIiquid").GetComponent<Collider2D>().enabled = false;
+        }
+
+        if (!TeachEight.activeSelf && teachEight == true)  //打開第八個教學面板的第二段
+        {
+            GameObject.FindWithTag("blueIiquid").GetComponent<Collider2D>().enabled = true;
+        }
+        if (!TeachEightTwo.activeSelf && isTeachEightTwo == true)
+        {
+            GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
+            Vector3 pcbLocal = GameObject.FindWithTag("brokePCB").transform.localPosition;
+            pcbLocal.z = -1f;
+            GameObject.FindWithTag("brokePCB").transform.localPosition = pcbLocal;
+        }
+        //  if (Teach9.activeSelf && teach9 == false)
+        // {
+        //     GameObject.FindWithTag("fixeditemOpen").GetComponent<Collider2D>().enabled = false;
+        //     teach9 = true;
+        // }
+
+        // if (!Teach9.activeSelf&& teach9 == true)
+        // {
+        //  GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+        // }
     }
     public void ProductCustomer()
     {
@@ -552,10 +581,11 @@ public class TeachGM : MonoBehaviour
     public void OpenTeachEightTwo()  //處理電路板
     {
         TeachEightTwo.SetActive(true);
-        GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
-        Vector3 pcbLocal = GameObject.FindWithTag("brokePCB").transform.localPosition;
-        pcbLocal.z = -1f;
-        GameObject.FindWithTag("brokePCB").transform.localPosition = pcbLocal;
+        isTeachEightTwo = true;
+        // GameObject.FindWithTag("brokePCB").GetComponent<DraggableReturn2D>().enabled = true;
+        //Vector3 pcbLocal = GameObject.FindWithTag("brokePCB").transform.localPosition;
+        // pcbLocal.z = -1f;
+        //GameObject.FindWithTag("brokePCB").transform.localPosition = pcbLocal;
         // GameObject.FindWithTag("brokePCB").transform.localPosition = new Vector3(-3.583005f, -0.3002f, -0.1f);
 
     }
@@ -578,9 +608,18 @@ public class TeachGM : MonoBehaviour
     public void OpenTeach9()
     {
         Teach9.SetActive(true);
-
+        teach9 = true;
     }
 
+    public void CloseTeach9()
+    {
+        //if (!Teach9.activeSelf)
+        // {
+        //    teach9 = true;
+        GameObject.FindWithTag("fixeditemOpen").GetComponent<DraggableReturn2D>().enabled = true;
+        //}
+
+    }
     public void OpenTeach10()
     {
         Teach10.SetActive(true);

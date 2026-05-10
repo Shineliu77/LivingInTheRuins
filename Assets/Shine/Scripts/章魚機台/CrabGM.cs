@@ -41,20 +41,26 @@ public class CrabGM : MonoBehaviour
     private int buyCount;  //計算商店現在買幾次
     //機器耐久值恢復
     public GameObject FixMachineDurability;  //機器耐久維修物
-    bool MachineDurabilityFix = false;  //不可修
+    public bool MachineDurabilityFix = false;  //不可修
     public GameObject FixMachineShow; //機器維修會顯示在機器上的圖
     private bool isFixMachineShow = false;
     private Coroutine repairCoroutine; // 協程參考，避免重複啟動
     private bool touchingFixMachine; //耐久維修物是否碰撞中
-    private bool iswork = false;//一次只能使用一個  工作不可修
+    public bool iswork = false;//一次只能使用一個  工作不可修
+    private bool isFixMachineDurability = true;  //耐久值不是0
     //電路板
     private bool touchingbrokePCB;
     private GameObject currentbrokePCB;
-    private bool isworkSfx=false;
+    private bool isworkSfx = false;
     //動畫
     float getInLength;
     float workLength;
     float totalLength;
+
+    private int savedSeatID = -1; // 用來存儲抓到currentFixedItem的 ID
+    public int BrokeProgresssavedSeatID = -1; // 用來存儲抓到currentFixedItem的 ID
+                                              // public int PCBID;    //生成取得
+                                              // public int HasActiveCircuitBoardNum;   //j外組件打開id
     void Start()
     {
         MachineDurability_Script = MachineDurability;
@@ -117,10 +123,33 @@ public class CrabGM : MonoBehaviour
     {
         //if (!touchingbrokePCB) return;
         //放開時碰到電路板
-        if (touchingbrokePCB && currentbrokePCB != null && iswork == false)
+        if (touchingbrokePCB && currentbrokePCB != null && iswork == false && isFixMachineDurability == true)
         {
             //AudioManager.Instance.PlaySfx(1);             //音效
             MachineAni.speed = 1;                         //動
+                                                          // GameObject[] allOpenItems = GameObject.FindGameObjectsWithTag("fixeditemOpen");
+                                                          // foreach (GameObject obj in allOpenItems)
+                                                          //{
+                                                          // if (Vector3.Distance(transform.position, obj.transform.position) < 2.0f)
+                                                          //{
+                                                          //var set = obj.GetComponent<SetIteamOpenObj>();
+
+            // if (set != null&& set.ID!=-1)
+            // {
+            //  savedSeatID = set.ID;
+
+            //  Debug.Log($"從場景物件 {obj.name} 成功獲取編號: {savedSeatID}");
+            // break;
+            // }
+            //}
+            //}
+            //FindObjectOfType<IteamOpenOnTable>(). HasActiveCircuitBoardNum;
+            IteamOpenOnTable IteamOpenOnTableNum = FindObjectOfType<IteamOpenOnTable>();
+            BrokeProgresssavedSeatID = IteamOpenOnTableNum.HasActiveCircuitBoardNum;
+            savedSeatID = BrokeProgresssavedSeatID;
+            Debug.Log("準備生成，使用座位 ID: " + BrokeProgresssavedSeatID + IteamOpenOnTableNum.HasActiveCircuitBoardNum + savedSeatID);
+            // BrokeProgresssavedSeatID = savedSeatID ;  // 存外組件打開的編號
+            // Debug.Log("準備生成，使用座位 ID: " + BrokeProgresssavedSeatID + savedSeatID);
             //Destroy(item.gameObject); //這兩都ok
             canSpawnPCB = true;
             iswork = true;
@@ -155,7 +184,7 @@ public class CrabGM : MonoBehaviour
         var clipInfo = MachineAni.GetCurrentAnimatorClipInfo(0);
         if (stateInfo.IsName("get in") || stateInfo.IsName("work"))
         {
-            
+
             if (stateInfo.normalizedTime >= 0.99f)
             {
                 // if (Application.loadedLevelName == "TeachGame")
@@ -171,12 +200,12 @@ public class CrabGM : MonoBehaviour
             {
                 if (stateInfo.normalizedTime < 0.99f)
                 {
-                    if(isworkSfx == false)
+                    if (isworkSfx == false)
                     {
                         AudioManager.Instance.PlaySfx(5);
                         isworkSfx = true;
                     }
-                    
+
                     MachineAni.speed = 1;
                     //if(stateInfo.IsName("work")){ MachineUI.gameObject.SetActive(true); }
                     MachineUI.gameObject.SetActive(true);
@@ -213,16 +242,26 @@ public class CrabGM : MonoBehaviour
                     SaveRemainingValue = MachineDurability_Script - currentTimeInSeconds;
 
                     MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
-                    if (MachineUIBar.fillAmount > 0.5f)
-                    {
-                        MachineUIBar.sprite = MachineUIBarSprites[0];
-                        MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
-                    }
-                    else
-                    {
-                        MachineUIBar.sprite = MachineUIBarSprites[1];
-                        MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
-                    }
+                    // if (MachineUIBar.fillAmount > 0.5f)
+                    // {
+                    //   MachineUIBar.sprite = MachineUIBarSprites[0];
+                    //    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+                    //    isFixMachineDurability = true;
+                    //}
+                    // else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
+                    // {
+                    //    MachineUIBar.sprite = MachineUIBarSprites[1];
+                    //    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                    //    isFixMachineDurability = false;
+                    // }
+                    // else if (MachineUIBar.fillAmount <= 0.5f)
+                    // {
+                    //  MachineUIBar.sprite = MachineUIBarSprites[1];
+                    //   MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                    //   isFixMachineDurability = true;
+                    //}
+
+
                     //MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
                     // float fillAmount = 1f - (currentTimeInSeconds / animationLength);
                     MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / totalLength);
@@ -244,7 +283,7 @@ public class CrabGM : MonoBehaviour
 
             }
         }
-        if (canSpawnPCB && CurrentPCB == null)   //生成PCB
+        if (canSpawnPCB && CurrentPCB == null && Application.loadedLevelName == "TeachGame")   //生成PCB
         {
 
             AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
@@ -254,12 +293,34 @@ public class CrabGM : MonoBehaviour
                 AudioManager.Instance.PlaySfx(4);                                                        //音效
                 CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
                 canSpawnPCB = false;
-                if (Application.loadedLevelName == "TeachGame")
+                // if (Application.loadedLevelName == "TeachGame")
+                //{
+                FindObjectOfType<TeachGM>().OpenTeachEightThree();
+                GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = false;
+                //}
+            }
+        }
+        if (canSpawnPCB && CurrentPCB == null && Application.loadedLevelName != "TeachGame")   //生成PCB
+        {
+
+            if (savedSeatID != -1)
+            {
+                BrokeProgresssavedSeatID = savedSeatID;  // 存外組件打開的編號
+                AnimatorStateInfo stateInfo2 = MachineAni.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.IsName("pull out") && stateInfo2.normalizedTime > 0.6f)
                 {
-                    FindObjectOfType<TeachGM>().OpenTeachEightThree();
-                    GameObject.FindWithTag("PCB").GetComponent<DraggableReturn2D>().enabled = false;
+                    isworkSfx = false;
+                    AudioManager.Instance.PlaySfx(4);                                                        //音效
+                    CurrentPCB = Instantiate(PCBPop, PCBPopPlace.position, PCBPopPlace.rotation);
+                    canSpawnPCB = false;
+                    CurrentPCB.name = "PCB_ID_" + savedSeatID;
+
+                    Debug.Log($"電路板已生成，名稱為: {CurrentPCB.name}{savedSeatID}");
+                    savedSeatID = -1;
+
                 }
             }
+
         }
         AnimatorStateInfo stateInfo3 = MachineAni.GetCurrentAnimatorStateInfo(0);
         if ((stateInfo3.IsName("pull out") && stateInfo3.normalizedTime > 0.01f) || (stateInfo.IsName("hold") && stateInfo3.normalizedTime > 0.01f || stateInfo.IsName("take out") && stateInfo3.normalizedTime > 0.01f))
@@ -272,6 +333,25 @@ public class CrabGM : MonoBehaviour
         {
             iswork = false;
             MachineAni.speed = 1;
+        }
+
+        if (MachineUIBar.fillAmount > 0.5f)
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[0];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+            isFixMachineDurability = true;
+        }
+        else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[1];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+            isFixMachineDurability = false;
+        }
+        else if (MachineUIBar.fillAmount <= 0.5f)
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[1];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+            isFixMachineDurability = true;
         }
     }
 
@@ -356,6 +436,8 @@ public class CrabGM : MonoBehaviour
             MachineDurability_Script += repairAmount;
 
             if (MachineDurability_Script > MachineDurability)
+            {
+
                 if (MachineDurability_Script >= MachineDurability)  //回滿關起來
                 {
                     MachineDurabilityFix = false; //停止修
@@ -363,7 +445,8 @@ public class CrabGM : MonoBehaviour
                     MachineAni.speed = 1;         //動
                     FixMachineShow.SetActive(false);
                     // FindObjectOfType<FixMachineDurabilityChangeImage>().ChangeOrigin();  //換回去
-                };
+                }
+            }
             SaveRemainingValue = MachineDurability_Script;
             MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
             yield return new WaitForSeconds(1f);

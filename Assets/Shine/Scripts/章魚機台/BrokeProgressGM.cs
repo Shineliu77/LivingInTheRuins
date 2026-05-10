@@ -45,11 +45,11 @@ public class BrokeProgressGM : MonoBehaviour
     public Transform ProducePos;
     public float DeductMachineDurability;//扣除機器耐久
     bool isRun;
-    private bool iswork = false;//一次只能使用一個  工作不可修
+    public bool iswork = false;//一次只能使用一個  工作不可修
     private bool inTimeOnlyOne = false;//一次只能生成一個
     private bool isworkSfx = false;
     private int savedSeatID = -1; // 用來存儲抓到currentFixedItem的 ID
-
+    public int BrokeProgresssavedSeatID = -1; // 用來存儲抓到currentFixedItem的 ID
     private int buyCount;  //計算商店現在買幾次
     void Start()
     {
@@ -112,7 +112,9 @@ public class BrokeProgressGM : MonoBehaviour
             {
                 savedSeatID = marker.SeatIndex;
             }
-
+            int idToUse = savedSeatID;
+            BrokeProgresssavedSeatID = idToUse; // 存外組件打開的編號
+            Debug.Log("準備生成，使用座位 ID: " + idToUse + savedSeatID);
             currentFixedItem.SetActive(false);
 
             Debug.Log("放開滑鼠：fixeditem");
@@ -185,16 +187,21 @@ public class BrokeProgressGM : MonoBehaviour
                 //第一關使用  //看商店買幾次
                 else if (Application.loadedLevelName != "TeachGame")
                 {
+                    if (savedSeatID != -1)
+                    {
+                        int idToUse = savedSeatID;
+                        BrokeProgresssavedSeatID = idToUse; // 存入外組件打開編號
+                                                            // int idToUse = (savedSeatID != -1) ? savedSeatID : 0;
 
-                    // 使用剛剛存好的 savedSeatID
-                    int idToUse = (savedSeatID != -1) ? savedSeatID : 0;
+                        Debug.Log("生成，使用座位 ID: " + idToUse + savedSeatID);
 
-                    Debug.Log("準備生成零件，使用座位 ID: " + idToUse);
-
-                    FindObjectOfType<FirstGame>().ProduceIteamOpen(idToUse);
-                    AudioManager.Instance.PlaySfx(0);             //音效
-                    //inTimeOnlyOne = true;
-                    savedSeatID = -1; // 重置
+                        FindObjectOfType<FirstGame>().ProduceIteamOpen(idToUse);
+                        AudioManager.Instance.PlaySfx(0);             //音效
+                                                                      //inTimeOnlyOne = true;
+                        savedSeatID = -1; // 重置
+                        BrokeProgresssavedSeatID = -1;
+                        Debug.Log("生成完成，清空座位 ID: " + idToUse + savedSeatID + BrokeProgresssavedSeatID);
+                    }
                 }
                 inTimeOnlyOne = true;
                 Placement.enabled = true;
@@ -223,25 +230,25 @@ public class BrokeProgressGM : MonoBehaviour
                 //    SaveRemainingValue = MachineDurability_Script;      好像要用個存的                                                               //ttt
                 MachineUIBar.fillAmount = SaveRemainingValue / MachineDurability;
 
-                if (MachineUIBar.fillAmount > 0.5f)
-                {
-                    MachineUIBar.sprite = MachineUIBarSprites[0];
-                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
-                    isFixMachineDurability = true;
-                }
-                else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
-                {
-                    MachineUIBar.sprite = MachineUIBarSprites[1];
-                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
-                    isFixMachineDurability = false;
-                }
-                else
-                {
-                    MachineUIBar.sprite = MachineUIBarSprites[1];
-                    MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
-                    isFixMachineDurability = true;
+                // if (MachineUIBar.fillAmount > 0.5f)
+                // {
+                //   MachineUIBar.sprite = MachineUIBarSprites[0];
+                //  MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+                // isFixMachineDurability = true;
+                //}
+                // else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
+                //{
+                //  MachineUIBar.sprite = MachineUIBarSprites[1];
+                //  MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                // isFixMachineDurability = false;
+                //}
+                //else if (MachineUIBar.fillAmount <= 0.5f)
+                //{
+                //  MachineUIBar.sprite = MachineUIBarSprites[1];
+                //   MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+                //  isFixMachineDurability = true;
 
-                }
+                //}
                 MachineUI.transform.GetChild(1).GetComponent<Image>().fillAmount = 1f - (currentTimeInSeconds / animationLength);
                 float fillAmount = 1f - (currentTimeInSeconds / animationLength);
                 float zRotation = fillAmount * maxRotation; // 比例轉角度，例如 1.0 * -360 = -360°
@@ -264,6 +271,26 @@ public class BrokeProgressGM : MonoBehaviour
                 MachineAni.speed = 1;
 
             }
+        }
+
+        if (MachineUIBar.fillAmount > 0.5f)
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[0];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[0]; //耐久值外框原色
+            isFixMachineDurability = true;
+        }
+        else if (MachineUIBar.fillAmount <= 0f)                          //耐久值歸零不能使用  
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[1];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+            isFixMachineDurability = false;
+        }
+        else if (MachineUIBar.fillAmount <= 0.5f)
+        {
+            MachineUIBar.sprite = MachineUIBarSprites[1];
+            MachineUIBarOutside.sprite = MachineUIBarSpritesOutside[1]; //耐久值外框變色
+            isFixMachineDurability = true;
+
         }
     }
 

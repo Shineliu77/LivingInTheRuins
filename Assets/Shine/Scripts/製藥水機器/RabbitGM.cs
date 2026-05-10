@@ -42,8 +42,6 @@ public class RabbitGM : MonoBehaviour
     public Animator MachineAni;
     float SaveMachineDurability;
     bool isRun;
-
-
     bool Show = false;
 
     //生成物件
@@ -65,6 +63,7 @@ public class RabbitGM : MonoBehaviour
                                        // public System.Action OnWaitFinished;
     private bool waitEventSent = false;
     public Button[] RabbitButton;   //兔子按鈕
+    public bool isLockButton = false;
     //確保動畫換回idel才可以修
     private bool isIdel;
     //確保動畫播完才可以修
@@ -326,38 +325,49 @@ public class RabbitGM : MonoBehaviour
         // }
         // }
         AnimatorStateInfo stateInfo6 = MachineAni.GetCurrentAnimatorStateInfo(0);       //鎖住按鈕       
-        //if ((stateInfo6.IsName("work circle") && stateInfo6.normalizedTime > 0.01f )||( stateInfo6.IsName("work square") && stateInfo6.normalizedTime > 0.01f )|| (stateInfo6.IsName("work triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.01f))
+                                                                                        //if ((stateInfo6.IsName("work circle") && stateInfo6.normalizedTime > 0.01f )||( stateInfo6.IsName("work square") && stateInfo6.normalizedTime > 0.01f )|| (stateInfo6.IsName("work triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.01f))
+        if (isLockButton == true)
+        {
+            LockRabbitButtons();
+        }
         if ((stateInfo6.IsName("work circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("work square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("work triangle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait circle") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait square") && stateInfo6.normalizedTime > 0.01f) || (stateInfo6.IsName("wait triangle") && stateInfo6.normalizedTime > 0.01f))
         {
+            isLockButton = true;
             isIdel = false;
             takeCircle = false;
             takeSquare = false;
             takeTriangle = false;
             LockRabbitButtons();
         }
-        if (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.99f)
+        //if (stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.99f)
+        //  {
+        //    takeCircle = true;
+        // }
+        // if (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f)
+        // {
+        //    takeSquare = true;
+        // }
+        //if ((stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f))
+        if ((stateInfo6.IsName("take away circle") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f))
         {
             takeCircle = true;
-        }
-        if (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f)
-        {
             takeSquare = true;
-        }
-        if ((stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away square") && stateInfo6.normalizedTime > 0.99f) || (stateInfo6.IsName("take away triangle") && stateInfo6.normalizedTime > 0.99f))
-        {
             takeTriangle = true;
+            isLockButton = false;
         }
         AnimatorStateInfo stateInfo7 = MachineAni.GetCurrentAnimatorStateInfo(0);       //解鎖按鈕   
         //if (allSpawnedObjects.Count <= maxObjects&&stateInfo7.IsName("idel") &&!MachineDurabilityEmpty)
         if ((allSpawnedObjects.Count <= maxObjects) && stateInfo7.IsName("take away circle") || stateInfo7.IsName("take away square") || stateInfo7.IsName("take away triangle") && !MachineDurabilityEmpty)
         {
             isIdel = true;
+            isLockButton = false;
             UnlockRabbitButtons();
         }
         //if ((stateInfo7.IsName("idel") && MachineDurabilityEmpty == true) || (allSpawnedObjects.Count >= maxObjects))
         if ((stateInfo7.IsName("take away circle") || stateInfo7.IsName("take away square") || stateInfo7.IsName("take away triangle") && MachineDurabilityEmpty == true) || (allSpawnedObjects.Count >= maxObjects))
         {
             isIdel = true;
+            isLockButton = false;
             LockRabbitButtons();
         }
     }
@@ -394,6 +404,8 @@ public class RabbitGM : MonoBehaviour
 
     public void RabbitCircle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
+        isLockButton = true;
+
         isIdel = false;
         takeCircle = false;
         AudioManager.Instance.PlaySfx(8);             //音效
@@ -407,6 +419,7 @@ public class RabbitGM : MonoBehaviour
     }
     public void RabbitSquaare()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
+        isLockButton = true;
         isIdel = false;
         takeSquare = false;
         AudioManager.Instance.PlaySfx(8);             //音效
@@ -419,6 +432,7 @@ public class RabbitGM : MonoBehaviour
     }
     public void RabbittTriangle()   //如果按到哪個按鈕觸法哪個按鈕得生成
     {
+        isLockButton = true;
         isIdel = false;
         takeTriangle = false;
         AudioManager.Instance.PlaySfx(8);             //音效

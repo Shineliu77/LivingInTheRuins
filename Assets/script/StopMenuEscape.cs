@@ -43,6 +43,18 @@ public class StopMenuEscape : MonoBehaviour
             }
         }
     }
+
+    public void stopMenuObjectUse()
+    {
+        isMenuOpen = !isMenuOpen;  // 關掉選單
+        stopMenuObject.SetActive(isMenuOpen);
+    }
+
+    public void stopAdjustUse()
+    {
+        isMenuOpen = !isMenuOpen;  // 關掉調整項目
+        stopAdjust.SetActive(isAdjustOpen);
+    }
 }
 
 
