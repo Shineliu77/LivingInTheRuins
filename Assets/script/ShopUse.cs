@@ -255,7 +255,7 @@ public class ShopUse : MonoBehaviour
         }
         else                                       //錢不夠
         {
-            itemDescriptionUIupsise.text = "費用不足，無法購買 " + p.itemNameUI.text + " !";
+            itemDescriptionUIupsise.text = "費用不足，無法購買" + p.itemNameUI.text + " !";
             itemDescriptionUIdownsise.text = "遊玩關卡賺取更多報酬吧";
 
             SurebuyButton.gameObject.SetActive(false);
