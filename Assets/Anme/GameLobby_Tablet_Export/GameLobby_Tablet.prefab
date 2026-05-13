@@ -832,7 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Opacity: 1
-  _lastOpacity: 1
+  _lastOpacity: 0
   _isOverwrittenModelMultiplyColors: 0
   _isOverwrittenModelScreenColors: 0
   _modelMultiplyColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1374,15 +1374,15 @@ Transform:
   m_GameObject: {fileID: 4906212369417171076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.076, y: -0.066, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8449831068411641810}
   - {fileID: 2028996204511873870}
   - {fileID: 1605714281881599175}
   - {fileID: 6329512936419625371}
   - {fileID: 6733450050538982347}
-  - {fileID: 8449831068411641810}
   - {fileID: 9100889746985177874}
   - {fileID: 7074681712080397465}
   m_Father: {fileID: 8828326183865208041}
@@ -1509,13 +1509,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 3574379742896155333}
-  - {fileID: 6218604930275174463}
-  - {fileID: 6937028909851404514}
-  - {fileID: 2283807414224733019}
-  - {fileID: 7459169125969656809}
-  - {fileID: 457383755411900235}
-  - {fileID: 4876797179539029339}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0

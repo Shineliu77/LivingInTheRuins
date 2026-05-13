@@ -1112,63 +1112,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _childDrawableRenderers:
-  - {fileID: 1792846481418296465}
-  - {fileID: 5215732023285786305}
-  - {fileID: 3054311124725061808}
-  - {fileID: 7068984045839901884}
-  - {fileID: 1725970783766208396}
-  - {fileID: 7669889078587283136}
-  - {fileID: 914305985252300784}
-  - {fileID: 4626640838698716664}
-  - {fileID: 2399374325631709266}
-  - {fileID: 8752207948758182926}
-  - {fileID: 16924119196798}
-  - {fileID: 2250594850959052496}
-  - {fileID: 2108535184401445942}
-  - {fileID: 7885820815662313057}
-  - {fileID: 5156295156354881786}
-  - {fileID: 6051184418201421}
-  - {fileID: 4655443122090497145}
-  - {fileID: 677393918146055385}
-  - {fileID: 3086745691013234902}
-  - {fileID: 8710780906850279457}
-  - {fileID: 2877347363457776612}
-  - {fileID: 5679999543436190394}
-  - {fileID: 4665724971011505953}
-  - {fileID: 3961293292360061730}
-  - {fileID: 6836804445529654605}
-  - {fileID: 904830055768482014}
-  - {fileID: 5567593680245097669}
-  - {fileID: 3676205052837415940}
-  - {fileID: 8610696401324397343}
-  - {fileID: 5815833519031567526}
-  - {fileID: 1370430957961877719}
-  - {fileID: 1114710062410062298}
-  - {fileID: 2124192235442479332}
-  - {fileID: 654976052455608744}
-  - {fileID: 2437963492192822673}
-  - {fileID: 5528373316905137524}
-  - {fileID: 3275123585710486503}
-  - {fileID: 218471385424719368}
-  - {fileID: 1212218256808917054}
-  - {fileID: 1216668671704056385}
-  - {fileID: 7164642216358011645}
-  - {fileID: 2291924037417073890}
-  - {fileID: 8480776157465330886}
-  - {fileID: 9010836178514338873}
-  - {fileID: 2602905556546942343}
-  - {fileID: 4841612226633584387}
-  - {fileID: 2746696472706202854}
-  - {fileID: 427593409144645753}
-  - {fileID: 1679518977845444009}
-  - {fileID: 6512259309034636899}
-  - {fileID: 3517062064018908727}
-  - {fileID: 4107115644511360792}
-  - {fileID: 6944063613289280460}
-  - {fileID: 2822815945607825494}
-  - {fileID: 8632142455187545347}
-  - {fileID: 4705929930219275268}
-  - {fileID: 2055961229820258338}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _childParts: []
   _isOverwrittenPartMultiplyColors: 0
   _isOverwrittenPartScreenColors: 0
@@ -4661,7 +4661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Opacity: 1
-  _lastOpacity: 1
+  _lastOpacity: 0
   _isOverwrittenModelMultiplyColors: 0
   _isOverwrittenModelScreenColors: 0
   _modelMultiplyColor: {r: 0, g: 0, b: 0, a: 0}
@@ -4699,7 +4699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967223d908bf07b4f90945995bdca68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maskTexture: {fileID: 11400000, guid: 16bf142754640ab4487bb625c30931fd, type: 2}
+  _maskTexture: {fileID: 0}
 --- !u!114 &6940693128794031175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8620,7 +8620,7 @@ Transform:
   m_GameObject: {fileID: 6631982476786292476}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.2871342, w: -0.9578904}
-  m_LocalPosition: {x: -0.191, y: -0.472, z: -0.00055}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00055}
   m_LocalScale: {x: 1.1856, y: 1.1856, z: 1.1856}
   m_ConstrainProportionsScale: 0
   m_Children: []

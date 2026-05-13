@@ -1410,7 +1410,7 @@ MonoBehaviour:
   _modelScreenColor: {r: 0, g: 0, b: 0, a: 0}
   _sortingLayerId: 0
   _sortingMode: 0
-  _sortingOrder: 5
+  _sortingOrder: 0
   CameraToFace: {fileID: 0}
   _drawOrderHandler: {fileID: 0}
   _opacityHandler: {fileID: 0}
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b893d4d32dd60bc4c9a2e447d31c6e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExpressionsList: {fileID: 11400000, guid: 3a537a92ee1560549aa1cf5c31af8e65, type: 2}
+  ExpressionsList: {fileID: 0}
   UseLegacyBlendCalculation: 0
   CurrentExpressionIndex: -1
 --- !u!95 &2614897794160038874
@@ -1491,7 +1491,7 @@ Animator:
   m_GameObject: {fileID: 2697345470173862976}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b1b4628bf5eea084da339458b70b4b38, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1514,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd9e6647bfff7542acb0200ab74bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CubismFadeMotionList: {fileID: 11400000, guid: 3398d0d1357e3b048b0a169df33aa51b, type: 2}
+  CubismFadeMotionList: {fileID: 0}
 --- !u!114 &1279278849580268276
 MonoBehaviour:
   m_ObjectHideFlags: 0
