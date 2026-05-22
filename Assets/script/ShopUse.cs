@@ -215,7 +215,7 @@ public class ShopUse : MonoBehaviour
     }
     public void SurebuyButtonUse()         //確認鈕錢夠
     {
-        AudioManager.Instance.PlaySfx(22);                                     //音效
+        AudioManager.Instance.PlaySfx(27);                                     //音效
         Product p = allProducts[selectedProductIndex];
         int price = p.itemPrice[p.buyCount];
 

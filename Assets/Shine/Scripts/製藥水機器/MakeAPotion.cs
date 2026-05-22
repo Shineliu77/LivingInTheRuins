@@ -78,6 +78,8 @@ public class MakeAPotion : MonoBehaviour
         //讀取商店現在買幾次
         int ShopID = 1;
         buyCount = PlayerPrefs.GetInt("BuyCount_" + ShopID.ToString(), 0);
+        allSpawnedPotions.Clear();
+        Debug.Log("目前數量：" + allSpawnedPotions.Count);
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -688,12 +690,6 @@ public class MakeAPotion : MonoBehaviour
             UnlockMakeLiquidItem();
             MachineDurabilityEmpty = false;
         }
-        else if (SaveMachineDurability / MachineDurability < 0.5f)
-        {
-            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
-            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
-            MachineDurabilityEmpty = false;
-        }
         else if (SaveMachineDurability / MachineDurability <= 0f)      //耐久值歸零不能使用                                   
         {
             Debug.Log("耐久值歸零");
@@ -702,13 +698,23 @@ public class MakeAPotion : MonoBehaviour
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
             LockMakeLiquidItem();
         }
+        else if (SaveMachineDurability / MachineDurability < 0.5f)
+        {
+            MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+            MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+            MachineDurabilityEmpty = false;
+        }
         else if (SaveMachineDurability / MachineDurability > 0f)      //耐久值不為零                          
         {
             Debug.Log("耐久值不為零");
             MachineDurabilityEmpty = false;
             UnlockMakeLiquidItem();
         }
-
+        //  else
+        // {
+        //    MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
+        //   MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
+        // }
         //  if (MachineDurabilityBar.fillAmount <= 0)
         //   {
         // MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];

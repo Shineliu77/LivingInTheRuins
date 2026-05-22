@@ -81,6 +81,8 @@ public class RabbitGM : MonoBehaviour
         //讀取商店現在買幾次
         int ShopID = 2;
         buyCount = PlayerPrefs.GetInt("BuyCount_" + ShopID.ToString(), 0);
+        allSpawnedObjects.Clear();
+        Debug.Log("目前數量：" + allSpawnedObjects.Count);
     }
     void OnEnable()    //檢查滑鼠放開事件
     {
@@ -686,11 +688,10 @@ public class RabbitGM : MonoBehaviour
         if (SaveMachineDurability / MachineDurability <= 0f)      //耐久值歸零不能使用                                              //無法回血 鎖住按鈕                              
         {
             Debug.Log("耐久值歸零");
-            MachineDurabilityEmpty = true;
-            Debug.Log("耐久值歸零2");
             MachineDurabilityBar.sprite = MachineDurabilityBarSprite[1];
             MachineDurabilityBarOustside.sprite = MachineDurabilityBarSpriteOustside[1];  //耐久值外框變色
             MachineDurabilityEmpty = true;
+            Debug.Log("耐久值歸零2");
             LockRabbitButtons();
         }
         else if (SaveMachineDurability / MachineDurability > 0f)      //耐久值不為零                          

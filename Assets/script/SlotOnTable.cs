@@ -5,9 +5,9 @@ using UnityEngine;
 public class SlotOnTable : MonoBehaviour
 {
     private GameObject itemInContact = null; // 紀錄目前在 Slot 內的物件
-    private bool hasItem = false; // 是否已放入物件
-    private bool hasItemRealPut = false; // 是否已放入物件
-    private bool PutItem;
+    public bool hasItem = false; // 是否已放入物件
+    public bool hasItemRealPut = false; // 是否已放入物件
+    public bool PutItem;
 
     [Header("放入物件的位置")]
     public Transform LiquidslotPoint;   // 液體放置點
@@ -38,35 +38,36 @@ public class SlotOnTable : MonoBehaviour
     void OnCollisionExit2D(Collision2D coll)
     {
 
-        if (coll.gameObject == itemInContact)
+        //  if (coll.gameObject == itemInContact)
+        // {
+
+
+        Rigidbody2D rb = itemInContact.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-
-
-            Rigidbody2D rb = itemInContact.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                PutItem = false;
-                hasItem = false;
-                hasItemRealPut = false;
-                itemInContact = null;
-                Debug.Log($" {coll.gameObject.name} 離開 slot，可再次拖曳");
-            }
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            PutItem = false;
+            hasItem = false;
+            hasItemRealPut = false;
+            itemInContact = null;
+            this.GetComponent<Collider2D>().enabled = true;
+            Debug.Log($" {coll.gameObject.name} 離開 slot，可再次拖曳");
         }
+        // }
 
     }
     void Update()
     {
+
         // 檢查是否有物件且按下
         if (hasItem && itemInContact != null && Input.GetMouseButtonDown(0))
+        //if (hasItem && itemInContact != null && itemInContact.GetComponent<DraggableReturn2D>())
         {
             // 取得滑鼠在世界空間的位置
             Vector3 mousePos = Input.mousePosition;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            worldPos.z = 0;
-
-            Collider2D hit = Physics2D.OverlapCircle(worldPos, 0.2f);
-
+            worldPos.z = -1f;
+            Collider2D hit = Physics2D.OverlapCircle(worldPos, 4f);
             if (hit != null && hit.gameObject == itemInContact)
             {
                 Debug.Log($"成功從 {name} 點擊並取出 {itemInContact.name}");
@@ -76,28 +77,97 @@ public class SlotOnTable : MonoBehaviour
             }
 
             //有 就不能再放
-            if (LiquidslotPoint != null && hasItem == true && (hit.CompareTag("redIiquid") || hit.CompareTag("yellowIiquid") || hit.CompareTag("blueIiquid") || hit.CompareTag("greenIiquid")))
-            {
-                hasItemRealPut = true;
-            }
-            if (SpriteslotPoint != null && hasItem == true && (hit.CompareTag("brokecircle") || hit.CompareTag("square") || hit.CompareTag("triangle")))
-            {
-                hasItemRealPut = true;
-            }
+            //if (LiquidslotPoint != null && hasItem == true && (hit.CompareTag("redIiquid") || hit.CompareTag("yellowIiquid") || hit.CompareTag("blueIiquid") || hit.CompareTag("greenIiquid")))
+            // {
+            //   hasItemRealPut = true;
+            //   PutItem = true;
+            //  this.GetComponent<Collider2D>().enabled = false;
+            // Debug.Log("預置欄有物件");
+            //}
+            // if (SpriteslotPoint != null && hasItem == true && (hit.CompareTag("brokecircle") || hit.CompareTag("square") || hit.CompareTag("triangle")))
+            //{
+            //   hasItemRealPut = true;
+            //   PutItem = true;
+            //  this.GetComponent<Collider2D>().enabled = false;
+            //  Debug.Log("預置欄有物件");
+            //}
         }
 
+        //滑鼠放開回彈
+        //  if (itemInContact != null &&Vector2.Distance(transform.position, itemInContact.transform.position) < 0.005)
+        // {
+        //有 就不能再放
+        //  if (LiquidslotPoint != null && itemInContact != null &&  (itemInContact.CompareTag("redIiquid") || itemInContact.CompareTag("yellowIiquid") || itemInContact.CompareTag("blueIiquid") || itemInContact.CompareTag("greenIiquid")))
+        //  {
+        //  hasItem = true;
+        //  hasItemRealPut = true;
+        // PutItem = true;
+        //this.GetComponent<Collider2D>().enabled = false;
+        //  Debug.Log("預置欄有物件回彈");
+        // }
+        // if (SpriteslotPoint != null && itemInContact != null  && (itemInContact.CompareTag("brokecircle") || itemInContact.CompareTag("square") || itemInContact.CompareTag("triangle")))
+        // {
+        //    hasItem = true;
+        //   hasItemRealPut = true;
+        //   PutItem = true;
+        //    this.GetComponent<Collider2D>().enabled = false;
+        //     Debug.Log("預置欄有物件回彈");
+        //  }
+        //}
+        if (itemInContact != null && Vector2.Distance(transform.position, itemInContact.transform.position) > 0.005)
+        {
+            hasItem = false;
+            hasItemRealPut = false;
+            PutItem = false;
+            this.GetComponent<Collider2D>().enabled = true;
+            Debug.Log("預置欄有物件回彈");
+        }
         //預置體被刪掉 位置清空
+        // else if ((LiquidslotPoint != null || SpriteslotPoint != null) &&FindObjectOfType<DestroyPrefabButton>().controlDestory == true && itemInContact != null)
+        // {
+        //  PutItem = false;
+        //  hasItem = false;
+        // hasItemRealPut = false;
+        //itemInContact = null;
+        // this.GetComponent<Collider2D>().enabled = true;
+        // FindObjectOfType<DestroyPrefabButton>().controlDestory = false;
+        // Debug.Log("預置欄因刪除清空");
 
-        if (FindObjectOfType<DestroyPrefabButton>().controlDestory == true && itemInContact != null)
+        //}
+
+        else if (LiquidslotPoint != null && FindObjectOfType<liveTwoDchangeImageIiquid>().isliveTwoDchangeImageIiquidOk == true && itemInContact != null)
         {
             PutItem = false;
             hasItem = false;
             hasItemRealPut = false;
             itemInContact = null;
-            FindObjectOfType<DestroyPrefabButton>().controlDestory = false;
+            this.GetComponent<Collider2D>().enabled = true;
+            Debug.Log("預置欄藥水清空");
+        }
+        else if (SpriteslotPoint != null && FindObjectOfType<LiveTwoDChangeImage>().isLiveTDChangeImgOk == true && itemInContact != null)
+        {
+            PutItem = false;
+            hasItem = false;
+            hasItemRealPut = false;
+            itemInContact = null;
+            this.GetComponent<Collider2D>().enabled = true;
+            Debug.Log("預置欄元件清空");
         }
     }
+    public void NotifyIfMyItemDestroyed(GameObject destroyedObject)   //刪除預置體
+    {
+        if (itemInContact != null && itemInContact == destroyedObject)
+        {
+            PutItem = false;
+            hasItem = false;
+            hasItemRealPut = false;
+            itemInContact = null;
+            if (coll != null) coll.enabled = true;
+            else GetComponent<Collider2D>().enabled = true;
 
+            Debug.Log($"{name} 預置欄清空，重新開啟碰撞器。");
+        }
+    }
     // 將取出邏輯獨立出來，確保清理乾淨
     private void TakeOutItem()
     {
@@ -118,15 +188,18 @@ public class SlotOnTable : MonoBehaviour
         AudioManager.Instance.PlaySfx(22);              //音效
         hasItem = false;
         hasItemRealPut = false;
+        PutItem = false;
         itemInContact = null;
+        this.GetComponent<Collider2D>().enabled = true;
+        Debug.Log("預置欄清空");
     }
     private void OnItemReleased(DraggableReturn2D item)
     {
-        if (hasItem == true || itemInContact != null || hasItemRealPut == true)     //有 就不能再放
-        {
-            Debug.Log($"{name} 已經滿了，拒絕物件 {item.name} 進入");
-            return;
-        }
+        //if (hasItem == true || itemInContact != null || hasItemRealPut == true)     //有 就不能再放
+        //  {
+        //   Debug.Log($"{name} 已經滿了，拒絕物件 {item.name} 進入");
+        //  return;
+        // }
         Collider2D itemColl = item.GetComponent<Collider2D>();
         if (coll != null && itemColl != null && coll.IsTouching(itemColl))
         {
@@ -135,6 +208,7 @@ public class SlotOnTable : MonoBehaviour
             {
                 PlaceItemInSlot(item.gameObject, LiquidslotPoint);
                 hasItem = true;
+                //this.GetComponent<Collider2D>().enabled = false;
                 AudioManager.Instance.PlaySfx(22);              //音效
             }
 
@@ -143,6 +217,7 @@ public class SlotOnTable : MonoBehaviour
             {
                 PlaceItemInSlot(item.gameObject, SpriteslotPoint);
                 hasItem = true;
+                //this.GetComponent<Collider2D>().enabled = false;
                 AudioManager.Instance.PlaySfx(22);              //音效
             }
         }
@@ -152,11 +227,13 @@ public class SlotOnTable : MonoBehaviour
     private void PlaceItemInSlot(GameObject obj, Transform slotPoint)
     {
         itemInContact = obj;
-        obj.transform.position = new Vector3(slotPoint.position.x, slotPoint.position.y, slotPoint.position.z - 1f);
         // 放入 slot 位置
-        obj.transform.position = slotPoint.position;
-        obj.transform.rotation = slotPoint.rotation;
-
+        //  obj.transform.position = slotPoint.position;
+        // obj.transform.rotation = slotPoint.rotation;
+        //obj.transform.position = new Vector3(slotPoint.position.x, slotPoint.position.y, slotPoint.position.z - 1f);
+        Vector3 targetPosition = new Vector3(slotPoint.position.x, slotPoint.position.y, slotPoint.position.z - 1f);
+        obj.transform.position = targetPosition;
+        this.GetComponent<Collider2D>().enabled = false;
         // 停止物理移動
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -179,7 +256,8 @@ public class SlotOnTable : MonoBehaviour
         if (drag != null)
         {
             //drag.enabled = false;
-            drag.SetNewOrigin(slotPoint.position);
+            //drag.SetNewOrigin(slotPoint.position);
+            drag.SetNewOrigin(targetPosition);
         }
 
 

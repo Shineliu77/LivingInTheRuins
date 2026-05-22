@@ -159,12 +159,12 @@ public class MonsterGM : MonoBehaviour
             }
             if (stateInfo.normalizedTime >= 0.01f && stateInfo.IsName("leave"))
             {
-               
+
                 //if (!stopFailsfx)
                 //{
-                    //AudioManager.Instance.PlaySfx(7);
-                    //stopFailsfx = true;
-               // }
+                //AudioManager.Instance.PlaySfx(7);
+                //stopFailsfx = true;
+                // }
                 float distance = Vector2.Distance(transform.position, ExitTargetPoint.position);
 
                 if (distance > stopDistance)

@@ -589,14 +589,15 @@ public class FirstGame : MonoBehaviour
             AnimatorStateInfo stateInfo = b.MachineAni.GetCurrentAnimatorStateInfo(0);
             if (b.BrokeProgresssavedSeatID == seatID)
             {
-                if (!stateInfo.IsName("idel") && !b.MachineDurabilityFix == true)
+                if (!stateInfo.IsName("idel") && !b.MachineDurabilityFix)
                 {
                     Debug.Log($"抓到機器 {seatID}");
                     b.MachineUI.gameObject.SetActive(false);
                     b.iswork = false;
-                    b.MachineAni.ResetTrigger("IdleToWalk");
+                    b.MachineAni.ResetTrigger("WalkToIdle");
                     // b.MachineAni.Play("idle", 0, 0f); // 強制該台機器回 Idle
                     b.MachineAni.Play("idel", 0, 0f); // 強制該台機器回 Idle
+                    b.MachineAni.SetBool("WalkToIdle", false);
                     Debug.Log($"重置機器 {b.BrokeProgresssavedSeatID} {FindObjectOfType<IteamOpenOnTable>().HasActiveCircuitBoardNum}的 crab 動畫");
                 }
                 //  b.MachineAni.CrossFade("idel", 0.1f, 0);

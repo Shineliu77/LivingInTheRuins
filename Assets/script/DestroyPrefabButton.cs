@@ -86,6 +86,13 @@ public class DestroyPrefabButton : MonoBehaviour, IPointerDownHandler, IPointerU
             Debug.LogWarning("要刪除的物件不存在");
             return;
         }
+
+        SlotOnTable[] allSlots = FindObjectsOfType<SlotOnTable>();  //清預置體
+        foreach (SlotOnTable slot in allSlots)
+        {
+            slot.NotifyIfMyItemDestroyed(target);
+        }
+
         // 從各自系統刪除
         //RabbitGM.allSpawnedObjects.Remove(target);
         bool isRabbit = RabbitGM.allSpawnedObjects.Remove(target);

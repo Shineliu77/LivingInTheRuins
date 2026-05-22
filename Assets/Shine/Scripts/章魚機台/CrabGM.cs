@@ -92,7 +92,7 @@ public class CrabGM : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D coll)  //¸I¼²
     {
-        if (coll.gameObject.CompareTag("brokePCB"))
+        if (coll.gameObject.CompareTag("brokePCB") && FindObjectOfType<IteamOpenOnTable>().hasitem == true)
         {
             touchingbrokePCB = true;
             currentbrokePCB = coll.gameObject;
