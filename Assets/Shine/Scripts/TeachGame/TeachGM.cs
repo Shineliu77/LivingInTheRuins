@@ -187,13 +187,14 @@ public class TeachGM : MonoBehaviour
             IteamPrefab.GetComponent<DraggableReturn2D>().enabled = true;
         }
 
-        if (teach2 == true && !Teach2.active && teachTwo == false)  //打開第二個教學面板的第二段
-        {
-            TeachTwo.SetActive(true);
-            teachTwo = true;
-        }
+        //if (teach2 == true && !Teach2.active && teachTwo == false)  //打開第二個教學面板的第二段
+        //  {
+        //    TeachTwo.SetActive(true);
+        //   teachTwo = true;
+        //}
 
-        if (teach2 == true && !Teach2.active && !TeachTwo.active && teachTwo2 == false)  //打開第二個教學面板的第二段
+        //if (teach2 == true && !Teach2.active && !TeachTwo.active && teachTwo2 == false)  //
+        if (teach2 == true && !Teach2.active && teachTwo2 == false)  //打開第二個教學面板的第二段
         {
             TeachTwo2.SetActive(true);
             teachTwo2 = true;
@@ -202,14 +203,26 @@ public class TeachGM : MonoBehaviour
         if (!TeachTwo.active && teachTwo2 == true && !TeachTwo2.active)  //確定開啟才可以拖曳 修理
         {
             FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = true;
-
+            //teachTwo = true;
         }
 
-        if (teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計還可拖曳     不可拖曳也要開否則可拿起
-                                                     // if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳
+        if (teachTwo3 == true && !TeachTwo3.active && teachTwo == false)  //確定開啟才可以拖曳  修理元計還可拖曳     不可拖曳也要開否則可拿起
+                                                                          // if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳
         {
+            TeachTwo.SetActive(true);
+            teachTwo = true;
+            FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
+            // IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
+
+
+        }
+        if (teachTwo3 == true && !TeachTwo3.active && !TeachTwo.active && teachTwo == true) //確定開啟才可以拖曳  修理元計還可拖曳     不可拖曳也要開否則可拿起
+                                                                                            // if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳
+        {
+
             FixMachineDurability.GetComponent<DraggableReturn2D>().enabled = false;
             IteamOpenPrefab.GetComponent<BoxCollider2D>().enabled = true;
+
 
         }
         //  if (!TeachTwo.active && teachTwo3 == true && !TeachTwo3.active)  //確定開啟才可以拖曳  修理元計不可拖曳

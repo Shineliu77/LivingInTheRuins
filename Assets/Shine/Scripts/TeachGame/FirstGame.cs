@@ -407,7 +407,8 @@ public class FirstGame : MonoBehaviour
         IteamGO.transform.SetParent(parentCustomer);
 
         // 歸零座標，讓它完美對準顧客
-        IteamGO.transform.localPosition = Vector3.zero;
+        // IteamGO.transform.localPosition = Vector3.zero;
+        IteamGO.transform.localPosition = new Vector3(0, 0, -1f);
 
         IteamPrefab.Add(IteamGO);
     }
@@ -488,7 +489,9 @@ public class FirstGame : MonoBehaviour
     {
         if (IteamOpen != null && IteamOpenProduce != null)
         {
-            IteamOpenPrefab = Instantiate(IteamOpen, IteamOpenProduce.position, IteamOpenProduce.rotation);
+            //   IteamOpenPrefab = Instantiate(IteamOpen, IteamOpenProduce.position, IteamOpenProduce.rotation);
+            Vector3 spawnPosition = IteamOpenProduce.position - (IteamOpenProduce.forward * 1f);
+            GameObject IteamOpenPrefab = Instantiate(IteamOpen, spawnPosition, IteamOpenProduce.rotation);
             var set = IteamOpenPrefab.GetComponent<SetIteamOpenObj>();
             if (set != null && seatID != -1)
             {
